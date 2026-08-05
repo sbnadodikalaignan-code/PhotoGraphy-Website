@@ -1,0 +1,125 @@
+.about-editorial-header {
+  text-align: center;
+  margin-bottom: 6rem;
+  display: flex;
+  justify-content: center;
+}
+
+/* Elegant editorial header matching the screenshot */
+.editorial-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.2rem, 5.5vw, 4.2rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  letter-spacing: 0.02em;
+}
+
+.editorial-title span {
+  display: block;
+}
+
+/* 3-Column editorial layout */
+.about-editorial-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
+  align-items: start;
+  margin-top: 2rem;
+}
+
+.editorial-column {
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transition-normal);
+}
+
+/* Staggered vertical effect: middle column is shifted upwards */
+.col-center {
+  transform: translateY(-50px);
+}
+
+.editorial-image-wrapper {
+  width: 100%;
+  height: 520px;
+  /* Tall vertical crop like standard editorial layouts */
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.editorial-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Column titles: italics serif */
+.editorial-col-title {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.45rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 0.85rem;
+}
+
+/* Column description text */
+.editorial-col-desc {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  text-align: center;
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+/* Responsiveness overrides */
+@media (max-width: 1024px) {
+  .about-editorial-grid {
+    gap: 2rem;
+  }
+
+  .editorial-image-wrapper {
+    height: 420px;
+  }
+
+  .col-center {
+    transform: translateY(-30px);
+  }
+}
+
+@media (max-width: 768px) {
+  .about-editorial-grid {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    margin-top: 0;
+  }
+
+  .col-center {
+    transform: translateY(0);
+    /* Remove staggered offset in single column */
+  }
+
+  .about-editorial-header {
+    margin-bottom: 4rem;
+  }
+
+  .editorial-image-wrapper {
+    height: 500px;
+    max-width: 450px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .editorial-image-wrapper {
+    height: 380px;
+  }
+}
