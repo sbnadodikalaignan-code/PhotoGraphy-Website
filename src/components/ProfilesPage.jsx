@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Header from './Header';
 import Testimonials from './Testimonials';
 import Footer from './Footer';
+import ThreeGallery from './ThreeGallery';
 import './ProfilesPage.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -228,23 +229,13 @@ export default function ProfilesPage() {
             </div>
           </div>
 
-          {/* Studio Gallery Showcase */}
+          {/* Studio Gallery Showcase - 3D Three.js Interactive Showcase */}
           <div className="studio-gallery-header">
             <h3>Behind the Craft</h3>
             <p>A glimpse into our visual storytelling across weddings, pre-weddings, and baby &amp; maternity albums.</p>
           </div>
 
-          <div className="studio-gallery-grid">
-            <div className="studio-gallery-item img-zoom-container">
-              <img src="/images/WEEDING/HEROSEACTIONIMAGE/5.webp" alt="Studio Portfolio Highlight 1" />
-            </div>
-            <div className="studio-gallery-item img-zoom-container">
-              <img src="/images/WEEDING/HEROSEACTIONIMAGE/6.webp" alt="Studio Portfolio Highlight 2" />
-            </div>
-            <div className="studio-gallery-item img-zoom-container">
-              <img src="/images/BABYIMAGE/4.webp" alt="Studio Portfolio Highlight 3" />
-            </div>
-          </div>
+          <ThreeGallery />
 
         </div>
       </section>

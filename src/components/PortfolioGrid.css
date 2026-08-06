@@ -125,12 +125,36 @@
   /* Chrome/Safari/Opera */
 }
 
+.horizontal-gallery-controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+}
+
+.horizontal-gallery-controls-bar .arrows-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.gallery-container.prewedding-container {
+  padding: 4rem 0 4rem 0;
+  max-width: 100%;
+}
+
+.section-intro.prewedding-intro {
+  margin-bottom: 2rem;
+}
+
 .horizontal-gallery-track {
   display: flex;
   align-items: flex-start;
-  height: 680px;
+  height: 480px;
   width: fit-content;
-  padding: 160px 4rem 50px 4rem;
+  padding: 0.5rem 3rem 2rem 3rem;
   gap: 2.5rem;
   box-sizing: border-box;
   will-change: scroll-position;

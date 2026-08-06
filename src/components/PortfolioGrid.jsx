@@ -8,36 +8,36 @@ import './PortfolioGrid.css';
 gsap.registerPlugin(ScrollTrigger);
 
 const PRE_WEDDING_ITEMS = [
-  { id: 1, title: '', image: '/images/WEEDING/PREWEEDING/1.webp', size: 'size-medium' },
-  { id: 2, title: '', image: '/images/WEEDING/PREWEEDING/2.webp', size: 'size-small' },
-  { id: 3, title: '', image: '/images/WEEDING/PREWEEDING/4.webp', size: 'size-small' },
-  { id: 4, title: '', image: '/images/WEEDING/PREWEEDING/3.webp', size: 'size-medium' },
-  { id: 5, title: '', image: '/images/WEEDING/PREWEEDING/6.webp', size: 'size-medium' },
-  { id: 6, title: '', image: '/images/WEEDING/PREWEEDING/7.webp', size: 'size-small' },
-  { id: 7, title: '', image: '/images/WEEDING/PREWEEDING/8.webp', size: 'size-small' },
-  { id: 8, title: '', image: '/images/WEEDING/PREWEEDING/9.webp', size: 'size-medium' }
+  { id: 1, title: 'Golden Hour Embrace', image: '/images/WEEDING/PREWEEDING/1.webp', size: 'size-medium' },
+  { id: 2, title: 'Whispers in the Mist', image: '/images/WEEDING/PREWEEDING/2.webp', size: 'size-small' },
+  { id: 3, title: 'Sunset Silhouette', image: '/images/WEEDING/PREWEEDING/4.webp', size: 'size-small' },
+  { id: 4, title: 'Urban Serenade', image: '/images/WEEDING/PREWEEDING/3.webp', size: 'size-medium' },
+  { id: 5, title: 'Cinematic Moments', image: '/images/WEEDING/PREWEEDING/6.webp', size: 'size-medium' },
+  { id: 6, title: 'Coastal Romance', image: '/images/WEEDING/PREWEEDING/7.webp', size: 'size-small' },
+  { id: 7, title: 'Eternal Promise', image: '/images/WEEDING/PREWEEDING/8.webp', size: 'size-small' },
+  { id: 8, title: 'Lakeside Bliss', image: '/images/WEEDING/PREWEEDING/9.webp', size: 'size-medium' }
 ];
 
 const WEDDING_ITEMS = [
-  { id: 1, title: '', image: '/images/WEEDING/1.webp', size: 'size-medium' },
-  { id: 2, title: '', image: '/images/WEEDING/2.webp', size: 'size-small' },
-  { id: 3, title: '', image: '/images/WEEDING/4.webp', size: 'size-small' },
-  { id: 4, title: '', image: '/images/WEEDING/3.webp', size: 'size-medium' },
-  { id: 5, title: '', image: '/images/WEEDING/5.webp', size: 'size-medium' },
-  { id: 6, title: '', image: '/images/WEEDING/6.webp', size: 'size-small' },
-  { id: 7, title: '', image: '/images/WEEDING/7.webp', size: 'size-small' },
-  { id: 8, title: '', image: '/images/WEEDING/8.webp', size: 'size-medium' }
+  { id: 1, title: 'Sacred Vows', image: '/images/WEEDING/1.webp', size: 'size-medium' },
+  { id: 2, title: 'The Royal Procession', image: '/images/WEEDING/2.webp', size: 'size-small' },
+  { id: 3, title: 'Jayamala Joy', image: '/images/WEEDING/4.webp', size: 'size-small' },
+  { id: 4, title: 'Bridal Portrait', image: '/images/WEEDING/3.webp', size: 'size-medium' },
+  { id: 5, title: 'Heritage Rituals', image: '/images/WEEDING/5.webp', size: 'size-medium' },
+  { id: 6, title: 'Ceremonial Splendor', image: '/images/WEEDING/6.webp', size: 'size-small' },
+  { id: 7, title: 'Golden Moments', image: '/images/WEEDING/7.webp', size: 'size-small' },
+  { id: 8, title: 'Festive Celebration', image: '/images/WEEDING/8.webp', size: 'size-medium' }
 ];
 
 const BABY_ITEMS = [
-  { id: 1, title: '', image: '/images/BABYIMAGE/1.webp', size: 'size-medium' },
-  { id: 2, title: '', image: '/images/BABYIMAGE/2.webp', size: 'size-small' },
-  { id: 3, title: '', image: '/images/BABYIMAGE/3.webp', size: 'size-small' },
-  { id: 4, title: '', image: '/images/BABYIMAGE/4.webp', size: 'size-medium' },
-  { id: 5, title: '', image: '/images/BABYIMAGE/5.webp', size: 'size-medium' },
-  { id: 6, title: '', image: '/images/BABYIMAGE/6.webp', size: 'size-small' },
-  { id: 7, title: '', image: '/images/BABYIMAGE/7.webp', size: 'size-small' },
-  { id: 8, title: '', image: '/images/BABYIMAGE/8.webp', size: 'size-medium' }
+  { id: 1, title: 'First Smiles', image: '/images/BABYIMAGE/1.webp', size: 'size-medium' },
+  { id: 2, title: 'Motherhood Grace', image: '/images/BABYIMAGE/2.webp', size: 'size-small' },
+  { id: 3, title: 'Tiny Steps', image: '/images/BABYIMAGE/3.webp', size: 'size-small' },
+  { id: 4, title: 'Precious Moments', image: '/images/BABYIMAGE/4.webp', size: 'size-medium' },
+  { id: 5, title: 'Angelic Dreams', image: '/images/BABYIMAGE/5.webp', size: 'size-medium' },
+  { id: 6, title: 'Little Wonder', image: '/images/BABYIMAGE/6.webp', size: 'size-small' },
+  { id: 7, title: 'Warm Embrace', image: '/images/BABYIMAGE/7.webp', size: 'size-small' },
+  { id: 8, title: 'Sweet Lullaby', image: '/images/BABYIMAGE/8.webp', size: 'size-medium' }
 ];
 
 export default function PortfolioGrid() {
@@ -213,47 +213,55 @@ export default function PortfolioGrid() {
 
   return (
     <div ref={rootRef} className="portfolio-multi-wrapper">
-      {/* SECTION 1: PRE-WEDDING (Smooth Continuous Auto-Scroll Gallery) */}
-      <section id="pre-wedding" className="pre-wedding-horizontal-section">
-        {/* Top Minimal Editorial Header */}
-        <div className="horizontal-gallery-header">
-          <div className="header-left">
-            <span className="gallery-badge">EDITORIAL EXHIBITION</span>
-            <h2 className="gallery-headline">Pre-Wedding Stories</h2>
-          </div>
-          <div className="header-right-controls">
-            <span className="auto-scroll-status">AUTO-SCROLLING &bull; PAUSES ON HOVER</span>
-            <button className="gallery-nav-arrow" onClick={handleScrollPrev} aria-label="Previous Pre-Wedding Slide">
-              <ChevronLeft size={20} />
-            </button>
-            <button className="gallery-nav-arrow" onClick={handleScrollNext} aria-label="Next Pre-Wedding Slide">
-              <ChevronRight size={20} />
-            </button>
-          </div>
-          <div className="horizontal-progress-container">
-            <div ref={progressBarRef} className="horizontal-progress-bar"></div>
+      {/* SECTION 1: PRE-WEDDING */}
+      <section id="pre-wedding" className="portfolio-section-block">
+        {/* Parallax Hero Banner matching Wedding style */}
+        <div className="portfolio-hero">
+          <div 
+            className="portfolio-hero-bg" 
+            style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('/images/WEEDING/PREWEEDING/1.webp')` }}
+          ></div>
+          <div className="hero-content hero-title-anim">
+            <h2 className="hero-title">Pre-Wedding</h2>
+            <div className="hero-divider"></div>
           </div>
         </div>
 
-        {/* Horizontal Track Container with Auto Scroll */}
-        <div 
-          ref={trackContainerRef} 
-          className="horizontal-scroll-container"
-          onMouseEnter={() => { isHoveredRef.current = true; }}
-          onMouseLeave={() => { isHoveredRef.current = false; }}
-        >
-          <div className="horizontal-gallery-track">
-            {PRE_WEDDING_ITEMS.concat(PRE_WEDDING_ITEMS).map((item, index) => (
-              <div 
-                key={`${item.id}-${index}`} 
-                className="editorial-horizontal-card"
-                onClick={() => setLightbox({ category: 'pre-wedding', index: index % PRE_WEDDING_ITEMS.length })}
-              >
-                <div className="editorial-img-wrapper img-zoom-container">
-                  <img src={item.image} alt="Pre-Wedding" loading="lazy" className="editorial-horizontal-image" />
+        {/* Gallery Intro & Track Container */}
+        <div className="gallery-container prewedding-container">
+          <div className="section-intro prewedding-intro">
+            <span className="section-subtitle subtitle-elegant">EDITORIAL EXHIBITION</span>
+            <h3 className="section-title title-large">Pre-Wedding Stories</h3>
+          </div>
+
+          {/* Horizontal Track Container with Auto Scroll */}
+          <div 
+            ref={trackContainerRef} 
+            className="horizontal-scroll-container"
+            onMouseEnter={() => { isHoveredRef.current = true; }}
+            onMouseLeave={() => { isHoveredRef.current = false; }}
+          >
+            <div className="horizontal-gallery-track">
+              {PRE_WEDDING_ITEMS.concat(PRE_WEDDING_ITEMS).map((item, index) => (
+                <div 
+                  key={`${item.id}-${index}`} 
+                  className="editorial-horizontal-card"
+                  onClick={() => setLightbox({ category: 'pre-wedding', index: index % PRE_WEDDING_ITEMS.length })}
+                >
+                  <div className="editorial-img-wrapper img-zoom-container">
+                    <img src={item.image} alt={item.title || 'Pre-Wedding'} loading="lazy" className="editorial-horizontal-image" />
+                  </div>
+                  {item.title && (
+                    <div className="card-overlay">
+                      <div className="card-info">
+                        <span className="card-category">Pre-Wedding</span>
+                        <h4 className="card-title">{item.title}</h4>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
