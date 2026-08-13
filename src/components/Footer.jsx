@@ -14,7 +14,7 @@ export default function Footer() {
     <footer className="footer-section">
       <div className="container">
         <div className="footer-top">
-          
+
           {/* Logo block */}
           <div className="footer-brand">
             <div className="logo" onClick={scrollToTop}>
@@ -64,7 +64,7 @@ export default function Footer() {
         {/* Bottom copyright & Scroll back to top */}
         <div className="footer-bottom">
           <p className="copyright">&copy; {new Date().getFullYear()} Nadodikalaignan Photography. All rights reserved.</p>
-          
+
           <button className="scroll-top-btn" onClick={scrollToTop} aria-label="Scroll back to top">
             <span>BACK TO TOP</span>
             <div className="arrow-circle">

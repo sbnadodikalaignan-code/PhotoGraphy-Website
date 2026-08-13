@@ -1,181 +1,56 @@
-import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
+import React from 'react';
+import { Phone, MessageCircle, ArrowRight } from 'lucide-react';
 import './ContactForm.css';
 
 export default function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    eventType: 'WEDDING',
-    eventDate: '',
-    message: ''
-  });
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Simulate API request
-    setTimeout(() => {
-      setIsSubmitted(true);
-      setFormData({
-        name: '',
-        email: '',
-        eventType: 'WEDDING',
-        eventDate: '',
-        message: ''
-      });
-      // Clear message after 5 seconds
-      setTimeout(() => setIsSubmitted(false), 5000);
-    }, 1000);
-  };
-
   return (
-    <section id="contact" className="section section-dark">
+    <section id="contact" className="section section-dark contact-direct-section">
       <div className="container">
         
-        <div className="section-title-wrapper">
+        {/* Section Header */}
+        <div className="section-title-wrapper text-center">
           <span className="section-subtitle">GET IN TOUCH</span>
           <h2 className="section-title">Talk to Us</h2>
         </div>
 
-        <div className="contact-grid">
-          
-          {/* Left Column: Contact details */}
-          <div className="contact-info">
-            <h3 className="info-title">Let's Create Magic</h3>
-            <p className="info-desc">
-              Have an upcoming event or want a portrait session? Fill out the form or drop us an email/call. We respond to all inquiries within 24 hours.
-            </p>
+        {/* Minimalist 3 Direct Buttons (WhatsApp, Instagram, Phone) */}
+        <div className="contact-buttons-row text-center">
+          <a 
+            href="https://wa.me/919876543210?text=Hi%20Nadodikalaignan%20Photography!%20I%20would%20like%20to%20inquire%20about%20a%20shoot." 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="minimal-direct-btn whatsapp-style-btn"
+          >
+            <MessageCircle size={18} />
+            <span>WHATSAPP</span>
+            <ArrowRight size={16} />
+          </a>
 
-            <ul className="info-list">
-              <li>
-                <div className="info-icon-box">
-                  <Mail size={18} />
-                </div>
-                <div className="info-details">
-                  <span className="info-label">Email Us</span>
-                  <a href="mailto:hello@rmphotography.com" className="info-value">hello@rmphotography.com</a>
-                </div>
-              </li>
-              <li>
-                <div className="info-icon-box">
-                  <Phone size={18} />
-                </div>
-                <div className="info-details">
-                  <span className="info-label">Call/WhatsApp</span>
-                  <a href="tel:+919876543210" className="info-value">+91 98765 43210</a>
-                </div>
-              </li>
-              <li>
-                <div className="info-icon-box">
-                  <MapPin size={18} />
-                </div>
-                <div className="info-details">
-                  <span className="info-label">Based in</span>
-                  <span className="info-value">Bangalore &amp; Mumbai, India</span>
-                </div>
-              </li>
-            </ul>
-          </div>
+          <a 
+            href="https://instagram.com" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="minimal-direct-btn instagram-style-btn"
+          >
+            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+            <span>INSTAGRAM</span>
+            <ArrowRight size={16} />
+          </a>
 
-          {/* Right Column: Contact form */}
-          <div className="contact-form-wrapper">
-            {isSubmitted ? (
-              <div className="submit-success">
-                <CheckCircle size={48} className="success-icon" />
-                <h4>Thank You!</h4>
-                <p>Your message has been sent. We will get back to you shortly.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="contact-form">
-                <div className="form-group">
-                  <label htmlFor="name" className="form-label">Full Name</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="form-input"
-                    placeholder="Enter your name"
-                    required
-                  />
-                </div>
-
-                <div className="form-row">
-                  <div className="form-group">
-                    <label htmlFor="email" className="form-label">Email Address</label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="form-input"
-                      placeholder="Enter your email"
-                      required
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="eventType" className="form-label">Event Type</label>
-                    <select
-                      id="eventType"
-                      name="eventType"
-                      value={formData.eventType}
-                      onChange={handleChange}
-                      className="form-input select-input"
-                    >
-                      <option value="WEDDING">Wedding</option>
-                      <option value="PRE-WEDDING">Pre-Wedding</option>
-                      <option value="PORTRAIT">Portrait Shoot</option>
-                      <option value="MATERNITY">Maternity</option>
-                      <option value="OTHER">Other Events</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="eventDate" className="form-label">Event Date</label>
-                  <input
-                    type="date"
-                    id="eventDate"
-                    name="eventDate"
-                    value={formData.eventDate}
-                    onChange={handleChange}
-                    className="form-input date-input"
-                    required
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="message" className="form-label">Your Message</label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows="4"
-                    value={formData.message}
-                    onChange={handleChange}
-                    className="form-input textarea-input"
-                    placeholder="Tell us about your event, style, and details..."
-                    required
-                  />
-                </div>
-
-                <button type="submit" className="btn-gold submit-btn">
-                  <span>SEND MESSAGE</span>
-                  <Send size={16} />
-                </button>
-              </form>
-            )}
-          </div>
-
+          <a 
+            href="tel:+919876543210" 
+            className="minimal-direct-btn phone-style-btn"
+          >
+            <Phone size={18} />
+            <span>PHONE</span>
+            <ArrowRight size={16} />
+          </a>
         </div>
+
       </div>
     </section>
   );

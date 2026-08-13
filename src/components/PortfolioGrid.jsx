@@ -217,8 +217,8 @@ export default function PortfolioGrid() {
       <section id="pre-wedding" className="portfolio-section-block">
         {/* Parallax Hero Banner matching Wedding style */}
         <div className="portfolio-hero">
-          <div 
-            className="portfolio-hero-bg" 
+          <div
+            className="portfolio-hero-bg"
             style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('/images/WEEDING/PREWEEDING/1.webp')` }}
           ></div>
           <div className="hero-content hero-title-anim">
@@ -235,16 +235,16 @@ export default function PortfolioGrid() {
           </div>
 
           {/* Horizontal Track Container with Auto Scroll */}
-          <div 
-            ref={trackContainerRef} 
+          <div
+            ref={trackContainerRef}
             className="horizontal-scroll-container"
             onMouseEnter={() => { isHoveredRef.current = true; }}
             onMouseLeave={() => { isHoveredRef.current = false; }}
           >
             <div className="horizontal-gallery-track">
               {PRE_WEDDING_ITEMS.concat(PRE_WEDDING_ITEMS).map((item, index) => (
-                <div 
-                  key={`${item.id}-${index}`} 
+                <div
+                  key={`${item.id}-${index}`}
                   className="editorial-horizontal-card"
                   onClick={() => setLightbox({ category: 'pre-wedding', index: index % PRE_WEDDING_ITEMS.length })}
                 >
@@ -270,8 +270,8 @@ export default function PortfolioGrid() {
       <section id="wedding" className="portfolio-section-block">
         {/* Parallax Hero Banner using Local WebP file */}
         <div className="portfolio-hero">
-          <div 
-            className="portfolio-hero-bg" 
+          <div
+            className="portfolio-hero-bg"
             style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('/images/WEEDING/1.webp')` }}
           ></div>
           <div className="hero-content hero-title-anim">
@@ -289,8 +289,8 @@ export default function PortfolioGrid() {
 
           <div className="portfolio-masonry-grid wedding-grid">
             {WEDDING_ITEMS.map((item, index) => (
-              <div 
-                key={item.id} 
+              <div
+                key={item.id}
                 className={`portfolio-card ${item.size}`}
                 onClick={() => setLightbox({ category: 'wedding', index })}
               >
@@ -315,8 +315,8 @@ export default function PortfolioGrid() {
       <section id="baby" className="portfolio-section-block">
         {/* Parallax Hero Banner using Local WebP file */}
         <div className="portfolio-hero">
-          <div 
-            className="portfolio-hero-bg" 
+          <div
+            className="portfolio-hero-bg"
             style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('/images/BABYIMAGE/8.webp')` }}
           ></div>
           <div className="hero-content hero-title-anim">
@@ -334,8 +334,8 @@ export default function PortfolioGrid() {
 
           <div className="portfolio-masonry-grid baby-grid">
             {BABY_ITEMS.map((item, index) => (
-              <div 
-                key={item.id} 
+              <div
+                key={item.id}
                 className={`portfolio-card ${item.size}`}
                 onClick={() => setLightbox({ category: 'baby', index })}
               >
@@ -362,9 +362,9 @@ export default function PortfolioGrid() {
           <button className="lightbox-close" onClick={() => setLightbox({ category: null, index: null })} aria-label="Close Lightbox">
             <X size={28} />
           </button>
-          
-          <button 
-            className="lightbox-arrow arrow-left" 
+
+          <button
+            className="lightbox-arrow arrow-left"
             onClick={() => setLightbox(prev => ({ ...prev, index: (prev.index - 1 + activeItems.length) % activeItems.length }))}
             aria-label="Previous Slide"
           >
@@ -372,9 +372,9 @@ export default function PortfolioGrid() {
           </button>
 
           <div className="lightbox-content">
-            <img 
-              src={currentItem.image} 
-              alt={currentItem.title} 
+            <img
+              src={currentItem.image}
+              alt={currentItem.title}
               className="lightbox-image animate-fade-in"
             />
             <div className="lightbox-caption">
@@ -386,8 +386,8 @@ export default function PortfolioGrid() {
             </div>
           </div>
 
-          <button 
-            className="lightbox-arrow arrow-right" 
+          <button
+            className="lightbox-arrow arrow-right"
             onClick={() => setLightbox(prev => ({ ...prev, index: (prev.index + 1) % activeItems.length }))}
             aria-label="Next Slide"
           >

@@ -96,7 +96,7 @@
   background-color: #0a0a0c;
   color: #ffffff;
   padding: 1.1rem 2.5rem;
-  border-radius: 40px;
+  border-radius: 0px !important;
   font-family: var(--font-sans);
   font-size: 0.78rem;
   font-weight: 600;
@@ -125,6 +125,7 @@
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
+
   .stat-counter-card {
     padding: 2.5rem 1.5rem;
   }
