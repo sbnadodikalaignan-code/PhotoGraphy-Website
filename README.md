@@ -1,16 +1,81 @@
-# React + Vite
+# Nadodikalaignan Photography
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A React + Vite photography portfolio website for weddings, portraits, and storytelling work.
 
-Currently, two official plugins are available:
+## Project Structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```text
+photograph/
+├── public/
+│   ├── images/
+│   │   ├── BABYIMAGE/
+│   │   └── WEEDING/
+│   │       └── HEROSEACTIONIMAGE/
+│   └── favicon.ico
+├── src/
+│   ├── assets/
+│   ├── components/
+│   │   ├── About.css
+│   │   ├── About.jsx
+│   │   ├── ContactForm.css
+│   │   ├── ContactForm.jsx
+│   │   ├── ContactPage.jsx
+│   │   ├── FAQ.css
+│   │   ├── FAQ.jsx
+│   │   ├── Footer.css
+│   │   ├── Footer.jsx
+│   │   ├── Header.css
+│   │   ├── Header.jsx
+│   │   ├── HeroSlider.css
+│   │   ├── HeroSlider.jsx
+│   │   ├── PortfolioGrid.css
+│   │   ├── PortfolioGrid.jsx
+│   │   ├── ProfilesPage.css
+│   │   ├── ProfilesPage.jsx
+│   │   ├── ProfilesSection.css
+│   │   ├── ProfilesSection.jsx
+│   │   ├── ScrollToTop.jsx
+│   │   ├── ServicePage.css
+│   │   ├── ServicePage.jsx
+│   │   ├── Stories.css
+│   │   ├── Stories.jsx
+│   │   ├── Testimonials.css
+│   │   ├── Testimonials.jsx
+│   │   └── ThreeGallery.jsx
+│   ├── data/
+│   │   └── servicesData.js
+│   ├── App.css
+│   ├── App.jsx
+│   ├── index.css
+│   └── main.jsx
+├── index.html
+├── package.json
+├── vite.config.js
+├── README.md
+└── .gitignore
+```
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+npm run dev
+```
 
-## Expanding the Oxlint configuration
+## Production Build
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+```bash
+npm run build
+```
+
+## Tech Stack
+
+- React
+- Vite
+- CSS Modules / standard CSS files
+- React Router style page navigation
+- Lucide icons
+
+## Notes
+
+This project is a photography portfolio website with sections for home, service pages, profile showcases, testimonials, FAQ, and contact.
