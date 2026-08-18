@@ -40,40 +40,46 @@ export default function FAQ() {
   return (
     <section id="faq" className="section">
       <div className="container">
-        
-        <div className="section-title-wrapper">
-          <span className="section-subtitle">FAQ</span>
-          <h2 className="section-title">Frequently Asked Questions</h2>
-        </div>
+        <div className="faq-layout">
+          <div className="faq-content-column">
+            <div className="section-title-wrapper faq-title-wrapper">
+              <span className="section-subtitle">FAQ</span>
+              <h2 className="section-title">Frequently Asked Questions</h2>
+            </div>
 
-        <div className="faq-wrapper">
-          {FAQ_ITEMS.map((item, index) => {
-            const isOpen = openId === item.id;
-            return (
-              <div 
-                key={item.id} 
-                className={`faq-item ${isOpen ? 'active' : ''}`}
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <button 
-                  className="faq-question-btn" 
-                  onClick={() => toggleFAQ(item.id)}
-                  aria-expanded={isOpen}
-                >
-                  <span className="faq-question">{item.question}</span>
-                  <ChevronDown className={`faq-icon ${isOpen ? 'rotate' : ''}`} size={20} strokeWidth={1.5} />
-                </button>
-                
-                <div className={`faq-answer-container ${isOpen ? 'show' : ''}`}>
-                  <div className="faq-answer">
-                    <p>{item.answer}</p>
+            <div className="faq-wrapper">
+              {FAQ_ITEMS.map((item, index) => {
+                const isOpen = openId === item.id;
+                return (
+                  <div 
+                    key={item.id} 
+                    className={`faq-item ${isOpen ? 'active' : ''}`}
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <button 
+                      className="faq-question-btn" 
+                      onClick={() => toggleFAQ(item.id)}
+                      aria-expanded={isOpen}
+                    >
+                      <span className="faq-question">{item.question}</span>
+                      <ChevronDown className={`faq-icon ${isOpen ? 'rotate' : ''}`} size={20} strokeWidth={1.5} />
+                    </button>
+                    
+                    <div className={`faq-answer-container ${isOpen ? 'show' : ''}`}>
+                      <div className="faq-answer">
+                        <p>{item.answer}</p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+                );
+              })}
+            </div>
+          </div>
 
+          <div className="faq-portrait-space">
+            <img src="/images/faq.jpg" alt="Nadodikalaignan Photography portrait" />
+          </div>
+        </div>
       </div>
     </section>
   );

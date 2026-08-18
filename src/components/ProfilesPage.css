@@ -263,7 +263,7 @@
 }
 
 .studio-pillar-card {
-  background-color: #ffffff;
+  background-color: var(--bg-primary);
   padding: 3rem 2.5rem;
   border-radius: 16px;
   border: 1px solid var(--border-color);
@@ -504,12 +504,11 @@
   background: #14151a;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 20px;
-  max-width: 900px;
-  width: 100%;
+  max-width: min(1000px, 100%);
+  width: auto;
   overflow: hidden;
   box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
+  display: block;
 }
 
 .lightbox-close-btn {
@@ -537,7 +536,7 @@
 }
 
 .lightbox-img-wrapper {
-  max-height: 520px;
+  max-height: calc(100vh - 4rem);
   background: #000000;
   display: flex;
   align-items: center;
@@ -545,9 +544,12 @@
 }
 
 .lightbox-img-wrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: calc(100vh - 4rem);
+  object-fit: contain;
 }
 
 .lightbox-info {

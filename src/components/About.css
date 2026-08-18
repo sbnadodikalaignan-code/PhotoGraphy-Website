@@ -97,7 +97,7 @@
 }
 
 .editorial-card-link:hover .editorial-col-title {
-  color: #d4af37;
+  color: var(--accent-secondary);
 }
 
 /* Column description text */

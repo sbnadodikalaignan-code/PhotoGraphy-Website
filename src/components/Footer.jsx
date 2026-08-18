@@ -1,9 +1,18 @@
 import React from 'react';
-import { ArrowUp } from 'lucide-react';
+import { ArrowUp, MessageCircle } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Footer.css';
 
 export default function Footer() {
-  const scrollToTop = () => {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const goHome = () => {
+    if (pathname !== '/') {
+      navigate('/');
+      return;
+    }
+
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
@@ -17,7 +26,7 @@ export default function Footer() {
 
           {/* Logo block */}
           <div className="footer-brand">
-            <div className="logo" onClick={scrollToTop}>
+            <div className="logo" onClick={goHome}>
               <img src="/images/logo.png" alt="Nadodikalaignan Photography Logo" className="logo-img" />
             </div>
             <p className="brand-tagline">Timeless storytelling through candid frames.</p>
@@ -27,11 +36,11 @@ export default function Footer() {
           <div className="footer-nav-block">
             <h4 className="footer-heading">NAVIGATE</h4>
             <ul className="footer-links">
-              <li><a href="#home">Home</a></li>
-              <li><a href="#about">About Studio</a></li>
-              <li><a href="#portfolio">Albums</a></li>
-              <li><a href="#profiles">Profiles &amp; CEO</a></li>
-              <li><a href="#faq">FAQ</a></li>
+              <li><button type="button" className="footer-nav-btn" onClick={goHome}>Home</button></li>
+              <li><Link to="/profiles">About Studio</Link></li>
+              <li><Link to="/services/wedding">Latest Work</Link></li>
+              <li><Link to="/#faq">FAQ</Link></li>
+              <li><Link to="/contact">Talk to Us</Link></li>
             </ul>
           </div>
 
@@ -41,20 +50,19 @@ export default function Footer() {
             <p className="social-desc">Follow our latest weddings and journals on social channels.</p>
             <div className="social-icons">
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="Instagram">
-                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" className="lucide-instagram">
+                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                   <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                 </svg>
               </a>
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="Facebook">
-                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" className="lucide-facebook">
+                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
                 </svg>
               </a>
-              <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="Pinterest">
-                {/* Custom P icon for Pinterest */}
-                <span className="pinterest-custom">P</span>
+              <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="WhatsApp">
+                <MessageCircle size={18} strokeWidth={1.5} />
               </a>
             </div>
           </div>
@@ -65,7 +73,7 @@ export default function Footer() {
         <div className="footer-bottom">
           <p className="copyright">&copy; {new Date().getFullYear()} Nadodikalaignan Photography. All rights reserved.</p>
 
-          <button className="scroll-top-btn" onClick={scrollToTop} aria-label="Scroll back to top">
+          <button className="scroll-top-btn" onClick={goHome} aria-label="Go to the home page">
             <span>BACK TO TOP</span>
             <div className="arrow-circle">
               <ArrowUp size={14} />

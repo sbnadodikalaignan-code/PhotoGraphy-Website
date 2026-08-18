@@ -28,6 +28,18 @@ export default function Header() {
     navigate(path);
   };
 
+  const navigateToHome = () => {
+    setIsMenuOpen(false);
+    setIsServicesOpen(false);
+
+    if (window.location.pathname === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    navigate('/');
+  };
+
   const scrollToSection = (id) => {
     setIsMenuOpen(false);
     setIsServicesOpen(false);
@@ -55,14 +67,14 @@ export default function Header() {
   return (
     <header className={`header ${isScrolled ? 'header-scrolled' : ''}`}>
       <div className="header-container">
-        <div className="logo" onClick={() => navigateToPage('/')}>
+        <div className="logo" onClick={navigateToHome}>
           <img src="/images/logo.png" alt="Nadodikalaignan Photography Logo" className="logo-img" />
         </div>
 
         {/* Desktop Navigation */}
         <nav className="nav-desktop">
           <ul className="nav-links">
-            <li><button onClick={() => navigateToPage('/')} className="nav-btn">HOME</button></li>
+            <li><button onClick={navigateToHome} className="nav-btn">HOME</button></li>
 
             {/* SERVICES Dropdown Menu */}
             <li
@@ -74,7 +86,7 @@ export default function Header() {
                 onClick={() => scrollToSection('about')}
                 className="nav-btn dropdown-toggle-btn"
               >
-                <span>SERVICES</span>
+                <span>LATEST WORK</span>
                 <ChevronDown size={14} className={`dropdown-arrow ${isServicesOpen ? 'open' : ''}`} />
               </button>
 
@@ -92,10 +104,9 @@ export default function Header() {
             </li>
 
             <li><button onClick={() => navigateToPage('/profiles')} className="nav-btn">ABOUT US</button></li>
-            <li><button onClick={() => scrollToSection('faq')} className="nav-btn">FAQ</button></li>
           </ul>
 
-          <button onClick={() => scrollToSection('contact')} className="talk-to-us-btn">
+          <button onClick={() => navigateToPage('/contact')} className="talk-to-us-btn">
             TALK TO US
           </button>
         </nav>
@@ -114,11 +125,11 @@ export default function Header() {
         {/* Mobile Navigation Drawer */}
         <nav className={`nav-mobile ${isMenuOpen ? 'open' : ''}`}>
           <ul className="mobile-links">
-            <li><button onClick={() => navigateToPage('/')} className="mobile-nav-btn">HOME</button></li>
+            <li><button onClick={navigateToHome} className="mobile-nav-btn">HOME</button></li>
 
             {/* Mobile Services Submenu */}
             <li className="mobile-dropdown-group">
-              <span className="mobile-nav-subtitle">SERVICES</span>
+              <span className="mobile-nav-subtitle">LATEST WORK</span>
               <ul className="mobile-sublinks">
                 <li><button onClick={() => navigateToPage('/services/pre-wedding')} className="mobile-subnav-btn">PRE-WEDDING</button></li>
                 <li><button onClick={() => navigateToPage('/services/wedding')} className="mobile-subnav-btn">WEDDING</button></li>
@@ -127,9 +138,8 @@ export default function Header() {
             </li>
 
             <li><button onClick={() => navigateToPage('/profiles')} className="mobile-nav-btn">ABOUT US</button></li>
-            <li><button onClick={() => scrollToSection('faq')} className="mobile-nav-btn">FAQ</button></li>
             <li>
-              <button onClick={() => scrollToSection('contact')} className="mobile-talk-btn">
+              <button onClick={() => navigateToPage('/contact')} className="mobile-talk-btn">
                 TALK TO US
               </button>
             </li>

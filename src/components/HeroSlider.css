@@ -80,6 +80,27 @@
   opacity: 0;
 }
 
+/* Per-image copy colors preserve contrast on bright and dark hero photos. */
+.copy-light .slide-title {
+  color: #ffffff;
+  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.6);
+}
+
+.copy-light .slide-tagline {
+  color: #f4cf70;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.65);
+}
+
+.copy-ink .slide-title {
+  color: #211b18;
+  text-shadow: 0 2px 16px rgba(255, 255, 255, 0.65);
+}
+
+.copy-ink .slide-tagline {
+  color: #6f4d22;
+  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.7);
+}
+
 /* Animations for active slide elements */
 .slide-active .animate-slide-up {
   animation: slideUpContent 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
@@ -125,6 +146,17 @@
   color: var(--white);
 }
 
+.hero-slider-section.copy-ink .slider-arrow {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-color: rgba(33, 27, 24, 0.18);
+  color: #211b18;
+}
+
+.hero-slider-section.copy-ink .slider-arrow:hover {
+  background-color: rgba(255, 255, 255, 0.82);
+  color: #211b18;
+}
+
 .arrow-left {
   left: 2rem;
 }
@@ -156,6 +188,14 @@
 .indicator-dot.active {
   background-color: var(--accent-gold);
   transform: scale(1.2);
+}
+
+.hero-slider-section.copy-ink .indicator-dot {
+  background-color: rgba(33, 27, 24, 0.35);
+}
+
+.hero-slider-section.copy-ink .indicator-dot.active {
+  background-color: #6f4d22;
 }
 
 /* Responsiveness overrides */

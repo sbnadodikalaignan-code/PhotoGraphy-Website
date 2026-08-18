@@ -32,7 +32,7 @@
 }
 
 .stat-counter-card {
-  background-color: #ffffff;
+  background-color: var(--bg-primary);
   padding: 3rem 2rem;
   border-radius: 18px;
   border: 1px solid var(--border-color);
@@ -53,8 +53,8 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background-color: #f5f5f8;
-  color: #0a0a0c;
+  background-color: var(--bg-tertiary);
+  color: var(--accent-gold);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -93,8 +93,8 @@
   display: inline-flex;
   align-items: center;
   gap: 0.8rem;
-  background-color: #0a0a0c;
-  color: #ffffff;
+  background-color: var(--bg-dark);
+  color: var(--white);
   padding: 1.1rem 2.5rem;
   border-radius: 0px !important;
   font-family: var(--font-sans);
@@ -107,7 +107,7 @@
 }
 
 .view-profiles-cta-btn:hover {
-  background-color: #222226;
+  background-color: var(--accent-gold);
   transform: translateY(-3px) scale(1.02);
   box-shadow: 0 16px 35px rgba(0, 0, 0, 0.2);
 }

@@ -3,7 +3,7 @@ import { Award, Camera, Heart, Sparkles } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Header from './Header';
-import Testimonials from './Testimonials';
+import ContactForm from './ContactForm';
 import Footer from './Footer';
 import ThreeGallery from './ThreeGallery';
 import './ProfilesPage.css';
@@ -240,7 +240,7 @@ export default function ProfilesPage() {
         </div>
       </section>
 
-      <Testimonials />
+      <ContactForm />
 
       <Footer />
     </div>

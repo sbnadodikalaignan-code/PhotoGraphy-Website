@@ -119,15 +119,9 @@ export default function ThreeGallery() {
     container.innerHTML = '';
     container.appendChild(renderer.domElement);
 
-    // 4. Vibrant Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 2.0);
-    scene.add(ambientLight);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
 
-    const dirLight = new THREE.DirectionalLight(0xffffff, 1.8);
-    dirLight.position.set(5, 10, 7);
-    scene.add(dirLight);
-
-    // 5. Create 3D Carousel Ring
+    // 4. Create 3D Carousel Ring
     const meshesGroup = new THREE.Group();
     scene.add(meshesGroup);
 
@@ -148,14 +142,15 @@ export default function ThreeGallery() {
       cardObj.rotation.y = angle;
 
       const texture = textureLoader.load(item.src);
+      texture.colorSpace = THREE.SRGBColorSpace;
       texture.generateMipmaps = true;
       texture.minFilter = THREE.LinearMipmapLinearFilter;
 
-      const material = new THREE.MeshStandardMaterial({
+      // Use an unlit material so the source photos retain their original color.
+      const material = new THREE.MeshBasicMaterial({
         map: texture,
         side: THREE.DoubleSide,
-        roughness: 0.2,
-        metalness: 0.05,
+        toneMapped: false,
       });
 
       const mesh = new THREE.Mesh(planeGeo, material);
@@ -228,7 +223,7 @@ export default function ThreeGallery() {
 
       // Continuous auto-rotation
       if (!isDragging) {
-        rotationTargetRef.current += 0.0035;
+        rotationTargetRef.current += 0.0008;
       }
 
       currentRotationRef.current += (rotationTargetRef.current - currentRotationRef.current) * 0.08;
@@ -308,11 +303,6 @@ export default function ThreeGallery() {
             </button>
             <div className="lightbox-img-wrapper">
               <img src={selectedItem.src} alt={selectedItem.title} />
-            </div>
-            <div className="lightbox-info">
-              <span className="lightbox-category">{selectedItem.category}</span>
-              <h3>{selectedItem.title}</h3>
-              <p>{selectedItem.desc}</p>
             </div>
           </div>
         </div>

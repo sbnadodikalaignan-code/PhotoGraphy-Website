@@ -5,48 +5,66 @@ import './HeroSlider.css';
 const SLIDES = [
   {
     image: '/images/WEEDING/HEROSEACTIONIMAGE/1.webp',
-    title: 'HUSBAND-WIFE TEAM',
-    tagline: 'CREATING BEAUTIFUL STORIES TOGETHER'
+    title: 'A PROMISE, HELD CLOSE',
+    tagline: 'BEFORE THE CELEBRATION BEGINS',
+    copyTheme: 'copy-ink',
+    overlay: 'linear-gradient(to bottom, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.12) 60%, rgba(255,255,255,0.76) 100%)'
   },
   {
     image: '/images/WEEDING/HEROSEACTIONIMAGE/2.webp',
-    title: 'CANDID & EMOTIONAL',
-    tagline: 'WE CAPTURE SOULS, NOT JUST POSES'
+    title: 'GOLDEN HOUR, TWO HEARTS',
+    tagline: 'A LOVE STORY LIT BY THE LAST LIGHT',
+    copyTheme: 'copy-light',
+    overlay: 'linear-gradient(to bottom, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.15) 60%, rgba(0,0,0,0.7) 100%)'
   },
   {
     image: '/images/WEEDING/HEROSEACTIONIMAGE/3.webp',
-    title: 'MOMENTS ETERNALIZED',
-    tagline: 'TRADITIONS EMBELLISHED IN TIME'
+    title: 'THE JOY OF US',
+    tagline: 'THE LITTLE GLANCES THAT LAST FOREVER',
+    copyTheme: 'copy-ink',
+    overlay: 'linear-gradient(to bottom, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.08) 60%, rgba(255,255,255,0.68) 100%)'
   },
   {
     image: '/images/WEEDING/HEROSEACTIONIMAGE/4.webp',
-    title: 'ROYAL CELEBRATIONS',
-    tagline: 'CAPTURING THE MAJESTY OF YOUR DAY'
+    title: 'A NIGHT MADE OF MAGIC',
+    tagline: 'WHERE LOVE DANCES THROUGH THE RAIN',
+    copyTheme: 'copy-light',
+    overlay: 'linear-gradient(to bottom, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.14) 60%, rgba(0,0,0,0.72) 100%)'
   },
   {
     image: '/images/WEEDING/HEROSEACTIONIMAGE/5.webp',
-    title: 'LOVE STORY IN FRAMES',
-    tagline: 'DOCUMENTING LIFELONG VOWS'
+    title: 'HEARTS IN HARMONY',
+    tagline: 'THE MOST BEAUTIFUL MOMENTS ARE UNSCRIPTED',
+    copyTheme: 'copy-light',
+    overlay: 'linear-gradient(to bottom, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.12) 60%, rgba(0,0,0,0.68) 100%)'
   },
   {
     image: '/images/WEEDING/HEROSEACTIONIMAGE/6.webp',
-    title: 'TIMELESS ELEGANCE',
-    tagline: 'EVERY DETAIL HELD FOREVER'
+    title: 'JOY, IN ITS PUREST FORM',
+    tagline: 'REAL LAUGHTER. REAL LOVE. FOREVER REMEMBERED.',
+    copyTheme: 'copy-light',
+    overlay: 'linear-gradient(to bottom, rgba(0,0,0,0.26) 0%, rgba(0,0,0,0.12) 60%, rgba(0,0,0,0.68) 100%)'
   },
   {
-    image: '/images/WEEDING/HEROSEACTIONIMAGE/7.webp',
-    title: 'SACRED BOND',
-    tagline: 'WHERE DREAMS MERGE INTO REALITY'
+    image: '/images/WEEDING/HEROSEACTIONIMAGE/7..webp',
+    title: 'JOY TAKES THE STAGE',
+    tagline: 'A CELEBRATION LIT WITH LAUGHTER',
+    copyTheme: 'copy-light',
+    overlay: 'linear-gradient(to bottom, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.08) 60%, rgba(0,0,0,0.66) 100%)'
   },
   {
     image: '/images/WEEDING/HEROSEACTIONIMAGE/8.webp',
-    title: 'CELEBRATING TOGETHERNESS',
-    tagline: 'UNFORGETTABLE WEDDING MEMORIES'
+    title: 'YOUR STORY, BEAUTIFULLY YOURS',
+    tagline: 'TRADITIONS HELD CLOSE. MEMORIES MADE NEW.',
+    copyTheme: 'copy-ink',
+    overlay: 'linear-gradient(to bottom, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.08) 60%, rgba(255,255,255,0.66) 100%)'
   },
   {
     image: '/images/WEEDING/HEROSEACTIONIMAGE/9.webp',
-    title: 'JOYFUL JOURNEYS',
-    tagline: 'PRESERVING YOUR SPECIAL DAY'
+    title: 'FOREVER BEGINS HERE',
+    tagline: 'TWO SOULS, ONE BEAUTIFUL JOURNEY',
+    copyTheme: 'copy-ink',
+    overlay: 'linear-gradient(to bottom, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.08) 60%, rgba(255,255,255,0.72) 100%)'
   }
 ];
 
@@ -80,13 +98,13 @@ export default function HeroSlider() {
   }, [handleNext]);
 
   return (
-    <section id="home" className="hero-slider-section">
+    <section id="home" className={`hero-slider-section ${SLIDES[currentIndex].copyTheme}`}>
       <div className="slider-wrapper">
         {SLIDES.map((slide, index) => (
           <div
             key={index}
-            className={`slide-item ${index === currentIndex ? 'slide-active' : ''}`}
-            style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0.6) 100%), url(${slide.image})` }}
+            className={`slide-item ${slide.copyTheme} ${index === currentIndex ? 'slide-active' : ''}`}
+            style={{ backgroundImage: `${slide.overlay}, url(${slide.image})` }}
           >
             {/* Smooth-appearing content overlay */}
             {index === currentIndex && (

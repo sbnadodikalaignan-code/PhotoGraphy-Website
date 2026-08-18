@@ -4,11 +4,13 @@
   --bg-primary: #ffffff;
   --bg-secondary: #fafafc;
   --bg-tertiary: #f0f0f3;
+  --bg-dark: #111111;
   --text-primary: #0a0a0c;
   --text-secondary: #4a4a4e;
   --text-tertiary: #8a8a8f;
   --accent-gold: #000000;
   --accent-gold-hover: #222222;
+  --accent-secondary: #b58a5a;
   --white: #ffffff;
   --border-color: rgba(0, 0, 0, 0.08);
   

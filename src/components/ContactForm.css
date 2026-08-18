@@ -1,15 +1,23 @@
 /* Minimalist Contact Section (Only WhatsApp, Instagram, Phone Buttons) */
 .contact-direct-section {
   padding: 6rem 0 7rem 0;
-  background-color: #ffffff;
-  color: #111111;
-  border-top: 1px solid #e5e5e5;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-top: 1px solid var(--border-color);
   width: 100vw;
   box-sizing: border-box;
 }
 
 .text-center {
   text-align: center;
+}
+
+.contact-direct-section .section-subtitle {
+  color: var(--text-secondary);
+}
+
+.contact-direct-section .section-title {
+  color: var(--text-primary);
 }
 
 .contact-buttons-row {
@@ -26,11 +34,11 @@
   align-items: center;
   justify-content: center;
   gap: 0.8rem;
-  background: #000000;
-  color: #ffffff;
+  background: var(--white);
+  color: var(--text-primary);
   padding: 1.1rem 2.5rem;
-  border-radius: 0px; /* Square rectangular shape */
-  border: 1px solid #000000;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
   font-family: var(--font-sans);
   font-size: 0.85rem;
   font-weight: 700;
@@ -38,12 +46,12 @@
   text-decoration: none;
   transition: all 0.3s ease;
   min-width: 220px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
 }
 
 .minimal-direct-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.15);
 }
 
 .whatsapp-style-btn:hover {
@@ -53,14 +61,14 @@
 }
 
 .instagram-style-btn:hover {
-  background-color: #e1306c;
-  border-color: #e1306c;
+  background: linear-gradient(135deg, #f58529 0%, #dd2a7b 45%, #8134af 100%);
+  border-color: transparent;
   color: #ffffff;
 }
 
 .phone-style-btn:hover {
-  background-color: #222222;
-  border-color: #222222;
+  background-color: #1877f2;
+  border-color: #1877f2;
   color: #ffffff;
 }
 
