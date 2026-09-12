@@ -1,12 +1,12 @@
 .portfolio-multi-wrapper {
   background-color: var(--bg-primary);
-  width: 100vw;
+  width: 100%;
 }
 
 /* High-End Minimal Editorial Horizontal Scroll Section */
 .pre-wedding-horizontal-section {
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 680px;
   background-color: #ffffff;
   color: #0a0a0c;

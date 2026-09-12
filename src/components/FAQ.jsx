@@ -10,7 +10,7 @@ const FAQ_ITEMS = [
   },
   {
     id: 2,
-    question: 'Do you travel for destination weddings or pre-wedding shoots?',
+    question: 'Do you travel for destination weddings or editorial shoots?',
     answer: 'Absolutely! We love traveling. Whether it is a beach wedding in Goa, a royal celebration in Udaipur, or an international location, we are ready to pack our bags and document your story anywhere in the world.'
   },
   {
@@ -77,7 +77,7 @@ export default function FAQ() {
           </div>
 
           <div className="faq-portrait-space">
-            <img src="/images/faq.jpg" alt="Nadodikalaignan Photography portrait" />
+            <img src="/images/faq.jpg" alt="Stories by Nadodikalaignan portrait" />
           </div>
         </div>
       </div>

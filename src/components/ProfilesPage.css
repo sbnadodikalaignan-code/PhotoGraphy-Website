@@ -1,52 +1,372 @@
 .profiles-page-wrapper {
   background-color: var(--bg-primary);
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
   overflow-x: hidden;
 }
 
-/* Hero Banner */
-.profiles-hero-banner {
-  position: relative;
-  height: 60vh;
-  min-height: 440px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  color: #ffffff;
-}
-
-.profiles-hero-bg {
-  position: absolute;
-  top: -10%;
-  left: 0;
+/* Warm Beige Editorial Hero Banner */
+.about-editorial-hero {
+  background-color: #f2eee9;
+  padding: 130px 5rem 90px;
   width: 100%;
-  height: 120%;
-  background-size: cover;
-  background-position: center;
-  z-index: 1;
-  pointer-events: none;
+  color: #1f1f1f;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
-.profiles-hero-content {
-  position: relative;
-  z-index: 5;
-  text-align: center;
-  max-width: 900px;
-  padding: 0 2rem;
-  margin-top: 3rem;
+.about-hero-container {
+  max-width: 1350px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 4rem;
+  flex-wrap: wrap;
 }
 
-.hero-subtitle-badge {
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.35em;
-  color: rgba(255, 255, 255, 0.7);
-  text-transform: uppercase;
+.about-hero-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.about-hero-title {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: clamp(3.2rem, 6.5vw, 5.5rem);
+  font-weight: 400;
+  line-height: 1.05;
+  color: #1a1a1a;
+  letter-spacing: -0.01em;
+  margin: 0 0 1.2rem 0;
+}
+
+.about-hero-founded {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.95rem;
+  color: #333333;
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+.about-hero-right {
+  max-width: 520px;
+  padding-bottom: 0.5rem;
+}
+
+.about-hero-description {
+  font-family: var(--font-sans, sans-serif);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #333333;
+  font-weight: 400;
+  margin: 0;
+}
+
+@media (max-width: 850px) {
+  .about-editorial-hero {
+    padding: 100px 1.8rem 60px;
+  }
+  .about-hero-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2.5rem;
+  }
+  .about-hero-right {
+    max-width: 100%;
+  }
+}
+
+/* SECTION: OUR STORY */
+.our-story-section {
+  background-color: #f2eee9;
+  padding: 60px 5rem 120px;
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.our-story-container {
+  max-width: 1350px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: stretch;
+}
+
+.our-story-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.our-story-image-mobile-box {
+  display: none;
+}
+
+.our-story-subtitle {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.95rem;
+  color: #555555;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.5rem;
+}
+
+.our-story-title {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: clamp(3.2rem, 6.5vw, 5.5rem);
+  font-weight: 400;
+  line-height: 1.05;
+  color: #1a1a1a;
+  margin: 0 0 4rem 0;
+}
+
+.our-story-text-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.our-story-paragraph {
+  font-family: var(--font-sans, sans-serif);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: #333333;
+  font-weight: 400;
+  margin: 0;
+}
+
+.our-story-right {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.our-story-image-box {
+  width: 100%;
+  height: 100%;
+  min-height: 520px;
+  overflow: hidden;
+}
+
+.our-story-image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
-  margin-bottom: 0.8rem;
+}
+
+/* SECTION: OUR CEO (TERRACOTTA CARD) */
+.about-ceo-section {
+  background-color: #ffffff;
+  padding: 70px 5rem 100px;
+  width: 100%;
+}
+
+.about-ceo-container {
+  max-width: 1350px;
+  margin: 0 auto;
+}
+
+.about-ceo-header-title {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: clamp(3.2rem, 6.5vw, 5.2rem);
+  font-weight: 400;
+  color: #e5b324;
+  margin: 0 0 2.5rem 0;
+  letter-spacing: -0.01em;
+}
+
+.about-ceo-card-block {
+  background-color: #d95d39;
+  display: flex;
+  align-items: flex-start;
+  gap: 3.5rem;
+  padding: 2.8rem;
+  border-radius: 0px;
+}
+
+.about-ceo-photo-wrapper {
+  width: 320px;
+  height: 420px;
+  flex-shrink: 0;
+  background-color: #f4f1ea;
+  overflow: hidden;
+}
+
+.about-ceo-photo-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.about-ceo-details {
+  display: flex;
+  flex-direction: column;
+  color: #111111;
+  padding-top: 0.5rem;
+}
+
+.about-ceo-name {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+  font-weight: 400;
+  color: #111111;
+  margin: 0 0 3rem 0;
+  line-height: 1.1;
+}
+
+.about-ceo-role {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #111111;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.02em;
+}
+
+.about-ceo-bio {
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.96rem;
+  line-height: 1.65;
+  color: #1a1a1a;
+  margin: 0 0 1.2rem 0;
+  font-weight: 400;
+}
+
+.about-ceo-social-wrap {
+  margin-top: 1rem;
+}
+
+.ceo-instagram-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #111111;
+  color: #ffffff;
+  padding: 0.75rem 1.6rem;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.ceo-instagram-btn:hover {
+  background: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 1024px) {
+  .about-ceo-card-block {
+    flex-direction: column;
+    padding: 2rem;
+    gap: 2.5rem;
+  }
+  .about-ceo-photo-wrapper {
+    width: 100%;
+    max-width: 360px;
+    height: 400px;
+  }
+}
+
+@media (max-width: 950px) {
+  .our-story-container {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .our-story-right {
+    display: none;
+  }
+  .our-story-image-mobile-box {
+    display: block;
+    width: 100%;
+    margin: 1.2rem 0 2rem 0;
+    overflow: hidden;
+  }
+  .our-story-image-mobile-box img {
+    width: 100%;
+    height: auto;
+    max-height: 440px;
+    object-fit: cover;
+    display: block;
+  }
+  .our-story-title {
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 850px) {
+  .about-ceo-section {
+    padding: 50px 1.8rem 70px;
+  }
+  .about-ceo-name {
+    margin-bottom: 1.8rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-editorial-hero {
+    padding: 90px 1.25rem 45px;
+  }
+  .about-hero-title {
+    font-size: 2.8rem;
+    margin-bottom: 0.8rem;
+  }
+  .about-hero-founded {
+    font-size: 0.85rem;
+  }
+  .about-hero-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .our-story-section {
+    padding: 45px 1.25rem 60px;
+  }
+  .our-story-title {
+    font-size: 2.6rem;
+    margin-bottom: 1.5rem;
+  }
+  .our-story-subtitle {
+    font-size: 0.85rem;
+  }
+  .our-story-paragraph {
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+  .our-story-image-box {
+    min-height: 300px;
+    height: 320px;
+  }
+  .about-ceo-section {
+    padding: 40px 1.25rem 55px;
+  }
+  .about-ceo-header-title {
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+  }
+  .about-ceo-card-block {
+    padding: 1.4rem 1.1rem;
+    gap: 1.8rem;
+  }
+  .about-ceo-photo-wrapper {
+    height: 320px;
+  }
+  .about-ceo-name {
+    font-size: 2.2rem;
+    margin-bottom: 1.2rem;
+  }
+  .about-ceo-role {
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+  }
+  .about-ceo-bio {
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
 }
 
 .profiles-hero-title {

@@ -1,49 +1,61 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import LazyImage from './LazyImage';
 import './About.css';
+
+const CATEGORIES = [
+  {
+    id: 'weddings',
+    title: 'Weddings',
+    path: '/work/weddings',
+    image: '/images/WEEDING/1 (2).webp',
+    alt: 'Weddings photography and films by Stories by Nadodikalaignan'
+  },
+  {
+    id: 'events',
+    title: 'Events',
+    path: '/work/events',
+    image: '/images/events seaction/1 (1).webp',
+    alt: 'Events photography and films by Stories by Nadodikalaignan'
+  },
+  {
+    id: 'portraits',
+    title: 'Portraits',
+    path: '/work/portraits',
+    image: '/images/protrate/1 (1).webp',
+    alt: 'Portraits photography by Stories by Nadodikalaignan'
+  },
+  {
+    id: 'toddlers',
+    title: 'Toddlers',
+    path: '/work/toddlers',
+    image: '/images/BABYIMAGE/1 (3).webp',
+    alt: 'Toddlers photography by Stories by Nadodikalaignan'
+  }
+];
 
 export default function About() {
   return (
-    <section id="about" className="section">
+    <section id="about" className="section services-category-section">
       <div className="container">
 
-        {/* Main Editorial Header */}
-        <div className="about-editorial-header">
-          <h2 className="editorial-title">
-            <span>OFF-BEAT,</span>
-            <span>DOCUMENTARY</span>
-            <span>STORIES MADE</span>
-            <span>WITH LOVE.</span>
+        {/* Small Studio Introduction Header */}
+        <div className="services-intro-header text-center">
+          <h2 className="services-intro-title">
+            Let us capture the real story
           </h2>
         </div>
 
-        {/* 3-Column Staggered Clickable Grid */}
-        <div className="about-editorial-grid">
-
-          {/* Column 1: Wedding Photography */}
-          <Link to="/services/wedding" className="editorial-column col-left editorial-card-link">
-            <div className="editorial-image-wrapper img-zoom-container">
-              <img src="/images/WEEDING/1.webp" alt="Wedding Photography by Nadodikalaignan" />
-            </div>
-            <h3 className="editorial-col-title">Wedding Photography</h3>
-          </Link>
-
-          {/* Column 2: Pre Wedding Photography */}
-          <Link to="/services/pre-wedding" className="editorial-column col-center editorial-card-link">
-            <div className="editorial-image-wrapper img-zoom-container">
-              <img src="/images/WEEDING/HEROSEACTIONIMAGE/9.webp" alt="Pre Wedding Photography by Nadodikalaignan" />
-            </div>
-            <h3 className="editorial-col-title">Pre Wedding Photography</h3>
-          </Link>
-
-          {/* Column 3: Baby & Maternity */}
-          <Link to="/services/baby-maternity" className="editorial-column col-right editorial-card-link">
-            <div className="editorial-image-wrapper img-zoom-container">
-              <img src="/images/BABYIMAGE/8.webp" alt="Baby and Maternity Shoots by Nadodikalaignan" />
-            </div>
-            <h3 className="editorial-col-title">Baby &amp; Maternity</h3>
-          </Link>
-
+        {/* Compact 4-Column Category Cards Grid */}
+        <div className="category-cards-grid">
+          {CATEGORIES.map((cat) => (
+            <Link key={cat.id} to={cat.path} className="category-card-item">
+              <div className="category-image-wrapper">
+                <LazyImage src={cat.image} alt={cat.alt} />
+              </div>
+              <h3 className="category-card-title">{cat.title}</h3>
+            </Link>
+          ))}
         </div>
 
       </div>

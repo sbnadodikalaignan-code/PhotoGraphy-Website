@@ -2,43 +2,53 @@ import React, { useState, useEffect, useRef } from 'react';
 import { X, ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import LazyImage from './LazyImage';
 import './PortfolioGrid.css';
 
 // Register GSAP ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
-const PRE_WEDDING_ITEMS = [
-  { id: 1, title: 'Golden Hour Embrace', image: '/images/WEEDING/PREWEEDING/1.webp', size: 'size-medium' },
-  { id: 2, title: 'Whispers in the Mist', image: '/images/WEEDING/PREWEEDING/2.webp', size: 'size-small' },
-  { id: 3, title: 'Sunset Silhouette', image: '/images/WEEDING/PREWEEDING/4.webp', size: 'size-small' },
-  { id: 4, title: 'Urban Serenade', image: '/images/WEEDING/PREWEEDING/3.webp', size: 'size-medium' },
-  { id: 5, title: 'Cinematic Moments', image: '/images/WEEDING/PREWEEDING/6.webp', size: 'size-medium' },
-  { id: 6, title: 'Coastal Romance', image: '/images/WEEDING/PREWEEDING/7.webp', size: 'size-small' },
-  { id: 7, title: 'Eternal Promise', image: '/images/WEEDING/PREWEEDING/8.webp', size: 'size-small' },
-  { id: 8, title: 'Lakeside Bliss', image: '/images/WEEDING/PREWEEDING/9.webp', size: 'size-medium' }
+const WEDDING_IMAGE_FILES = [
+  '1 (1).webp', '1 (2).webp', '1 (3).webp', '1 (4).webp', '1 (5).webp', '1 (6).webp', '1 (7).webp', '1 (8).webp', '1 (9).webp',
+  '1 (10).webp', '1 (11).webp', '1 (12).webp', '1 (13).webp', '1 (14).webp', '1 (15).webp', '1 (16).webp', '1 (17).webp',
+  '1 (18).webp', '1 (19).webp', '1 (20).webp', '1 (21).webp', '1 (22).webp', '1 (23).webp', '1 (24).webp', '1 (25).webp',
+  '1 (26).webp', '1 (27).webp', '1 (28).webp', '1 (29).webp', '1 (30).webp', '1 (31).webp', '1 (32).webp', '1 (33).webp',
+  '1 (34).webp', '1 (35).webp', '1 (36).webp', '1 (37).webp', '1 (38).webp', '1 (39).webp', '1 (40).webp'
 ];
 
-const WEDDING_ITEMS = [
-  { id: 1, title: 'Sacred Vows', image: '/images/WEEDING/1.webp', size: 'size-medium' },
-  { id: 2, title: 'The Royal Procession', image: '/images/WEEDING/2.webp', size: 'size-small' },
-  { id: 3, title: 'Jayamala Joy', image: '/images/WEEDING/4.webp', size: 'size-small' },
-  { id: 4, title: 'Bridal Portrait', image: '/images/WEEDING/3.webp', size: 'size-medium' },
-  { id: 5, title: 'Heritage Rituals', image: '/images/WEEDING/5.webp', size: 'size-medium' },
-  { id: 6, title: 'Ceremonial Splendor', image: '/images/WEEDING/6.webp', size: 'size-small' },
-  { id: 7, title: 'Golden Moments', image: '/images/WEEDING/7.webp', size: 'size-small' },
-  { id: 8, title: 'Festive Celebration', image: '/images/WEEDING/8.webp', size: 'size-medium' }
+const WEDDING_ITEMS = WEDDING_IMAGE_FILES.map((fileName, index) => ({
+  id: index + 1,
+  title: `Wedding ${index + 1}`,
+  image: `/images/WEEDING/${fileName}`,
+  size: index % 2 === 0 ? 'size-medium' : 'size-small'
+}));
+
+const BABY_IMAGE_FILES = [
+  '1 (2).webp', '1 (3).webp', '1 (5).webp', '1 (6).webp', '1 (7).webp', '1 (8).webp',
+  '1 (9).webp', '1 (10).webp', '1 (11).webp', '1 (12).webp', '1 (13).webp', '1 (14).webp',
+  '1 (15).webp', '1 (16).webp', '1 (17).webp', '1(18).webp'
 ];
 
-const BABY_ITEMS = [
-  { id: 1, title: 'First Smiles', image: '/images/BABYIMAGE/1.webp', size: 'size-medium' },
-  { id: 2, title: 'Motherhood Grace', image: '/images/BABYIMAGE/2.webp', size: 'size-small' },
-  { id: 3, title: 'Tiny Steps', image: '/images/BABYIMAGE/3.webp', size: 'size-small' },
-  { id: 4, title: 'Precious Moments', image: '/images/BABYIMAGE/4.webp', size: 'size-medium' },
-  { id: 5, title: 'Angelic Dreams', image: '/images/BABYIMAGE/5.webp', size: 'size-medium' },
-  { id: 6, title: 'Little Wonder', image: '/images/BABYIMAGE/6.webp', size: 'size-small' },
-  { id: 7, title: 'Warm Embrace', image: '/images/BABYIMAGE/7.webp', size: 'size-small' },
-  { id: 8, title: 'Sweet Lullaby', image: '/images/BABYIMAGE/8.webp', size: 'size-medium' }
+const BABY_ITEMS = BABY_IMAGE_FILES.map((fileName, index) => ({
+  id: index + 1,
+  title: `Baby & Maternity ${index + 1}`,
+  image: `/images/BABYIMAGE/${fileName}`,
+  size: index % 2 === 0 ? 'size-medium' : 'size-small'
+}));
+
+const PORTRAIT_IMAGE_FILES = [
+  '1 (1).webp', '1 (2).webp', '1 (3).webp', '1 (4).webp', '1 (5).webp', '1 (6).webp', '1 (7).webp', '1 (8).webp', '1 (9).webp',
+  '1 (10).webp', '1 (11).webp', '1 (12).webp', '1 (13).webp', '1 (14).webp', '1 (16).webp', '1 (17).webp', '1 (18).webp',
+  '1 (19).webp', '1 (20).webp', '1 (21).webp', '1 (22).webp', '1 (23).webp', '1 (24).webp', '1 (25).webp', '1 (26).webp',
+  '1 (27).webp', '1 (28).webp', '1 (29).webp'
 ];
+
+const PORTRAIT_ITEMS = PORTRAIT_IMAGE_FILES.map((fileName, index) => ({
+  id: index + 1,
+  title: `Portrait ${index + 1}`,
+  image: `/images/protrate/${fileName}`,
+  size: index % 2 === 0 ? 'size-medium' : 'size-small'
+}));
 
 export default function PortfolioGrid() {
   const [lightbox, setLightbox] = useState({ category: null, index: null });
@@ -47,7 +57,7 @@ export default function PortfolioGrid() {
   const isHoveredRef = useRef(false);
   const progressBarRef = useRef(null);
 
-  // Smooth continuous auto-scroll loop for Pre-Wedding section
+  // Smooth continuous auto-scroll loop for the gallery section
   useEffect(() => {
     const container = trackContainerRef.current;
     if (!container) return;
@@ -180,9 +190,10 @@ export default function PortfolioGrid() {
     if (lightbox.index === null) return;
 
     const getItems = () => {
-      if (lightbox.category === 'pre-wedding') return PRE_WEDDING_ITEMS;
       if (lightbox.category === 'wedding') return WEDDING_ITEMS;
-      return BABY_ITEMS;
+      if (lightbox.category === 'baby') return BABY_ITEMS;
+      if (lightbox.category === 'portrait') return PORTRAIT_ITEMS;
+      return [];
     };
 
     const items = getItems();
@@ -202,9 +213,9 @@ export default function PortfolioGrid() {
   }, [lightbox]);
 
   const getActiveItems = () => {
-    if (lightbox.category === 'pre-wedding') return PRE_WEDDING_ITEMS;
     if (lightbox.category === 'wedding') return WEDDING_ITEMS;
     if (lightbox.category === 'baby') return BABY_ITEMS;
+    if (lightbox.category === 'portrait') return PORTRAIT_ITEMS;
     return [];
   };
 
@@ -213,66 +224,13 @@ export default function PortfolioGrid() {
 
   return (
     <div ref={rootRef} className="portfolio-multi-wrapper">
-      {/* SECTION 1: PRE-WEDDING */}
-      <section id="pre-wedding" className="portfolio-section-block">
-        {/* Parallax Hero Banner matching Wedding style */}
-        <div className="portfolio-hero">
-          <div
-            className="portfolio-hero-bg"
-            style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('/images/WEEDING/PREWEEDING/1.webp')` }}
-          ></div>
-          <div className="hero-content hero-title-anim">
-            <h2 className="hero-title">Pre-Wedding</h2>
-            <div className="hero-divider"></div>
-          </div>
-        </div>
-
-        {/* Gallery Intro & Track Container */}
-        <div className="gallery-container prewedding-container">
-          <div className="section-intro prewedding-intro">
-            <span className="section-subtitle subtitle-elegant">EDITORIAL EXHIBITION</span>
-            <h3 className="section-title title-large">Pre-Wedding Stories</h3>
-          </div>
-
-          {/* Horizontal Track Container with Auto Scroll */}
-          <div
-            ref={trackContainerRef}
-            className="horizontal-scroll-container"
-            onMouseEnter={() => { isHoveredRef.current = true; }}
-            onMouseLeave={() => { isHoveredRef.current = false; }}
-          >
-            <div className="horizontal-gallery-track">
-              {PRE_WEDDING_ITEMS.concat(PRE_WEDDING_ITEMS).map((item, index) => (
-                <div
-                  key={`${item.id}-${index}`}
-                  className="editorial-horizontal-card"
-                  onClick={() => setLightbox({ category: 'pre-wedding', index: index % PRE_WEDDING_ITEMS.length })}
-                >
-                  <div className="editorial-img-wrapper img-zoom-container">
-                    <img src={item.image} alt={item.title || 'Pre-Wedding'} loading="lazy" className="editorial-horizontal-image" />
-                  </div>
-                  {item.title && (
-                    <div className="card-overlay">
-                      <div className="card-info">
-                        <span className="card-category">Pre-Wedding</span>
-                        <h4 className="card-title">{item.title}</h4>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 2: WEDDING */}
+      {/* SECTION 1: WEDDING */}
       <section id="wedding" className="portfolio-section-block">
         {/* Parallax Hero Banner using Local WebP file */}
         <div className="portfolio-hero">
           <div
             className="portfolio-hero-bg"
-            style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('/images/WEEDING/1.webp')` }}
+            style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('/images/WEEDING/1 (1).webp')` }}
           ></div>
           <div className="hero-content hero-title-anim">
             <h2 className="hero-title">Wedding</h2>
@@ -295,7 +253,7 @@ export default function PortfolioGrid() {
                 onClick={() => setLightbox({ category: 'wedding', index })}
               >
                 <div className="card-image-container img-zoom-container">
-                  <img src={item.image} alt={item.title || 'Wedding'} loading="lazy" className="portfolio-image" />
+                  <LazyImage src={item.image} alt={item.title || 'Wedding'} className="portfolio-image" />
                 </div>
                 {item.title && (
                   <div className="card-overlay">
@@ -317,7 +275,7 @@ export default function PortfolioGrid() {
         <div className="portfolio-hero">
           <div
             className="portfolio-hero-bg"
-            style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('/images/BABYIMAGE/8.webp')` }}
+            style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('/images/BABYIMAGE/1 (8).webp')` }}
           ></div>
           <div className="hero-content hero-title-anim">
             <h2 className="hero-title">Baby &amp; Maternity</h2>
@@ -340,12 +298,57 @@ export default function PortfolioGrid() {
                 onClick={() => setLightbox({ category: 'baby', index })}
               >
                 <div className="card-image-container img-zoom-container">
-                  <img src={item.image} alt={item.title || 'Baby and Maternity'} loading="lazy" className="portfolio-image" />
+                  <LazyImage src={item.image} alt={item.title || 'Baby and Maternity'} className="portfolio-image" />
                 </div>
                 {item.title && (
                   <div className="card-overlay">
                     <div className="card-info">
                       <span className="card-category">Baby &amp; Maternity</span>
+                      <h4 className="card-title">{item.title}</h4>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 4: PORTRAIT SHOOT */}
+      <section id="portrait" className="portfolio-section-block">
+        {/* Parallax Hero Banner */}
+        <div className="portfolio-hero">
+          <div
+            className="portfolio-hero-bg"
+            style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('/images/protrate/1 (1).webp')` }}
+          ></div>
+          <div className="hero-content hero-title-anim">
+            <h2 className="hero-title">Portrait Shoot</h2>
+            <div className="hero-divider"></div>
+          </div>
+        </div>
+
+        {/* Gallery Grid */}
+        <div className="gallery-container">
+          <div className="section-intro">
+            <span className="section-subtitle subtitle-elegant">EDITORIAL &amp; FINE ART</span>
+            <h3 className="section-title title-large">Portrait Portfolio</h3>
+          </div>
+
+          <div className="portfolio-masonry-grid portrait-grid">
+            {PORTRAIT_ITEMS.map((item, index) => (
+              <div
+                key={item.id}
+                className={`portfolio-card ${item.size}`}
+                onClick={() => setLightbox({ category: 'portrait', index })}
+              >
+                <div className="card-image-container img-zoom-container">
+                  <LazyImage src={item.image} alt={item.title || 'Portrait Shoot'} className="portfolio-image" />
+                </div>
+                {item.title && (
+                  <div className="card-overlay">
+                    <div className="card-info">
+                      <span className="card-category">Portrait Shoot</span>
                       <h4 className="card-title">{item.title}</h4>
                     </div>
                   </div>

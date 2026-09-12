@@ -4,18 +4,18 @@ import './Stories.css';
 const BLOGS = [
   {
     id: 1,
-    title: '10 Crucial Tips for Your Dream Pre-Wedding Shoot',
+    title: '10 Crucial Tips for Your Dream Wedding Shoot',
     date: 'July 24, 2026',
     author: 'Maya',
-    image: '/images/WEEDING/PREWEEDING/2.webp',
-    excerpt: 'Planning your pre-wedding shoot can be overwhelming. From picking outfits to styling locations, here is our ultimate guide to making it perfect.'
+    image: '/images/WEEDING/1 (2).webp',
+    excerpt: 'Planning your wedding story can feel intense. From wardrobe selection to timing rituals, here is our guide to making every frame feel effortless.'
   },
   {
     id: 2,
     title: 'Chasing the Light: Destination Wedding in Udaipur',
     date: 'June 18, 2026',
     author: 'Rahul',
-    image: '/images/WEEDING/4.webp',
+    image: '/images/WEEDING/1 (4).webp',
     excerpt: 'Udaipur offers a royal backdrop unlike any other. We share our experience navigating the palaces, lakes, and lighting setups.'
   },
   {
@@ -23,7 +23,7 @@ const BLOGS = [
     title: 'The Art of Capture: Why Candid Shots Matter Most',
     date: 'May 05, 2026',
     author: 'Rahul & Maya',
-    image: '/images/WEEDING/5.webp',
+    image: '/images/WEEDING/1 (5).webp',
     excerpt: 'While portraits are timeless, candid moments hold the true emotions of your wedding day. Discover our approach to capturing unposed magic.'
   }
 ];
@@ -32,7 +32,7 @@ export default function Stories() {
   return (
     <section id="blog" className="section section-dark">
       <div className="container">
-        
+
         <div className="section-title-wrapper">
           <span className="section-subtitle">INSIGHTS &amp; INSPIRED WRITING</span>
           <h2 className="section-title">The Photography Blog</h2>
@@ -45,7 +45,7 @@ export default function Stories() {
                 <img src={blog.image} alt={blog.title} />
                 <span className="blog-date">{blog.date}</span>
               </div>
-              
+
               <div className="blog-body">
                 <span className="blog-author">Written by {blog.author}</span>
                 <h3 className="blog-card-title">{blog.title}</h3>

@@ -17,6 +17,20 @@
   flex-direction: column;
 }
 
+.footer-brand .logo-img {
+  height: 60px;
+  width: auto;
+  max-width: 220px;
+  object-fit: contain;
+  filter: brightness(0);
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.footer-brand .logo-img:hover {
+  opacity: 0.8;
+}
+
 .brand-tagline {
   font-family: var(--font-sans);
   font-size: 0.9rem;

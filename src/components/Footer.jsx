@@ -27,7 +27,7 @@ export default function Footer() {
           {/* Logo block */}
           <div className="footer-brand">
             <div className="logo" onClick={goHome}>
-              <img src="/images/logo.png" alt="Nadodikalaignan Photography Logo" className="logo-img" />
+              <img src="/images/logo.png" alt="Stories by Nadodikalaignan Logo" className="logo-img" />
             </div>
             <p className="brand-tagline">Timeless storytelling through candid frames.</p>
           </div>
@@ -49,19 +49,21 @@ export default function Footer() {
             <h4 className="footer-heading">FOLLOW US</h4>
             <p className="social-desc">Follow our latest weddings and journals on social channels.</p>
             <div className="social-icons">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="Instagram">
+              <a href="https://www.instagram.com/storiesbynadodikalaignan?stkn=aG14N3o0NDlyMTQ1" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="Stories by Nadodikalaignan Instagram" title="Stories by Nadodikalaignan">
                 <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                   <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                 </svg>
               </a>
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="Facebook">
+              <a href="https://www.instagram.com/nadodikalaignan?stkn=MWd2M2Q4c3B3d2hpbg%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="Nadodikalaignan Instagram" title="Nadodikalaignan Founder Profile">
                 <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                 </svg>
               </a>
-              <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="WhatsApp">
+              <a href="https://wa.me/919865696065" target="_blank" rel="noopener noreferrer" className="social-icon-btn" aria-label="WhatsApp" title="Chat on WhatsApp">
                 <MessageCircle size={18} strokeWidth={1.5} />
               </a>
             </div>
@@ -71,7 +73,7 @@ export default function Footer() {
 
         {/* Bottom copyright & Scroll back to top */}
         <div className="footer-bottom">
-          <p className="copyright">&copy; {new Date().getFullYear()} Nadodikalaignan Photography. All rights reserved.</p>
+          <p className="copyright">&copy; {new Date().getFullYear()} Stories by Nadodikalaignan. All rights reserved.</p>
 
           <button className="scroll-top-btn" onClick={goHome} aria-label="Go to the home page">
             <span>BACK TO TOP</span>

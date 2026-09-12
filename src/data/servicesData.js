@@ -4,12 +4,12 @@ export const SERVICES_DATA = {
     title: 'Pre-Wedding Shoot Photography',
     subtitle: 'Capture your love story in cinematic splendor before you say I Do',
     badge: 'ROMANTIC & CINEMATIC',
-    heroImage: '/images/WEEDING/PREWEEDING/1.webp',
+    heroImage: '/images/HEROSEACTIONIMAGE/2.webp',
     heroGallery: [
-      '/images/WEEDING/PREWEEDING/1.webp',
-      '/images/WEEDING/PREWEEDING/4.webp',
-      '/images/WEEDING/PREWEEDING/3.webp',
-      '/images/WEEDING/PREWEEDING/6.webp'
+      '/images/HEROSEACTIONIMAGE/1.webp',
+      '/images/HEROSEACTIONIMAGE/2.webp',
+      '/images/HEROSEACTIONIMAGE/3.webp',
+      '/images/HEROSEACTIONIMAGE/4.webp'
     ],
     description: `We believe pre-wedding shoots should be a relaxed, intimate journey where your genuine chemistry takes center stage. From misty mountain sunrises and sun-kissed beaches to grand heritage palaces and moody urban streetscapes, our team crafts visually stunning visual poetry tailored to your couple persona.`,
     stats: [
@@ -20,14 +20,18 @@ export const SERVICES_DATA = {
     ],
     categories: ['All', 'Sunset', 'Cinematic', 'Outdoor', 'Romantic', 'Candid'],
     gallery: [
-      { id: 1, title: 'Golden Hour Embrace', image: '/images/WEEDING/PREWEEDING/1.webp', category: 'Sunset', location: 'Coastal Cliffs', camera: 'Sony A7IV • 85mm f/1.4' },
-      { id: 2, title: 'Whispers in the Mist', image: '/images/WEEDING/PREWEEDING/2.webp', category: 'Cinematic', location: 'Tea Gardens, Munnar', camera: 'Sony FX3 • 35mm GM' },
-      { id: 3, title: 'Sunset Silhouette', image: '/images/WEEDING/PREWEEDING/4.webp', category: 'Sunset', location: 'Heritage Fort', camera: 'Sony A7R V • 50mm f/1.2' },
-      { id: 4, title: 'Urban Serenade', image: '/images/WEEDING/PREWEEDING/3.webp', category: 'Candid', location: 'French Quarter, Pondicherry', camera: 'Sony A7IV • 24-70mm GM' },
-      { id: 5, title: 'Cinematic Moments', image: '/images/WEEDING/PREWEEDING/6.webp', category: 'Cinematic', location: 'Lakeside Estate', camera: 'DJI Mavic 3 Pro • 4K HDR' },
-      { id: 6, title: 'Coastal Romance', image: '/images/WEEDING/PREWEEDING/7.webp', category: 'Outdoor', location: 'Mahabalipuram Beach', camera: 'Sony A7R V • 135mm f/1.8' },
-      { id: 7, title: 'Eternal Promise', image: '/images/WEEDING/PREWEEDING/8.webp', category: 'Romantic', location: 'Pine Forest Trail', camera: 'Sony A7IV • 50mm GM' },
-      { id: 8, title: 'Lakeside Bliss', image: '/images/WEEDING/PREWEEDING/9.webp', category: 'Outdoor', location: 'Backwaters Sunset', camera: 'Sony A7S III • 24mm f/1.4' }
+      { id: 1, title: 'Golden Hour Embrace', image: '/images/HEROSEACTIONIMAGE/2.webp', category: 'Sunset', location: 'Coastal Cliffs', camera: 'Sony A7IV • 85mm f/1.4' },
+      { id: 2, title: 'Whispers in the Mist', image: '/images/HEROSEACTIONIMAGE/1.webp', category: 'Cinematic', location: 'Tea Gardens, Munnar', camera: 'Sony FX3 • 35mm GM' },
+      { id: 3, title: 'The Joy of Us', image: '/images/HEROSEACTIONIMAGE/3.webp', category: 'Candid', location: 'Heritage Fort', camera: 'Sony A7R V • 50mm f/1.2' },
+      { id: 4, title: 'A Night Made of Magic', image: '/images/HEROSEACTIONIMAGE/4.webp', category: 'Cinematic', location: 'Palace Courtyard', camera: 'Sony A7IV • 24-70mm GM' },
+      { id: 5, title: 'Hearts in Harmony', image: '/images/HEROSEACTIONIMAGE/5.webp', category: 'Romantic', location: 'Lakeside Estate', camera: 'DJI Mavic 3 Pro • 4K HDR' },
+      { id: 6, title: 'Joy In Purest Form', image: '/images/HEROSEACTIONIMAGE/6.webp', category: 'Outdoor', location: 'Mahabalipuram Beach', camera: 'Sony A7R V • 135mm f/1.8' },
+      { id: 7, title: 'Joy Takes The Stage', image: '/images/HEROSEACTIONIMAGE/7.webp', category: 'Romantic', location: 'Pine Forest Trail', camera: 'Sony A7IV • 50mm GM' },
+      { id: 8, title: 'Your Story Yours', image: '/images/HEROSEACTIONIMAGE/8.webp', category: 'Sunset', location: 'Backwaters Sunset', camera: 'Sony A7S III • 24mm f/1.4' },
+      { id: 9, title: 'Forever Begins Here', image: '/images/HEROSEACTIONIMAGE/9.webp', category: 'Candid', location: 'French Quarter', camera: 'Sony A7R V • 85mm GM' },
+      { id: 10, title: 'Coastal Serenade', image: '/images/latest_image/1 (3).webp', category: 'Outdoor', location: 'Shore Temple', camera: 'Sony A7IV • 35mm GM' },
+      { id: 11, title: 'Sunlit Romance', image: '/images/latest_image/1 (11).webp', category: 'Romantic', location: 'Colonial Street', camera: 'Sony A7IV • 50mm f/1.2' },
+      { id: 12, title: 'Twilight Promise', image: '/images/latest_image/1 (15).webp', category: 'Sunset', location: 'Lake Pier', camera: 'Sony A7R V • 24-70mm GM' }
     ],
     features: [
       { icon: 'Camera', title: 'Creative Direction & Posing Guidance', desc: 'Relaxed, natural direction that highlights your authentic laughter and chemistry without awkward poses.' },
@@ -88,12 +92,13 @@ export const SERVICES_DATA = {
     title: 'Royal & Traditional Wedding Photography',
     subtitle: 'Preserving raw emotions, sacred rituals, and royal grandeur with artistic mastery',
     badge: 'SACRED & ROYAL',
-    heroImage: '/images/WEEDING/3.webp',
+    heroImage: '/images/WEEDING/1 (3).webp',
     heroGallery: [
-      '/images/WEEDING/1.webp',
-      '/images/WEEDING/2.webp',
-      '/images/WEEDING/3.webp',
-      '/images/WEEDING/4.webp'
+      '/images/WEEDING/1 (1).webp',
+      '/images/WEEDING/1 (2).webp',
+      '/images/WEEDING/1 (3).webp',
+      '/images/WEEDING/1 (4).webp',
+      '/images/WEEDING/1 (5).webp'
     ],
     description: `A wedding is a tapestry of unrepeatable emotions—the quiet tears during Kanyadaan, the festive energy of Jayamala, and the majestic radiance of the couple under golden ceremonial lights. Our wedding photography combines candid storytelling with editorial royal portraits to preserve your heritage forever.`,
     stats: [
@@ -104,16 +109,45 @@ export const SERVICES_DATA = {
     ],
     categories: ['All', 'Ceremony', 'Bridal', 'Rituals', 'Reception', 'Candid'],
     gallery: [
-      { id: 1, title: 'Sacred Vows', image: '/images/WEEDING/1.webp', category: 'Ceremony', location: 'Grand Mandapam', camera: 'Sony A7R V • 85mm GM' },
-      { id: 2, title: 'The Royal Procession', image: '/images/WEEDING/2.webp', category: 'Rituals', location: 'Palace Courtyard', camera: 'Sony A7IV • 24-70mm GM' },
-      { id: 3, title: 'Bridal Portrait', image: '/images/WEEDING/3.webp', category: 'Bridal', location: 'Bridal Suite', camera: 'Sony A7R V • 50mm f/1.2' },
-      { id: 4, title: 'Jayamala Joy', image: '/images/WEEDING/4.webp', category: 'Ceremony', location: 'Main Stage', camera: 'Sony FX3 • 35mm GM' },
-      { id: 5, title: 'Heritage Rituals', image: '/images/WEEDING/5.webp', category: 'Rituals', location: 'Traditional Temple', camera: 'Sony A7IV • 50mm f/1.4' },
-      { id: 6, title: 'Ceremonial Splendor', image: '/images/WEEDING/6.webp', category: 'Ceremony', location: 'Choultry Hall', camera: 'Sony A7S III • 24mm GM' },
-      { id: 7, title: 'Golden Moments', image: '/images/WEEDING/7.webp', category: 'Reception', location: 'Royal Ball Room', camera: 'Sony A7R V • 70-200mm GM II' },
-      { id: 8, title: 'Festive Celebration', image: '/images/WEEDING/8.webp', category: 'Reception', location: 'Sangeet Stage', camera: 'Sony A7IV • 16-35mm GM' },
-      { id: 9, title: 'Sangeet Euphoria', image: '/images/WEEDING/9.webp', category: 'Reception', location: 'Grand Arena', camera: 'Sony FX3 • 24mm f/1.4' },
-      { id: 10, title: 'Eternal Bond', image: '/images/WEEDING/10.webp', category: 'Bridal', location: 'Heritage Hall', camera: 'Sony A7R V • 135mm f/1.8' }
+      { id: 1, title: 'Sacred Vows', image: '/images/WEEDING/1 (1).webp', category: 'Ceremony', location: 'Grand Mandapam', camera: 'Sony A7R V • 85mm GM' },
+      { id: 2, title: 'The Royal Procession', image: '/images/WEEDING/1 (2).webp', category: 'Rituals', location: 'Palace Courtyard', camera: 'Sony A7IV • 24-70mm GM' },
+      { id: 3, title: 'Bridal Portrait', image: '/images/WEEDING/1 (3).webp', category: 'Bridal', location: 'Bridal Suite', camera: 'Sony A7R V • 50mm f/1.2' },
+      { id: 4, title: 'Jayamala Joy', image: '/images/WEEDING/1 (4).webp', category: 'Ceremony', location: 'Main Stage', camera: 'Sony FX3 • 35mm GM' },
+      { id: 5, title: 'Heritage Rituals', image: '/images/WEEDING/1 (5).webp', category: 'Rituals', location: 'Traditional Temple', camera: 'Sony A7IV • 50mm f/1.4' },
+      { id: 6, title: 'Ceremonial Splendor', image: '/images/WEEDING/1 (6).webp', category: 'Ceremony', location: 'Choultry Hall', camera: 'Sony A7S III • 24mm GM' },
+      { id: 7, title: 'Golden Moments', image: '/images/WEEDING/1 (7).webp', category: 'Reception', location: 'Royal Ball Room', camera: 'Sony A7R V • 70-200mm GM II' },
+      { id: 8, title: 'Festive Celebration', image: '/images/WEEDING/1 (8).webp', category: 'Reception', location: 'Sangeet Stage', camera: 'Sony A7IV • 16-35mm GM' },
+      { id: 9, title: 'Sangeet Euphoria', image: '/images/WEEDING/1 (9).webp', category: 'Reception', location: 'Grand Arena', camera: 'Sony FX3 • 24mm f/1.4' },
+      { id: 10, title: 'Garden Glow', image: '/images/WEEDING/1 (10).webp', category: 'Candid', location: 'Garden Courtyard', camera: 'Sony A7IV • 35mm GM' },
+      { id: 12, title: 'Candid Warmth', image: '/images/WEEDING/1 (12).webp', category: 'Candid', location: 'Reception Hall', camera: 'Sony A7IV • 50mm f/1.2' },
+      { id: 13, title: 'Temple Blessings', image: '/images/WEEDING/1 (13).webp', category: 'Rituals', location: 'Temple Steps', camera: 'Sony A7S III • 35mm f/1.4' },
+      { id: 14, title: 'Haldi Hues', image: '/images/WEEDING/1 (14).webp', category: 'Ceremony', location: 'Traditional Ceremony', camera: 'Sony A7R V • 50mm GM' },
+      { id: 15, title: 'Timeless Radiance', image: '/images/WEEDING/1 (15).webp', category: 'Ceremony', location: 'Wedding Set', camera: 'Sony A7R V • 50mm GM' },
+      { id: 16, title: 'Joyful Moments', image: '/images/WEEDING/1 (16).webp', category: 'Reception', location: 'Wedding Set', camera: 'Sony A7IV • 35mm GM' },
+      { id: 17, title: 'Bridal Grace', image: '/images/WEEDING/1 (17).webp', category: 'Bridal', location: 'Wedding Set', camera: 'Sony A7IV • 50mm GM' },
+      { id: 18, title: 'Celebration Vibes', image: '/images/WEEDING/1 (18).webp', category: 'Candid', location: 'Wedding Set', camera: 'Sony A7IV • 35mm GM' },
+      { id: 19, title: 'Sacred Flame', image: '/images/WEEDING/1 (19).webp', category: 'Rituals', location: 'Wedding Set', camera: 'Sony A7IV • 35mm GM' },
+      { id: 20, title: 'Royal Glamour', image: '/images/WEEDING/1 (20).webp', category: 'Reception', location: 'Wedding Set', camera: 'Sony A7IV • 35mm GM' },
+      { id: 21, title: 'Sacred Muhurtham', image: '/images/WEEDING/1 (21).webp', category: 'Ceremony', location: 'Heritage Mandap', camera: 'Sony A7R V • 85mm GM' },
+      { id: 22, title: 'Festive Garland', image: '/images/WEEDING/1 (22).webp', category: 'Rituals', location: 'Traditional Set', camera: 'Sony A7IV • 50mm GM' },
+      { id: 23, title: 'Cherished Glance', image: '/images/WEEDING/1 (23).webp', category: 'Candid', location: 'Royal Lawn', camera: 'Sony A7S III • 35mm GM' },
+      { id: 24, title: 'Bridal Elegance', image: '/images/WEEDING/1 (24).webp', category: 'Bridal', location: 'Mirror Suite', camera: 'Sony A7R V • 50mm f/1.2' },
+      { id: 25, title: 'Twilight Celebration', image: '/images/WEEDING/1 (25).webp', category: 'Reception', location: 'Grand Ballroom', camera: 'Sony FX3 • 24mm GM' },
+      { id: 26, title: 'Divine Rituals', image: '/images/WEEDING/1 (26).webp', category: 'Rituals', location: 'Temple Court', camera: 'Sony A7IV • 85mm f/1.4' },
+      { id: 27, title: 'Unscripted Smile', image: '/images/WEEDING/1 (27).webp', category: 'Candid', location: 'Wedding Pavilion', camera: 'Sony A7R V • 135mm f/1.8' },
+      { id: 28, title: 'Regal Walk', image: '/images/WEEDING/1 (28).webp', category: 'Ceremony', location: 'Palace Passage', camera: 'Sony A7IV • 24-70mm GM' },
+      { id: 29, title: 'Sangeet Beats', image: '/images/WEEDING/1 (29).webp', category: 'Reception', location: 'Dance Arena', camera: 'Sony FX3 • 16-35mm GM' },
+      { id: 30, title: 'Bridal Adornments', image: '/images/WEEDING/1 (30).webp', category: 'Bridal', location: 'Dressing Room', camera: 'Sony A7R V • 90mm Macro' },
+      { id: 31, title: 'Golden Vows', image: '/images/WEEDING/1 (31).webp', category: 'Ceremony', location: 'Central Altar', camera: 'Sony A7IV • 50mm GM' },
+      { id: 32, title: 'Sacred Threads', image: '/images/WEEDING/1 (32).webp', category: 'Rituals', location: 'Traditional Hall', camera: 'Sony A7S III • 35mm GM' },
+      { id: 33, title: 'Joyous Laughter', image: '/images/WEEDING/1 (33).webp', category: 'Candid', location: 'Mandap Steps', camera: 'Sony A7R V • 85mm f/1.4' },
+      { id: 34, title: 'Evening Splendor', image: '/images/WEEDING/1 (34).webp', category: 'Reception', location: 'Palace Terrace', camera: 'Sony A7IV • 24mm GM' },
+      { id: 35, title: 'The Royal Entry', image: '/images/WEEDING/1 (35).webp', category: 'Ceremony', location: 'Main Entrance', camera: 'Sony FX3 • 24-70mm GM' },
+      { id: 36, title: 'Family Blessings', image: '/images/WEEDING/1 (36).webp', category: 'Rituals', location: 'Ceremony Stage', camera: 'Sony A7IV • 35mm GM' },
+      { id: 37, title: 'Bridal Radiance', image: '/images/WEEDING/1 (37).webp', category: 'Bridal', location: 'Bridal Suite', camera: 'Sony A7R V • 50mm f/1.2' },
+      { id: 38, title: 'Candid Moments', image: '/images/WEEDING/1 (38).webp', category: 'Candid', location: 'Courtyard Garden', camera: 'Sony A7IV • 85mm GM' },
+      { id: 39, title: 'Festive Lights', image: '/images/WEEDING/1 (39).webp', category: 'Reception', location: 'Lighting Stage', camera: 'Sony A7S III • 24mm f/1.4' },
+      { id: 40, title: 'Eternal Union', image: '/images/WEEDING/1 (40).webp', category: 'Ceremony', location: 'Sacred Mandap', camera: 'Sony A7R V • 50mm GM' }
     ],
     features: [
       { icon: 'Camera', title: 'Multi-Cam Candid & Traditional Crew', desc: 'Dedicated candid specialist photographers capturing emotional unscripted moments while traditional team logs all rituals.' },
@@ -175,12 +209,12 @@ export const SERVICES_DATA = {
     title: 'Baby & Maternity Photography',
     subtitle: 'Tender beginnings, glowing motherhood, and adorable childhood milestones',
     badge: 'TENDER & PURE',
-    heroImage: '/images/BABYIMAGE/3.webp',
+    heroImage: '/images/BABYIMAGE/1 (3).webp',
     heroGallery: [
-      '/images/BABYIMAGE/1.webp',
-      '/images/BABYIMAGE/2.webp',
-      '/images/BABYIMAGE/3.webp',
-      '/images/BABYIMAGE/7.webp'
+      '/images/BABYIMAGE/1 (2).webp',
+      '/images/BABYIMAGE/1 (3).webp',
+      '/images/BABYIMAGE/1 (5).webp',
+      '/images/BABYIMAGE/1 (7).webp'
     ],
     description: `There is nothing quite as precious as the gentle glow of motherhood and the delicate innocence of a newborn baby. Our studio provides a warm, safe, temperature-controlled environment with sanitized organic props, patient photographers, and creative themes to turn these fleeting early moments into timeless family heirlooms.`,
     stats: [
@@ -191,15 +225,22 @@ export const SERVICES_DATA = {
     ],
     categories: ['All', 'Newborn', 'Maternity', 'Milestones', 'Family', 'Toddler'],
     gallery: [
-      { id: 1, title: 'First Smiles', image: '/images/BABYIMAGE/1.webp', category: 'Newborn', location: 'Studio Setup', camera: 'Sony A7IV • 50mm GM' },
-      { id: 2, title: 'Motherhood Grace', image: '/images/BABYIMAGE/2.webp', category: 'Maternity', location: 'Natural Light Studio', camera: 'Sony A7R V • 85mm f/1.4' },
-      { id: 3, title: 'Tiny Steps', image: '/images/BABYIMAGE/3.webp', category: 'Newborn', location: 'Cozy Basket Setup', camera: 'Sony A7IV • 35mm f/1.4' },
-      { id: 4, title: 'Precious Moments', image: '/images/BABYIMAGE/4.webp', category: 'Family', location: 'Outdoor Garden', camera: 'Sony A7R V • 24-70mm GM' },
-      { id: 5, title: 'Angelic Dreams', image: '/images/BABYIMAGE/5.webp', category: 'Newborn', location: 'Cloud Nest Theme', camera: 'Sony A7IV • 50mm f/1.2' },
-      { id: 6, title: 'Little Wonder', image: '/images/BABYIMAGE/6.webp', category: 'Toddler', location: 'Playful Studio', camera: 'Sony A7S III • 50mm GM' },
-      { id: 7, title: 'Warm Embrace', image: '/images/BABYIMAGE/7.webp', category: 'Maternity', location: 'Sunset Outdoor', camera: 'Sony A7R V • 135mm f/1.8' },
-      { id: 8, title: 'Sweet Lullaby', image: '/images/BABYIMAGE/8.webp', category: 'Newborn', location: 'Floral Theme', camera: 'Sony A7IV • 85mm f/1.4' },
-      { id: 9, title: 'First Birthday Magic', image: '/images/BABYIMAGE/9.webp', category: 'Milestones', location: 'Cake Smash Studio', camera: 'Sony A7IV • 35mm GM' }
+      { id: 1, title: 'Motherhood Grace', image: '/images/BABYIMAGE/1 (2).webp', category: 'Maternity', location: 'Natural Light Studio', camera: 'Sony A7R V • 85mm f/1.4' },
+      { id: 2, title: 'Tiny Steps', image: '/images/BABYIMAGE/1 (3).webp', category: 'Newborn', location: 'Cozy Basket Setup', camera: 'Sony A7IV • 35mm f/1.4' },
+      { id: 3, title: 'Angelic Dreams', image: '/images/BABYIMAGE/1 (5).webp', category: 'Newborn', location: 'Cloud Nest Theme', camera: 'Sony A7IV • 50mm f/1.2' },
+      { id: 4, title: 'Little Wonder', image: '/images/BABYIMAGE/1 (6).webp', category: 'Toddler', location: 'Playful Studio', camera: 'Sony A7S III • 50mm GM' },
+      { id: 5, title: 'Warm Embrace', image: '/images/BABYIMAGE/1 (7).webp', category: 'Maternity', location: 'Sunset Outdoor', camera: 'Sony A7R V • 135mm f/1.8' },
+      { id: 6, title: 'Sweet Lullaby', image: '/images/BABYIMAGE/1 (8).webp', category: 'Newborn', location: 'Floral Theme', camera: 'Sony A7IV • 85mm f/1.4' },
+      { id: 7, title: 'First Birthday Magic', image: '/images/BABYIMAGE/1 (9).webp', category: 'Milestones', location: 'Cake Smash Studio', camera: 'Sony A7IV • 35mm GM' },
+      { id: 8, title: 'Innocent Joy', image: '/images/BABYIMAGE/1 (10).webp', category: 'Newborn', location: 'Minimal Studio', camera: 'Sony A7IV • 50mm GM' },
+      { id: 9, title: 'Precious Smile', image: '/images/BABYIMAGE/1 (11).webp', category: 'Family', location: 'Studio Set', camera: 'Sony A7R V • 50mm f/1.2' },
+      { id: 10, title: 'Gentle Glow', image: '/images/BABYIMAGE/1 (12).webp', category: 'Maternity', location: 'Window Light', camera: 'Sony A7IV • 85mm f/1.4' },
+      { id: 11, title: 'Baby Bloom', image: '/images/BABYIMAGE/1 (13).webp', category: 'Toddler', location: 'Garden Set', camera: 'Sony A7IV • 35mm GM' },
+      { id: 12, title: 'Pure Wonder', image: '/images/BABYIMAGE/1 (14).webp', category: 'Milestones', location: 'Vintage Set', camera: 'Sony A7S III • 50mm GM' },
+      { id: 13, title: 'Sleeping Angel', image: '/images/BABYIMAGE/1 (15).webp', category: 'Newborn', location: 'Cloud Setup', camera: 'Sony A7IV • 50mm GM' },
+      { id: 14, title: 'Little Cherub', image: '/images/BABYIMAGE/1 (16).webp', category: 'Toddler', location: 'Playful Loft', camera: 'Sony A7R V • 85mm f/1.4' },
+      { id: 15, title: 'Motherly Love', image: '/images/BABYIMAGE/1 (17).webp', category: 'Maternity', location: 'Warm Daylight Studio', camera: 'Sony FX3 • 35mm GM' },
+      { id: 16, title: 'Innocent Laughter', image: '/images/BABYIMAGE/1(18).webp', category: 'Playful', location: 'Cozy Room', camera: 'Sony A7IV • 50mm f/1.2' }
     ],
     features: [
       { icon: 'Heart', title: '100% Baby Safe & Sanitized Studio', desc: 'All fabrics, wooden props, wraps, and studio floors are UV-sanitized and washed with hypoallergenic detergent before every session.' },
@@ -252,5 +293,295 @@ export const SERVICES_DATA = {
         ]
       }
     ]
+  },
+
+  'portrait': {
+    id: 'portrait',
+    title: 'Fine-Art Portrait & Editorial Photography',
+    subtitle: 'Expressive, timeless, and editorial portraits crafted with dramatic studio lighting and raw emotion',
+    badge: 'ELEGANT & EDITORIAL',
+    heroImage: '/images/protrate/1 (1).webp',
+    heroGallery: [
+      '/images/protrate/1 (1).webp',
+      '/images/protrate/1 (2).webp',
+      '/images/protrate/1 (3).webp',
+      '/images/protrate/1 (5).webp'
+    ],
+    description: `Our portrait sessions go beyond traditional posing to capture the unique character, intensity, and soul of every subject. Utilizing master-level lighting, organic textures, and editorial styling, we craft gallery-worthy fine-art portraits for individuals, couples, creative personalities, and executive branding.`,
+    stats: [
+      { label: 'Portraits Captured', value: '400+' },
+      { label: 'Studio Lighting Setups', value: '25+' },
+      { label: 'Magazine Features', value: '15+' },
+      { label: 'Satisfaction Rate', value: '100%' }
+    ],
+    categories: ['All', 'Editorial', 'Studio', 'Outdoor', 'B&W', 'Creative'],
+    gallery: [
+      { id: 1, title: 'Mystic Solitude', image: '/images/protrate/1 (1).webp', category: 'Editorial', location: 'Studio Daylight', camera: 'Sony A7R V • 85mm f/1.4' },
+      { id: 2, title: 'Golden Silhouette', image: '/images/protrate/1 (2).webp', category: 'Studio', location: 'Dark Mood Studio', camera: 'Sony A7IV • 50mm f/1.2' },
+      { id: 3, title: 'Monochrome Gaze', image: '/images/protrate/1 (3).webp', category: 'B&W', location: 'Fine Art Studio', camera: 'Sony A7R V • 135mm f/1.8' },
+      { id: 4, title: 'Cinematic Essence', image: '/images/protrate/1 (4).webp', category: 'Creative', location: 'Natural Light Studio', camera: 'Sony FX3 • 35mm GM' },
+      { id: 5, title: 'Urban Elegance', image: '/images/protrate/1 (5).webp', category: 'Outdoor', location: 'Street Architecture', camera: 'Sony A7IV • 24-70mm GM' },
+      { id: 6, title: 'Timeless Persona', image: '/images/protrate/1 (6).webp', category: 'Editorial', location: 'Vintage Studio Set', camera: 'Sony A7R V • 50mm GM' },
+      { id: 7, title: 'Velvet Shadows', image: '/images/protrate/1 (7).webp', category: 'B&W', location: 'Shadow Studio', camera: 'Sony A7IV • 85mm f/1.4' },
+      { id: 8, title: 'Soulful Reflections', image: '/images/protrate/1 (8).webp', category: 'Creative', location: 'Mirror Studio', camera: 'Sony A7R V • 35mm GM' },
+      { id: 9, title: 'Regal Grace', image: '/images/protrate/1 (9).webp', category: 'Studio', location: 'Heritage Studio', camera: 'Sony A7IV • 50mm f/1.2' },
+      { id: 10, title: 'Whispering Winds', image: '/images/protrate/1 (10).webp', category: 'Outdoor', location: 'Forest Trail', camera: 'Sony A7R V • 135mm f/1.8' },
+      { id: 11, title: 'Ethereal Light', image: '/images/protrate/1 (11).webp', category: 'Editorial', location: 'Loft Studio', camera: 'Sony A7IV • 85mm f/1.4' },
+      { id: 12, title: 'Classic Elegance', image: '/images/protrate/1 (12).webp', category: 'Studio', location: 'Canvas Backdrop', camera: 'Sony A7R V • 50mm f/1.2' },
+      { id: 13, title: 'Dramatic Mood', image: '/images/protrate/1 (13).webp', category: 'Creative', location: 'Dark Studio', camera: 'Sony A7IV • 85mm GM' },
+      { id: 14, title: 'Vintage Radiance', image: '/images/protrate/1 (14).webp', category: 'Editorial', location: 'Heritage Room', camera: 'Sony A7R V • 35mm GM' },
+      { id: 15, title: 'Subtle Harmony', image: '/images/protrate/1 (16).webp', category: 'Studio', location: 'Daylight Arena', camera: 'Sony FX3 • 50mm GM' },
+      { id: 16, title: 'Artistic Expression', image: '/images/protrate/1 (17).webp', category: 'Creative', location: 'Art Gallery', camera: 'Sony A7IV • 24-70mm GM' },
+      { id: 17, title: 'Noir Poise', image: '/images/protrate/1 (18).webp', category: 'B&W', location: 'Monochrome Set', camera: 'Sony A7R V • 85mm f/1.4' },
+      { id: 18, title: 'Autumn Breeze', image: '/images/protrate/1 (19).webp', category: 'Outdoor', location: 'Botanical Garden', camera: 'Sony A7IV • 135mm f/1.8' },
+      { id: 19, title: 'Pure Charisma', image: '/images/protrate/1 (20).webp', category: 'Editorial', location: 'Studio Loft', camera: 'Sony A7R V • 50mm f/1.2' },
+      { id: 20, title: 'Grace in Monochrome', image: '/images/protrate/1 (21).webp', category: 'B&W', location: 'Shadow Set', camera: 'Sony A7S III • 35mm GM' },
+      { id: 21, title: 'Golden Horizon', image: '/images/protrate/1 (22).webp', category: 'Outdoor', location: 'Sunset Lawn', camera: 'Sony A7IV • 85mm GM' },
+      { id: 22, title: 'Captivating Glance', image: '/images/protrate/1 (23).webp', category: 'Studio', location: 'Portrait Chamber', camera: 'Sony A7R V • 50mm GM' },
+      { id: 23, title: 'Editorial Chic', image: '/images/protrate/1 (24).webp', category: 'Editorial', location: 'Fashion Loft', camera: 'Sony FX3 • 35mm GM' },
+      { id: 24, title: 'Timeless Beauty', image: '/images/protrate/1 (25).webp', category: 'Creative', location: 'Textured Studio', camera: 'Sony A7IV • 50mm f/1.4' },
+      { id: 25, title: 'Sculpted Profile', image: '/images/protrate/1 (26).webp', category: 'B&W', location: 'Chiaroscuro Studio', camera: 'Sony A7R V • 135mm f/1.8' },
+      { id: 26, title: 'Serene Aura', image: '/images/protrate/1 (27).webp', category: 'Outdoor', location: 'Pine Hills', camera: 'Sony A7IV • 85mm GM' },
+      { id: 27, title: 'Majestic Poise', image: '/images/protrate/1 (28).webp', category: 'Studio', location: 'Royal Canvas', camera: 'Sony A7R V • 50mm f/1.2' },
+      { id: 28, title: 'Signature Horizon', image: '/images/protrate/1 (29).webp', category: 'Editorial', location: 'Rooftop Skyline', camera: 'Sony FX3 • 24mm GM' }
+    ],
+    features: [
+      { icon: 'Camera', title: 'Editorial Direction & Styling Guidance', desc: 'Comprehensive guidance on posing, wardrobe choices, color coordination, and natural expressions.' },
+      { icon: 'Sparkles', title: 'Custom Fine-Art Color Grading', desc: 'Every portrait receives hand-retouched skin details, subtle contrast enhancements, and tailored film tones.' },
+      { icon: 'Award', title: 'Museum-Grade Fine Art Prints', desc: 'Includes archival canvas wall prints and hand-bound portfolio photobooks engineered to last lifetimes.' },
+      { icon: 'Globe', title: 'On-Location & Studio Versatility', desc: 'Flexible shooting environments ranging from our specialized lighting studio to outdoor dramatic landscapes.' }
+    ],
+    packages: [
+      {
+        name: 'Classic Portrait Session',
+        price: '₹15,000',
+        period: 'Per Session',
+        highlight: false,
+        features: [
+          '2 Hours Studio or Outdoor Session',
+          '2 Outfit Changes Supported',
+          '10 Master Fine-Art Retouched Photos',
+          'High-Res Online Cloud Gallery',
+          '1 Framed Desk Print (8x10)'
+        ]
+      },
+      {
+        name: 'Editorial Signature',
+        price: '₹30,000',
+        period: 'Full Day Shoot',
+        highlight: true,
+        features: [
+          'Full Day Studio & Outdoor Shoot (6 Hours)',
+          'Unlimited Outfit Changes',
+          '25 Master Fine-Art Retouched Photos',
+          '1 Mounted Canvas Wall Frame (16x24)',
+          'Personalized Stylist & Moodboard Consultation',
+          'RAW Archive USB Drive Delivered'
+        ]
+      },
+      {
+        name: 'Celebrity & Creative Portfolio',
+        price: '₹50,000',
+        period: 'Full Experience',
+        highlight: false,
+        features: [
+          'Full Creative Crew (Professional Makeup & Hair Artist)',
+          'Multiple Indoor & Outdoor Locations',
+          '50 Master Fine-Art Retouched Photos',
+          'Deluxe Leather-Bound Portfolio Album',
+          '2 Large Canvas Wall Prints (20x30)',
+          'Complete Master RAW Hard Drive Delivered'
+        ]
+      }
+    ]
+  },
+
+  'events': {
+    id: 'events',
+    title: 'Events & Celebrations Photography',
+    subtitle: 'Capturing vibrant energy, milestone celebrations, and unscripted joy',
+    badge: 'VIBRANT & MEMORABLE',
+    heroImage: '/images/events seaction/1 (1).webp',
+    heroGallery: [
+      '/images/events seaction/1 (1).webp',
+      '/images/events seaction/1 (2).webp',
+      '/images/events seaction/1 (3).webp',
+      '/images/events seaction/1 (4).webp',
+      '/images/events seaction/1 (5).webp'
+    ],
+    description: `From high-energy galas and corporate celebrations to birthday milestones and family anniversaries, our team captures the lively atmosphere, candid moments, and key highlights with broadcast-quality precision.`,
+    stats: [
+      { label: 'Events Covered', value: '350+' },
+      { label: 'Corporate Clients', value: '80+' },
+      { label: 'Live Broadcasts', value: '120+' },
+      { label: 'Satisfaction Rate', value: '100%' }
+    ],
+    categories: ['All', 'Celebration', 'Stage', 'Candid', 'Gala', 'Highlights'],
+    gallery: [
+      { id: 1, title: 'Vibrant Stage Energy', image: '/images/events seaction/1 (1).webp', category: 'Stage', location: 'Grand Arena', camera: 'Sony FX3 • 24mm f/1.4' },
+      { id: 2, title: 'Festive Celebration', image: '/images/events seaction/1 (2).webp', category: 'Celebration', location: 'Royal Lawn', camera: 'Sony A7IV • 16-35mm GM' },
+      { id: 3, title: 'Grand Gala Night', image: '/images/events seaction/1 (3).webp', category: 'Gala', location: 'Grand Ballroom', camera: 'Sony A7R V • 50mm GM' },
+      { id: 4, title: 'Joy In Purest Form', image: '/images/events seaction/1 (4).webp', category: 'Candid', location: 'Banquet Hall', camera: 'Sony A7IV • 35mm GM' },
+      { id: 5, title: 'A Night Of Lights', image: '/images/events seaction/1 (5).webp', category: 'Highlights', location: 'Resort Courtyard', camera: 'Sony A7S III • 24mm GM' },
+      { id: 6, title: 'Celebration Vibes', image: '/images/events seaction/1 (6).webp', category: 'Celebration', location: 'Garden Venue', camera: 'Sony A7IV • 50mm f/1.2' },
+      { id: 7, title: 'Electrifying Moments', image: '/images/events seaction/1 (7).webp', category: 'Stage', location: 'Stage Arena', camera: 'Sony A7R V • 85mm GM' },
+      { id: 8, title: 'Candid Smiles', image: '/images/events seaction/1 (8).webp', category: 'Candid', location: 'Party Set', camera: 'Sony A7IV • 35mm GM' },
+      { id: 9, title: 'Dynamic Energy', image: '/images/events seaction/1 (9).webp', category: 'Gala', location: 'Dance Arena', camera: 'Sony FX3 • 16-35mm GM' },
+      { id: 10, title: 'Golden Gathering', image: '/images/events seaction/1 (10).webp', category: 'Highlights', location: 'Outdoor Lawn', camera: 'Sony A7IV • 85mm f/1.4' },
+      { id: 11, title: 'Royal Festivities', image: '/images/events seaction/1 (11).webp', category: 'Celebration', location: 'Ballroom', camera: 'Sony A7R V • 50mm GM' },
+      { id: 12, title: 'Unscripted Moments', image: '/images/events seaction/1 (12).webp', category: 'Candid', location: 'Event Pavilion', camera: 'Sony A7IV • 35mm GM' },
+      { id: 13, title: 'Starry Evening', image: '/images/events seaction/1 (13).webp', category: 'Stage', location: 'Concert Hall', camera: 'Sony A7S III • 24mm GM' },
+      { id: 14, title: 'Lively Gathering', image: '/images/events seaction/1 (14).webp', category: 'Celebration', location: 'Open Air Arena', camera: 'Sony A7IV • 24-70mm GM' },
+      { id: 15, title: 'Festival of Joy', image: '/images/events seaction/1 (15).webp', category: 'Gala', location: 'Convention Centre', camera: 'Sony A7R V • 35mm GM' },
+      { id: 16, title: 'Pure Euphoria', image: '/images/events seaction/1 (16).webp', category: 'Highlights', location: 'Festival Grounds', camera: 'Sony FX3 • 50mm GM' },
+      { id: 17, title: 'Memorable Cheers', image: '/images/events seaction/1 (17).webp', category: 'Candid', location: 'VIP Lounge', camera: 'Sony A7IV • 85mm f/1.4' },
+      { id: 18, title: 'Spectacular Finale', image: '/images/events seaction/1 (18).webp', category: 'Stage', location: 'Main Stage', camera: 'Sony A7R V • 70-200mm GM' }
+    ],
+    features: [
+      { icon: 'Camera', title: 'Full Event Coverage & Candid Motion', desc: 'Comprehensive coverage capturing guest interactions, speeches, stage performances, and venue decor.' },
+      { icon: 'Video', title: 'Highlight Reel & Full Video Log', desc: 'Delivered with a high-impact 2-minute event summary film set to licensed upbeat music.' },
+      { icon: 'Sparkles', title: 'Fast-Track Retouching Delivery', desc: 'Receive high-resolution edited press & social media photos within 48 hours.' },
+      { icon: 'Globe', title: 'Multi-Location Crew Setup', desc: 'Flexible photographer teams capable of managing multi-zone convention and celebration venues.' }
+    ],
+    packages: [
+      {
+        name: 'Half-Day Event Coverage',
+        price: '₹25,000',
+        period: '4 Hours',
+        highlight: false,
+        features: [
+          '4 Hours Event Coverage',
+          '1 Lead Photographer + 1 Videographer',
+          '100 Retouched High-Res Photos',
+          'High-Res Online Cloud Gallery',
+          '1-Minute Event Reel'
+        ]
+      },
+      {
+        name: 'Full-Day Celebration',
+        price: '₹45,000',
+        period: '8 Hours',
+        highlight: true,
+        features: [
+          '8 Hours Full Event Coverage',
+          '2 Photographers + 2 4K Videographers',
+          '250 Retouched High-Res Photos',
+          '3-Minute Event Highlight Film',
+          'High-Res Online Gallery + USB',
+          'Fast 48-Hour Teaser Delivery'
+        ]
+      },
+      {
+        name: 'Grand Gala Signature',
+        price: '₹75,000',
+        period: 'Multi-Zone / Full Day',
+        highlight: false,
+        features: [
+          'Full Day Multi-Zone Coverage',
+          'Master Crew of 6 (Photo, Video & Drone)',
+          '4K Aerial Drone Coverage',
+          'Live YouTube/LED Stream Setup',
+          '400 Retouched High-Res Photos',
+          'Full Feature Event Film + Social Reels'
+        ]
+      }
+    ]
+  },
+
+  'toddlers': {
+    id: 'toddlers',
+    title: 'Baby, Toddlers & Maternity Photography',
+    subtitle: 'Tender beginnings, playful smiles, and adorable childhood milestones',
+    badge: 'PLAYFUL & PURE',
+    heroImage: '/images/BABYIMAGE/1 (3).webp',
+    heroGallery: [
+      '/images/BABYIMAGE/1 (2).webp',
+      '/images/BABYIMAGE/1 (3).webp',
+      '/images/BABYIMAGE/1 (5).webp',
+      '/images/BABYIMAGE/1 (7).webp'
+    ],
+    description: `There is nothing quite as precious as the innocent laughter of toddlers and delicate newborn moments. Our studio provides a warm, safe, temperature-controlled environment with sanitized organic props, patient photographers, and creative themes to capture these fleeting early memories.`,
+    stats: [
+      { label: 'Toddlers & Newborns', value: '300+' },
+      { label: 'Sanitized Props', value: '100+' },
+      { label: 'Studio Temperature', value: 'Cozy 26°C' },
+      { label: 'Parent Love Rate', value: '100%' }
+    ],
+    categories: ['All', 'Toddler', 'Newborn', 'Maternity', 'Milestones', 'Family', 'Playful'],
+    gallery: [
+      { id: 1, title: 'Motherhood Grace', image: '/images/BABYIMAGE/1 (2).webp', category: 'Maternity', location: 'Natural Light Studio', camera: 'Sony A7R V • 85mm f/1.4' },
+      { id: 2, title: 'Tiny Steps', image: '/images/BABYIMAGE/1 (3).webp', category: 'Toddler', location: 'Cozy Basket Setup', camera: 'Sony A7IV • 35mm f/1.4' },
+      { id: 3, title: 'Angelic Dreams', image: '/images/BABYIMAGE/1 (5).webp', category: 'Newborn', location: 'Cloud Nest Theme', camera: 'Sony A7IV • 50mm f/1.2' },
+      { id: 4, title: 'Little Wonder', image: '/images/BABYIMAGE/1 (6).webp', category: 'Toddler', location: 'Playful Studio', camera: 'Sony A7S III • 50mm GM' },
+      { id: 5, title: 'Warm Embrace', image: '/images/BABYIMAGE/1 (7).webp', category: 'Maternity', location: 'Sunset Outdoor', camera: 'Sony A7R V • 135mm f/1.8' },
+      { id: 6, title: 'Sweet Lullaby', image: '/images/BABYIMAGE/1 (8).webp', category: 'Newborn', location: 'Floral Theme', camera: 'Sony A7IV • 85mm f/1.4' },
+      { id: 7, title: 'First Birthday Magic', image: '/images/BABYIMAGE/1 (9).webp', category: 'Milestones', location: 'Cake Smash Studio', camera: 'Sony A7IV • 35mm GM' },
+      { id: 8, title: 'Innocent Joy', image: '/images/BABYIMAGE/1 (10).webp', category: 'Toddler', location: 'Minimal Studio', camera: 'Sony A7IV • 50mm GM' },
+      { id: 9, title: 'Precious Smile', image: '/images/BABYIMAGE/1 (11).webp', category: 'Family', location: 'Studio Set', camera: 'Sony A7R V • 50mm f/1.2' },
+      { id: 10, title: 'Gentle Glow', image: '/images/BABYIMAGE/1 (12).webp', category: 'Maternity', location: 'Window Light', camera: 'Sony A7IV • 85mm f/1.4' },
+      { id: 11, title: 'Baby Bloom', image: '/images/BABYIMAGE/1 (13).webp', category: 'Toddler', location: 'Garden Set', camera: 'Sony A7IV • 35mm GM' },
+      { id: 12, title: 'Pure Wonder', image: '/images/BABYIMAGE/1 (14).webp', category: 'Milestones', location: 'Vintage Set', camera: 'Sony A7S III • 50mm GM' },
+      { id: 13, title: 'Sleeping Angel', image: '/images/BABYIMAGE/1 (15).webp', category: 'Newborn', location: 'Cloud Setup', camera: 'Sony A7IV • 50mm GM' },
+      { id: 14, title: 'Little Cherub', image: '/images/BABYIMAGE/1 (16).webp', category: 'Toddler', location: 'Playful Loft', camera: 'Sony A7R V • 85mm f/1.4' },
+      { id: 15, title: 'Motherly Love', image: '/images/BABYIMAGE/1 (17).webp', category: 'Maternity', location: 'Warm Daylight Studio', camera: 'Sony FX3 • 35mm GM' },
+      { id: 16, title: 'Innocent Laughter', image: '/images/BABYIMAGE/1(18).webp', category: 'Playful', location: 'Cozy Room', camera: 'Sony A7IV • 50mm f/1.2' }
+    ],
+    features: [
+      { icon: 'Heart', title: '100% Safe & Sanitized Studio', desc: 'All fabrics, wooden props, wraps, and studio floors are UV-sanitized and washed with hypoallergenic detergent before every session.' },
+      { icon: 'Sparkles', title: 'Custom Theme Setups & Wardrobe', desc: 'Choose from over 25+ handcrafted theme setups (Cloud Dreams, Vintage Basket, Floral Garden, Cake Smash).' },
+      { icon: 'Camera', title: 'Patient & Certified Infant Handler', desc: 'Our team takes unhurried breaks for nursing, soothing, and diaper changes to keep your child calm and happy.' },
+      { icon: 'Award', title: 'High-Res Digital & Keepsake Albums', desc: 'Includes fine-art canvas wall frames and velvet-covered memory photobooks made to last generations.' }
+    ],
+    packages: [
+      {
+        name: 'Little Miracle',
+        price: '₹18,000',
+        period: 'Toddlers or Baby',
+        highlight: false,
+        features: [
+          '2 Hours Relaxed Studio Session',
+          '2 Custom Theme Setups',
+          'All Swaddles & Props Provided',
+          '15 Retouched High-Res Photos',
+          'High-Res Online Cloud Gallery',
+          '1 Framed Desk Print (8x10)'
+        ]
+      },
+      {
+        name: 'Playful Milestones',
+        price: '₹32,000',
+        period: 'Toddler Milestone Shoot',
+        highlight: true,
+        features: [
+          '3 Theme Setups',
+          'Family & Sibling Poses Included',
+          '35 Retouched High-Res Photos',
+          'Handcrafted Silk Photobook Album (20 Pages)',
+          '1 Mounted Canvas Wall Frame (12x18)'
+        ]
+      },
+      {
+        name: 'First Year Memory Journey',
+        price: '₹55,000',
+        period: '3 Milestones Package',
+        highlight: false,
+        features: [
+          '3 Sessions across the year',
+          'Unlimited Theme Setups & Props',
+          'Cake Smash Theme Setup Included',
+          '60 Retouched Fine-Art Photos',
+          'Deluxe Memory Keepsake Album (40 Pages)',
+          '2 Large Canvas Wall Prints (16x24)',
+          'Complete RAW Image Archive on USB Drive'
+        ]
+      }
+    ]
   }
 };
+
+// Aliases for clean routing
+SERVICES_DATA['weddings'] = SERVICES_DATA['wedding'];
+SERVICES_DATA['portraits'] = SERVICES_DATA['portrait'];
+SERVICES_DATA['baby-maternity'] = SERVICES_DATA['toddlers'];
+SERVICES_DATA['toddler'] = SERVICES_DATA['toddlers'];
+

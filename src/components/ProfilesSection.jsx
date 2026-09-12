@@ -105,10 +105,10 @@ export default function ProfilesSection() {
           </p>
         </div>
 
-        {/* 4-Card Number Counter Grid */}
+        {/* 4-Card Number Counter Grid with Swatch Colors */}
         <div className="profiles-stats-counter-grid">
           
-          <div className="stat-counter-card">
+          <div className="stat-counter-card card-amber">
             <div className="stat-icon-wrapper">
               <Award size={26} />
             </div>
@@ -117,7 +117,7 @@ export default function ProfilesSection() {
             <p className="stat-counter-desc">Pioneering candid documentary photography since 2008</p>
           </div>
 
-          <div className="stat-counter-card">
+          <div className="stat-counter-card card-terracotta">
             <div className="stat-icon-wrapper">
               <Camera size={26} />
             </div>
@@ -126,7 +126,7 @@ export default function ProfilesSection() {
             <p className="stat-counter-desc">Iconic celebrations &amp; heirloom stories captured</p>
           </div>
 
-          <div className="stat-counter-card">
+          <div className="stat-counter-card card-mauve">
             <div className="stat-icon-wrapper">
               <Heart size={26} />
             </div>
@@ -135,7 +135,7 @@ export default function ProfilesSection() {
             <p className="stat-counter-desc">Word-of-mouth referral &amp; client satisfaction rate</p>
           </div>
 
-          <div className="stat-counter-card">
+          <div className="stat-counter-card card-violet">
             <div className="stat-icon-wrapper">
               <Globe size={26} />
             </div>

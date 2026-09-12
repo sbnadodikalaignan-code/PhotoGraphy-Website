@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 const TESTIMONIAL_ITEMS = [
   {
     id: 1,
-    image: '/images/WEEDING/HEROSEACTIONIMAGE/4.webp',
+    image: '/images/HEROSEACTIONIMAGE/4.webp',
     quote: '"They make you look confident in front of the camera!"',
     rating: 5,
     names: 'Keerthana & Ajay',
@@ -17,7 +17,7 @@ const TESTIMONIAL_ITEMS = [
   },
   {
     id: 2,
-    image: '/images/WEEDING/HEROSEACTIONIMAGE/8.webp',
+    image: '/images/HEROSEACTIONIMAGE/8.webp',
     quote: '"The most Punctual, Responsive & Reliable team we ever met"',
     rating: 5,
     names: 'Yusra & Shuja',
@@ -25,7 +25,7 @@ const TESTIMONIAL_ITEMS = [
   },
   {
     id: 3,
-    image: '/images/WEEDING/HEROSEACTIONIMAGE/6.webp',
+    image: '/images/HEROSEACTIONIMAGE/6.webp',
     quote: '"They capture true emotions and love"',
     rating: 5,
     names: 'Raizel & Ashwin',
@@ -33,7 +33,7 @@ const TESTIMONIAL_ITEMS = [
   },
   {
     id: 4,
-    image: '/images/WEEDING/HEROSEACTIONIMAGE/2.webp',
+    image: '/images/HEROSEACTIONIMAGE/2.webp',
     quote: '"Fun to work with!"',
     rating: 5,
     names: 'Reza & Paula',
@@ -69,7 +69,7 @@ export default function Testimonials() {
   return (
     <section id="testimonials" ref={rootRef} className="testimonials-section">
       <div className="testimonials-container">
-        
+
         {/* Main Title matching exact screenshot */}
         <h2 className="testimonials-title">TESTIMONIALS</h2>
 
@@ -77,7 +77,7 @@ export default function Testimonials() {
         <div className="testimonials-grid">
           {TESTIMONIAL_ITEMS.map((item) => (
             <div key={item.id} className="testimonial-card-item">
-              
+
               {/* Circular Couple Photo */}
               <div className="testimonial-avatar-wrapper img-zoom-container">
                 <img src={item.image} alt={`${item.names} Testimonial`} className="testimonial-avatar-img" />

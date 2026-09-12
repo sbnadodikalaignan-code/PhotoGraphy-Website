@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { 
   Heart, Download, Share2, Play, Pause, X, ChevronLeft, ChevronRight, 
-  Camera, Check, Calendar, User, Phone, Mail, MapPin, Sparkles, Star, ArrowRight, CheckCircle
+  Camera, Check, Calendar, User, Phone, Mail, MapPin, Sparkles, Star, ArrowRight, CheckCircle, Video, Award, Globe, Film
 } from 'lucide-react';
 import Header from './Header';
 import Footer from './Footer';
 import Testimonials from './Testimonials';
+import LazyImage from './LazyImage';
 import { SERVICES_DATA } from '../data/servicesData';
 import './ServicePage.css';
 
@@ -41,6 +42,13 @@ export default function ServicePage({ serviceId: propServiceId }) {
     notes: ''
   });
 
+  // Reset category on service change
+  useEffect(() => {
+    setActiveCategory('All');
+    setShowOnlyFavs(false);
+    window.scrollTo(0, 0);
+  }, [activeKey]);
+
   // Filter items
   const displayItems = serviceData.gallery.filter(item => {
     if (showOnlyFavs) return favorites.includes(item.id);
@@ -71,11 +79,11 @@ export default function ServicePage({ serviceId: propServiceId }) {
     e.stopPropagation();
     const a = document.createElement('a');
     a.href = photo.image;
-    a.download = `${serviceData.id}-${photo.title.replace(/\s+/g, '-').toLowerCase()}.jpg`;
+    a.download = `${serviceData.id}-${photo.title.replace(/\s+/g, '-').toLowerCase()}.webp`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    triggerToast(`Downloading high-res photo: "${photo.title}"`);
+    triggerToast(`Downloading photo: "${photo.title}"`);
   };
 
   // Share action
@@ -87,11 +95,6 @@ export default function ServicePage({ serviceId: propServiceId }) {
     } else {
       triggerToast('Link copied to clipboard!');
     }
-  };
-
-  // Download all gallery ZIP simulated trigger
-  const handleDownloadAll = () => {
-    triggerToast(`Preparing HD Zip Archive for ${serviceData.title}... Download starting.`);
   };
 
   // Automatic Slideshow Timer Effect
@@ -152,6 +155,19 @@ export default function ServicePage({ serviceId: propServiceId }) {
     }, 2800);
   };
 
+  // Icon mapping helper
+  const renderFeatureIcon = (iconName) => {
+    switch (iconName) {
+      case 'Camera': return <Camera size={26} />;
+      case 'Video': return <Video size={26} />;
+      case 'Award': return <Award size={26} />;
+      case 'Globe': return <Globe size={26} />;
+      case 'Film': return <Film size={26} />;
+      case 'Heart': return <Heart size={26} />;
+      default: return <Sparkles size={26} />;
+    }
+  };
+
   return (
     <div className="service-editorial-page">
       <Header />
@@ -164,8 +180,15 @@ export default function ServicePage({ serviceId: propServiceId }) {
         </div>
       )}
 
+      {/* SERVICE HERO BANNER */}
+      <section className="service-hero-section" style={{ backgroundImage: `linear-gradient(to bottom, rgba(10, 10, 12, 0.55) 0%, rgba(10, 10, 12, 0.75) 100%), url('${serviceData.heroImage}')` }}>
+        <div className="service-hero-container">
+          <h1 className="service-hero-title">{serviceData.title}</h1>
+        </div>
+      </section>
+
       {/* GALLERY MAIN MASONRY CONTAINER */}
-      <section className="client-gallery-section">
+      <section id="gallery" className="client-gallery-section">
         <div className="container-fluid">
           
           {displayItems.length === 0 ? (
@@ -179,20 +202,17 @@ export default function ServicePage({ serviceId: propServiceId }) {
             </div>
           ) : (
             <div className="editorial-masonry-container">
-              {displayItems.map((photo, index) => {
-                const isFav = favorites.includes(photo.id);
-                return (
-                  <div 
-                    key={photo.id}
-                    className="editorial-photo-card"
-                    onClick={() => { setLightboxIndex(index); setIsSlideshow(false); }}
-                  >
-                    <div className="photo-image-frame">
-                      <img src={photo.image} alt={photo.title} loading="lazy" />
-                    </div>
+              {displayItems.map((photo, index) => (
+                <div 
+                  key={photo.id}
+                  className="editorial-photo-card"
+                  onClick={() => { setLightboxIndex(index); setIsSlideshow(false); }}
+                >
+                  <div className="photo-image-frame">
+                    <LazyImage src={photo.image} alt={photo.title} />
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </div>
           )}
 
@@ -243,7 +263,7 @@ export default function ServicePage({ serviceId: propServiceId }) {
         </div>
       )}
 
-      {/* BOOKING DRAWER MODAL */}
+      {/* BOOKING MODAL */}
       {bookingModal.isOpen && (
         <div className="booking-modal-overlay" onClick={() => setBookingModal({ isOpen: false, packageName: '' })}>
           <div className="booking-modal-card" onClick={(e) => e.stopPropagation()}>
@@ -277,7 +297,7 @@ export default function ServicePage({ serviceId: propServiceId }) {
                       <input 
                         type="tel" 
                         required 
-                        placeholder="+91 98765 43210"
+                        placeholder="+91 98656 96065"
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       />

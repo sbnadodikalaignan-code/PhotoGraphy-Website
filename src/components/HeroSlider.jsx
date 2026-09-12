@@ -4,73 +4,84 @@ import './HeroSlider.css';
 
 const SLIDES = [
   {
-    image: '/images/WEEDING/HEROSEACTIONIMAGE/1.webp',
+    image: '/images/HEROSEACTIONIMAGE/1.webp',
     title: 'A PROMISE, HELD CLOSE',
     tagline: 'BEFORE THE CELEBRATION BEGINS',
     copyTheme: 'copy-ink',
-    overlay: 'linear-gradient(to bottom, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.12) 60%, rgba(255,255,255,0.76) 100%)'
+    navTone: 'light',
+    overlay: null
   },
   {
-    image: '/images/WEEDING/HEROSEACTIONIMAGE/2.webp',
+    image: '/images/HEROSEACTIONIMAGE/2.webp',
     title: 'GOLDEN HOUR, TWO HEARTS',
     tagline: 'A LOVE STORY LIT BY THE LAST LIGHT',
     copyTheme: 'copy-light',
+    navTone: 'light',
     overlay: 'linear-gradient(to bottom, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.15) 60%, rgba(0,0,0,0.7) 100%)'
   },
   {
-    image: '/images/WEEDING/HEROSEACTIONIMAGE/3.webp',
+    image: '/images/HEROSEACTIONIMAGE/3.webp',
     title: 'THE JOY OF US',
     tagline: 'THE LITTLE GLANCES THAT LAST FOREVER',
     copyTheme: 'copy-ink',
-    overlay: 'linear-gradient(to bottom, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.08) 60%, rgba(255,255,255,0.68) 100%)'
+    navTone: 'light',
+    overlay: null
   },
   {
-    image: '/images/WEEDING/HEROSEACTIONIMAGE/4.webp',
+    image: '/images/HEROSEACTIONIMAGE/4.webp',
     title: 'A NIGHT MADE OF MAGIC',
     tagline: 'WHERE LOVE DANCES THROUGH THE RAIN',
     copyTheme: 'copy-light',
+    navTone: 'light',
     overlay: 'linear-gradient(to bottom, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.14) 60%, rgba(0,0,0,0.72) 100%)'
   },
   {
-    image: '/images/WEEDING/HEROSEACTIONIMAGE/5.webp',
+    image: '/images/HEROSEACTIONIMAGE/5.webp',
     title: 'HEARTS IN HARMONY',
     tagline: 'THE MOST BEAUTIFUL MOMENTS ARE UNSCRIPTED',
     copyTheme: 'copy-light',
+    navTone: 'light',
     overlay: 'linear-gradient(to bottom, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.12) 60%, rgba(0,0,0,0.68) 100%)'
   },
   {
-    image: '/images/WEEDING/HEROSEACTIONIMAGE/6.webp',
+    image: '/images/HEROSEACTIONIMAGE/6.webp',
     title: 'JOY, IN ITS PUREST FORM',
     tagline: 'REAL LAUGHTER. REAL LOVE. FOREVER REMEMBERED.',
     copyTheme: 'copy-light',
+    navTone: 'light',
     overlay: 'linear-gradient(to bottom, rgba(0,0,0,0.26) 0%, rgba(0,0,0,0.12) 60%, rgba(0,0,0,0.68) 100%)'
   },
   {
-    image: '/images/WEEDING/HEROSEACTIONIMAGE/7..webp',
+    image: '/images/HEROSEACTIONIMAGE/7.webp',
     title: 'JOY TAKES THE STAGE',
     tagline: 'A CELEBRATION LIT WITH LAUGHTER',
     copyTheme: 'copy-light',
+    navTone: 'dark',
     overlay: 'linear-gradient(to bottom, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.08) 60%, rgba(0,0,0,0.66) 100%)'
   },
   {
-    image: '/images/WEEDING/HEROSEACTIONIMAGE/8.webp',
+    image: '/images/HEROSEACTIONIMAGE/8.webp',
     title: 'YOUR STORY, BEAUTIFULLY YOURS',
     tagline: 'TRADITIONS HELD CLOSE. MEMORIES MADE NEW.',
     copyTheme: 'copy-ink',
-    overlay: 'linear-gradient(to bottom, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.08) 60%, rgba(255,255,255,0.66) 100%)'
+    navTone: 'dark',
+    overlay: null
   },
   {
-    image: '/images/WEEDING/HEROSEACTIONIMAGE/9.webp',
+    image: '/images/HEROSEACTIONIMAGE/9.webp',
     title: 'FOREVER BEGINS HERE',
     tagline: 'TWO SOULS, ONE BEAUTIFUL JOURNEY',
     copyTheme: 'copy-ink',
-    overlay: 'linear-gradient(to bottom, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.08) 60%, rgba(255,255,255,0.72) 100%)'
+    navTone: 'dark',
+    overlay: null
   }
 ];
 
-export default function HeroSlider() {
+export default function HeroSlider({ onToneChange }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
 
   const handleNext = useCallback(() => {
     if (isTransitioning) return;
@@ -85,6 +96,10 @@ export default function HeroSlider() {
   }, [isTransitioning]);
 
   useEffect(() => {
+    onToneChange?.(SLIDES[currentIndex].navTone);
+  }, [currentIndex, onToneChange]);
+
+  useEffect(() => {
     const timer = setTimeout(() => {
       setIsTransitioning(false);
     }, 800); // Must match transition time in CSS
@@ -97,14 +112,40 @@ export default function HeroSlider() {
     return () => clearInterval(autoPlayTimer);
   }, [handleNext]);
 
+  // Touch Swipe Handlers
+  const handleTouchStart = (e) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    if (distance > 40) {
+      handleNext();
+    } else if (distance < -40) {
+      handlePrev();
+    }
+    setTouchStart(0);
+    setTouchEnd(0);
+  };
+
   return (
     <section id="home" className={`hero-slider-section ${SLIDES[currentIndex].copyTheme}`}>
-      <div className="slider-wrapper">
+      <div 
+        className="slider-wrapper"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         {SLIDES.map((slide, index) => (
           <div
             key={index}
             className={`slide-item ${slide.copyTheme} ${index === currentIndex ? 'slide-active' : ''}`}
-            style={{ backgroundImage: `${slide.overlay}, url(${slide.image})` }}
+            style={{ backgroundImage: `${slide.overlay ? `${slide.overlay}, ` : ''}url(${slide.image})` }}
           >
             {/* Smooth-appearing content overlay */}
             {index === currentIndex && (
@@ -125,21 +166,6 @@ export default function HeroSlider() {
         <ChevronRight size={24} strokeWidth={1.5} />
       </button>
 
-      {/* Progress / Slide Indicators */}
-      <div className="slider-indicators">
-        {SLIDES.map((_, index) => (
-          <button
-            key={index}
-            className={`indicator-dot ${index === currentIndex ? 'active' : ''}`}
-            onClick={() => {
-              if (isTransitioning || index === currentIndex) return;
-              setIsTransitioning(true);
-              setCurrentIndex(index);
-            }}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
-      </div>
     </section>
   );
 }

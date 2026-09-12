@@ -1,4 +1,4 @@
-# Nadodikalaignan Photography
+# Stories by Nadodikalaignan
 
 A React + Vite photography portfolio website for weddings, portraits, and storytelling work.
 
