@@ -147,7 +147,18 @@ export const SERVICES_DATA = {
       { id: 37, title: 'Bridal Radiance', image: '/images/WEEDING/1 (37).webp', category: 'Bridal', location: 'Bridal Suite', camera: 'Sony A7R V • 50mm f/1.2' },
       { id: 38, title: 'Candid Moments', image: '/images/WEEDING/1 (38).webp', category: 'Candid', location: 'Courtyard Garden', camera: 'Sony A7IV • 85mm GM' },
       { id: 39, title: 'Festive Lights', image: '/images/WEEDING/1 (39).webp', category: 'Reception', location: 'Lighting Stage', camera: 'Sony A7S III • 24mm f/1.4' },
-      { id: 40, title: 'Eternal Union', image: '/images/WEEDING/1 (40).webp', category: 'Ceremony', location: 'Sacred Mandap', camera: 'Sony A7R V • 50mm GM' }
+      { id: 40, title: 'Eternal Union', image: '/images/WEEDING/1 (40).webp', category: 'Ceremony', location: 'Sacred Mandap', camera: 'Sony A7R V • 50mm GM' },
+      { id: 41, title: 'Royal Heritage Frame', image: '/images/WEEDING/CP-1028.webp', category: 'Ceremony', location: 'Grand Mandapam', camera: 'Sony A7R V • 85mm GM' },
+      { id: 42, title: 'Sacred Mantras', image: '/images/WEEDING/CP-1087.webp', category: 'Rituals', location: 'Traditional Courtyard', camera: 'Sony A7IV • 50mm GM' },
+      { id: 43, title: 'Golden Auspicious Hour', image: '/images/WEEDING/CP-1309.webp', category: 'Reception', location: 'Palace Stage', camera: 'Sony A7S III • 35mm GM' },
+      { id: 44, title: 'Joyous Family Bonds', image: '/images/WEEDING/CP-366.webp', category: 'Candid', location: 'Royal Lawn', camera: 'Sony FX3 • 24-70mm GM' },
+      { id: 45, title: 'Ceremonial Majesty', image: '/images/WEEDING/IMG_1197.JPG.webp', category: 'Ceremony', location: 'Central Stage', camera: 'Sony A7R V • 50mm f/1.2' },
+      { id: 46, title: 'Grand Royal Entrance', image: '/images/WEEDING/IMG_1942.JPG.webp', category: 'Reception', location: 'Palace Gateway', camera: 'Sony A7IV • 24mm GM' },
+      { id: 47, title: 'Celebration of Two Souls', image: '/images/WEEDING/IMG_2290.JPG.webp', category: 'Ceremony', location: 'Sacred Altar', camera: 'Sony A7R V • 85mm GM' },
+      { id: 48, title: 'Serene Ritual Grace', image: '/images/WEEDING/_Z7N5513.webp', category: 'Rituals', location: 'Mandap Steps', camera: 'Sony A7IV • 35mm GM' },
+      { id: 49, title: 'Timeless Togetherness', image: '/images/WEEDING/103 (1).webp', category: 'Bridal', location: 'Bridal Chamber', camera: 'Sony A7R V • 50mm GM' },
+      { id: 50, title: 'Regal Vows', image: '/images/WEEDING/1 (2).jpeg', category: 'Ceremony', location: 'Royal Hall', camera: 'Sony A7IV • 50mm f/1.4' },
+      { id: 51, title: 'Sacred Blessings', image: '/images/WEEDING/1 (3).jpeg', category: 'Rituals', location: 'Temple Court', camera: 'Sony A7S III • 35mm GM' }
     ],
     features: [
       { icon: 'Camera', title: 'Multi-Cam Candid & Traditional Crew', desc: 'Dedicated candid specialist photographers capturing emotional unscripted moments while traditional team logs all rituals.' },
@@ -343,7 +354,10 @@ export const SERVICES_DATA = {
       { id: 25, title: 'Sculpted Profile', image: '/images/protrate/1 (26).webp', category: 'B&W', location: 'Chiaroscuro Studio', camera: 'Sony A7R V • 135mm f/1.8' },
       { id: 26, title: 'Serene Aura', image: '/images/protrate/1 (27).webp', category: 'Outdoor', location: 'Pine Hills', camera: 'Sony A7IV • 85mm GM' },
       { id: 27, title: 'Majestic Poise', image: '/images/protrate/1 (28).webp', category: 'Studio', location: 'Royal Canvas', camera: 'Sony A7R V • 50mm f/1.2' },
-      { id: 28, title: 'Signature Horizon', image: '/images/protrate/1 (29).webp', category: 'Editorial', location: 'Rooftop Skyline', camera: 'Sony FX3 • 24mm GM' }
+      { id: 28, title: 'Signature Horizon', image: '/images/protrate/1 (29).webp', category: 'Editorial', location: 'Rooftop Skyline', camera: 'Sony FX3 • 24mm GM' },
+      { id: 29, title: 'Refined Charisma', image: '/images/protrate/CP-423.webp', category: 'Editorial', location: 'Fine-Art Studio', camera: 'Sony A7R V • 85mm GM' },
+      { id: 30, title: 'Masterpiece Portrait', image: '/images/protrate/IMG_0175.JPG (1).webp', category: 'Studio', location: 'Classic Set', camera: 'Sony A7IV • 50mm f/1.2' },
+      { id: 31, title: 'Timeless Profile', image: '/images/protrate/IMG_0196.JPG.webp', category: 'Creative', location: 'Moody Loft', camera: 'Sony FX3 • 35mm GM' }
     ],
     features: [
       { icon: 'Camera', title: 'Editorial Direction & Styling Guidance', desc: 'Comprehensive guidance on posing, wardrobe choices, color coordination, and natural expressions.' },
@@ -435,7 +449,11 @@ export const SERVICES_DATA = {
       { id: 15, title: 'Festival of Joy', image: '/images/events seaction/1 (15).webp', category: 'Gala', location: 'Convention Centre', camera: 'Sony A7R V • 35mm GM' },
       { id: 16, title: 'Pure Euphoria', image: '/images/events seaction/1 (16).webp', category: 'Highlights', location: 'Festival Grounds', camera: 'Sony FX3 • 50mm GM' },
       { id: 17, title: 'Memorable Cheers', image: '/images/events seaction/1 (17).webp', category: 'Candid', location: 'VIP Lounge', camera: 'Sony A7IV • 85mm f/1.4' },
-      { id: 18, title: 'Spectacular Finale', image: '/images/events seaction/1 (18).webp', category: 'Stage', location: 'Main Stage', camera: 'Sony A7R V • 70-200mm GM' }
+      { id: 18, title: 'Spectacular Finale', image: '/images/events seaction/1 (18).webp', category: 'Stage', location: 'Main Stage', camera: 'Sony A7R V • 70-200mm GM' },
+      { id: 19, title: 'Gala Grandeur', image: '/images/events seaction/1(19).webp', category: 'Celebration', location: 'Grand Convention', camera: 'Sony A7IV • 24-70mm GM' },
+      { id: 20, title: 'Joyful Gathering', image: '/images/events seaction/19.webp', category: 'Candid', location: 'Banquet Hall', camera: 'Sony FX3 • 35mm GM' },
+      { id: 21, title: 'Vibrant Moments', image: '/images/events seaction/42.webp', category: 'Highlights', location: 'Outdoor Grounds', camera: 'Sony A7S III • 50mm GM' },
+      { id: 22, title: 'Royal Celebration Energy', image: '/images/events seaction/Z7N_8073.webp', category: 'Stage', location: 'Arena Stage', camera: 'Sony A7R V • 85mm GM' }
     ],
     features: [
       { icon: 'Camera', title: 'Full Event Coverage & Candid Motion', desc: 'Comprehensive coverage capturing guest interactions, speeches, stage performances, and venue decor.' },

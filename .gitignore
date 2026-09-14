@@ -21,4 +21,13 @@ dist-ssr
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+# Videos
+/public/images/VIDEO/
+public/images/VIDEO/
+*.mp4
+*.webm
+*.mov
+*.mkv
+*.avi
+public\images\VIDEO  
+public/images/

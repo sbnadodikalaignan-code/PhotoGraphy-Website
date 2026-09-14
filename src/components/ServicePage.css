@@ -896,3 +896,34 @@
   color: #000000;
   font-weight: 700;
 }
+
+@media (max-width: 650px) {
+  .gallery-header-flex {
+    padding-left: 15px;
+    padding-right: 15px;
+    gap: 12px;
+  }
+
+  .client-gallery-sticky-header {
+    top: 72px;
+    padding: 10px 0;
+  }
+
+  .gallery-action-bar {
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .booking-modal-card {
+    padding: 24px 16px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+}

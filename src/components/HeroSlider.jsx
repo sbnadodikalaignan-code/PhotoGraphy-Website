@@ -4,12 +4,21 @@ import './HeroSlider.css';
 
 const SLIDES = [
   {
+    video: '/images/VIDEO/HEROSEACTIONVIDEO.webm',
+    image: '/images/HEROSEACTIONIMAGE/1.webp',
+    title: '',
+    tagline: '',
+    copyTheme: 'copy-light',
+    navTone: 'light',
+    overlay: null
+  },
+  {
     image: '/images/HEROSEACTIONIMAGE/1.webp',
     title: 'A PROMISE, HELD CLOSE',
     tagline: 'BEFORE THE CELEBRATION BEGINS',
-    copyTheme: 'copy-ink',
+    copyTheme: 'copy-light',
     navTone: 'light',
-    overlay: null
+    overlay: 'linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0.72) 100%)'
   },
   {
     image: '/images/HEROSEACTIONIMAGE/2.webp',
@@ -106,11 +115,14 @@ export default function HeroSlider({ onToneChange }) {
     return () => clearTimeout(timer);
   }, [currentIndex]);
 
-  // Auto-play
+  // Auto-play for image slides; video plays until user navigates or scrolls
   useEffect(() => {
-    const autoPlayTimer = setInterval(handleNext, 6000);
+    if (SLIDES[currentIndex].video) {
+      return; // Keep video playing seamlessly without auto-switching
+    }
+    const autoPlayTimer = setInterval(handleNext, 7000);
     return () => clearInterval(autoPlayTimer);
-  }, [handleNext]);
+  }, [currentIndex, handleNext]);
 
   // Touch Swipe Handlers
   const handleTouchStart = (e) => {
@@ -145,27 +157,50 @@ export default function HeroSlider({ onToneChange }) {
           <div
             key={index}
             className={`slide-item ${slide.copyTheme} ${index === currentIndex ? 'slide-active' : ''}`}
-            style={{ backgroundImage: `${slide.overlay ? `${slide.overlay}, ` : ''}url(${slide.image})` }}
           >
-            {/* Smooth-appearing content overlay */}
-            {index === currentIndex && (
-              <div className="slide-content">
-                <span className="slide-tagline animate-slide-up">{slide.tagline}</span>
-                <h2 className="slide-title animate-slide-up-delayed">{slide.title}</h2>
+            {slide.video ? (
+              <div className="hero-video-wrapper">
+                <video
+                  src={slide.video}
+                  poster={slide.image}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="hero-video-element"
+                />
+                {slide.overlay && (
+                  <div 
+                    className="hero-video-overlay" 
+                    style={{ background: slide.overlay }} 
+                  />
+                )}
               </div>
+            ) : (
+              <div
+                className="hero-image-bg"
+                style={{ backgroundImage: `${slide.overlay ? `${slide.overlay}, ` : ''}url(${slide.image})` }}
+              />
             )}
+
+            {/* Smooth-appearing content overlay (only when slide has text) */}
+            {index === currentIndex && (slide.title || slide.tagline) ? (
+              <div className="slide-content">
+                {slide.tagline && <span className="slide-tagline animate-slide-up">{slide.tagline}</span>}
+                {slide.title && <h2 className="slide-title animate-slide-up-delayed">{slide.title}</h2>}
+              </div>
+            ) : null}
           </div>
         ))}
       </div>
 
-      {/* Navigation Arrows matching screenshot style */}
+      {/* Navigation Arrows matching style */}
       <button className="slider-arrow arrow-left" onClick={handlePrev} aria-label="Previous Slide">
         <ChevronLeft size={24} strokeWidth={1.5} />
       </button>
       <button className="slider-arrow arrow-right" onClick={handleNext} aria-label="Next Slide">
         <ChevronRight size={24} strokeWidth={1.5} />
       </button>
-
     </section>
   );
 }

@@ -13,7 +13,9 @@ const WEDDING_IMAGE_FILES = [
   '1 (10).webp', '1 (11).webp', '1 (12).webp', '1 (13).webp', '1 (14).webp', '1 (15).webp', '1 (16).webp', '1 (17).webp',
   '1 (18).webp', '1 (19).webp', '1 (20).webp', '1 (21).webp', '1 (22).webp', '1 (23).webp', '1 (24).webp', '1 (25).webp',
   '1 (26).webp', '1 (27).webp', '1 (28).webp', '1 (29).webp', '1 (30).webp', '1 (31).webp', '1 (32).webp', '1 (33).webp',
-  '1 (34).webp', '1 (35).webp', '1 (36).webp', '1 (37).webp', '1 (38).webp', '1 (39).webp', '1 (40).webp'
+  '1 (34).webp', '1 (35).webp', '1 (36).webp', '1 (37).webp', '1 (38).webp', '1 (39).webp', '1 (40).webp',
+  'CP-1028.webp', 'CP-1087.webp', 'CP-1309.webp', 'CP-366.webp', 'IMG_1197.JPG.webp', 'IMG_1942.JPG.webp', 'IMG_2290.JPG.webp',
+  '_Z7N5513.webp', '103 (1).webp', '1 (2).jpeg', '1 (3).jpeg'
 ];
 
 const WEDDING_ITEMS = WEDDING_IMAGE_FILES.map((fileName, index) => ({
@@ -40,7 +42,7 @@ const PORTRAIT_IMAGE_FILES = [
   '1 (1).webp', '1 (2).webp', '1 (3).webp', '1 (4).webp', '1 (5).webp', '1 (6).webp', '1 (7).webp', '1 (8).webp', '1 (9).webp',
   '1 (10).webp', '1 (11).webp', '1 (12).webp', '1 (13).webp', '1 (14).webp', '1 (16).webp', '1 (17).webp', '1 (18).webp',
   '1 (19).webp', '1 (20).webp', '1 (21).webp', '1 (22).webp', '1 (23).webp', '1 (24).webp', '1 (25).webp', '1 (26).webp',
-  '1 (27).webp', '1 (28).webp', '1 (29).webp'
+  '1 (27).webp', '1 (28).webp', '1 (29).webp', 'CP-423.webp', 'IMG_0175.JPG (1).webp', 'IMG_0196.JPG.webp'
 ];
 
 const PORTRAIT_ITEMS = PORTRAIT_IMAGE_FILES.map((fileName, index) => ({

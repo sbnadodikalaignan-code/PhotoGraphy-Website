@@ -28,6 +28,7 @@ export default function ServicePage({ serviceId: propServiceId }) {
   const [lightboxIndex, setLightboxIndex] = useState(null);
   const [isSlideshow, setIsSlideshow] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [touchStartX, setTouchStartX] = useState(0);
 
   // Booking Modal
   const [bookingModal, setBookingModal] = useState({ isOpen: false, packageName: '' });
@@ -224,12 +225,24 @@ export default function ServicePage({ serviceId: propServiceId }) {
 
       {/* LIGHTBOX MODAL VIEWER */}
       {lightboxIndex !== null && displayItems[lightboxIndex] && (
-        <div className="editorial-lightbox-overlay" onClick={closeLightbox}>
+        <div 
+          className="editorial-lightbox-overlay" 
+          onClick={closeLightbox}
+          onTouchStart={(e) => setTouchStartX(e.changedTouches[0].screenX)}
+          onTouchEnd={(e) => {
+            const diff = touchStartX - e.changedTouches[0].screenX;
+            if (diff > 45) {
+              setLightboxIndex((prev) => (prev + 1) % displayItems.length);
+            } else if (diff < -45) {
+              setLightboxIndex((prev) => (prev - 1 + displayItems.length) % displayItems.length);
+            }
+          }}
+        >
           <div className="lightbox-viewport" onClick={(e) => e.stopPropagation()}>
             
             {/* Close Button */}
             <button className="lightbox-close-btn" onClick={closeLightbox} aria-label="Close">
-              <X size={32} />
+              <X size={26} />
             </button>
 
             {/* Prev Nav Arrow */}
@@ -238,7 +251,7 @@ export default function ServicePage({ serviceId: propServiceId }) {
               onClick={() => setLightboxIndex((lightboxIndex - 1 + displayItems.length) % displayItems.length)}
               aria-label="Previous"
             >
-              <ChevronLeft size={36} />
+              <ChevronLeft size={30} />
             </button>
 
             {/* Centered Image */}
@@ -256,7 +269,7 @@ export default function ServicePage({ serviceId: propServiceId }) {
               onClick={() => setLightboxIndex((lightboxIndex + 1) % displayItems.length)}
               aria-label="Next"
             >
-              <ChevronRight size={36} />
+              <ChevronRight size={30} />
             </button>
 
           </div>

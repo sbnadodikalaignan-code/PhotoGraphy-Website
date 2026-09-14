@@ -35,16 +35,37 @@ export default function Header({ heroTone = 'dark' }) {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside, { passive: true });
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
       if (instaTimerRef.current) clearTimeout(instaTimerRef.current);
       if (servicesTimerRef.current) clearTimeout(servicesTimerRef.current);
     };
   }, []);
+
+  // Close mobile menu on location change
+  useEffect(() => {
+    setIsMenuOpen(false);
+    setIsServicesOpen(false);
+    setIsInstaOpen(false);
+  }, [location.pathname]);
+
+  // Lock body scroll when mobile drawer is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
 
   const handleInstaMouseEnter = () => {
     if (instaTimerRef.current) clearTimeout(instaTimerRef.current);
@@ -68,6 +89,13 @@ export default function Header({ heroTone = 'dark' }) {
     servicesTimerRef.current = setTimeout(() => {
       setIsServicesOpen(false);
     }, 350);
+  };
+
+  const toggleServicesDropdown = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (servicesTimerRef.current) clearTimeout(servicesTimerRef.current);
+    setIsServicesOpen((prev) => !prev);
   };
 
   const navigateToPage = (path) => {
@@ -132,7 +160,7 @@ export default function Header({ heroTone = 'dark' }) {
           aria-label="Stories by Nadodikalaignan on Instagram"
           title="Visit @storiesbynadodikalaignan on Instagram"
         >
-          <img src="/images/logo.png" alt="Stories by Nadodikalaignan Logo" className="logo-img" />
+          <img src="/images/other/logo.png" alt="Stories by Nadodikalaignan Logo" className="logo-img" />
         </a>
 
         {/* Desktop Navigation */}
@@ -148,8 +176,9 @@ export default function Header({ heroTone = 'dark' }) {
               onMouseLeave={handleServicesMouseLeave}
             >
               <button
-                onClick={() => scrollToSection('latest-work')}
+                onClick={toggleServicesDropdown}
                 className="nav-btn dropdown-toggle-btn"
+                aria-expanded={isServicesOpen}
               >
                 <span>SERVICES</span>
                 <ChevronDown size={14} className={`dropdown-arrow ${isServicesOpen ? 'open' : ''}`} />
@@ -171,6 +200,7 @@ export default function Header({ heroTone = 'dark' }) {
               </div>
             </li>
 
+            <li><button onClick={() => navigateToPage('/albums')} className="nav-btn">ALBUMS</button></li>
             <li><button onClick={() => navigateToPage('/profiles')} className="nav-btn">ABOUT US</button></li>
           </ul>
 
@@ -207,7 +237,7 @@ export default function Header({ heroTone = 'dark' }) {
                   onClick={() => setIsInstaOpen(false)}
                 >
                   <div className="insta-item-icon">
-                    <img src="/images/logo.png" alt="Stories by Nadodikalaignan Logo" className="insta-item-avatar insta-avatar-logo" />
+                    <img src="/images/other/logo.png" alt="Stories by Nadodikalaignan Logo" className="insta-item-avatar insta-avatar-logo" />
                   </div>
                   <div className="insta-item-info">
                     <span className="insta-item-handle">@storiesbynadodikalaignan</span>
@@ -225,7 +255,7 @@ export default function Header({ heroTone = 'dark' }) {
                   onClick={() => setIsInstaOpen(false)}
                 >
                   <div className="insta-item-icon">
-                    <img src="/images/nadodikalaignan ceo.webp" alt="Nadodikalaignan CEO" className="insta-item-avatar insta-avatar-photo" />
+                    <img src="/images/other/nadodikalaignan ceo.webp" alt="Nadodikalaignan CEO" className="insta-item-avatar insta-avatar-photo" />
                   </div>
                   <div className="insta-item-info">
                     <span className="insta-item-handle">@nadodikalaignan</span>
@@ -241,47 +271,62 @@ export default function Header({ heroTone = 'dark' }) {
           </div>
         </nav>
 
-        {/* Mobile menu toggle */}
+        {/* Mobile Hamburger Toggle Button */}
         <button
-          className={`menu-toggle ${isMenuOpen ? 'active' : ''}`}
+          className="mobile-menu-toggle"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label="Toggle Navigation Menu"
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isMenuOpen}
         >
-          <span></span>
-          <span></span>
-          <span></span>
+          <span className={`hamburger-bar ${isMenuOpen ? 'open' : ''}`}></span>
+          <span className={`hamburger-bar ${isMenuOpen ? 'open' : ''}`}></span>
+          <span className={`hamburger-bar ${isMenuOpen ? 'open' : ''}`}></span>
         </button>
 
         {/* Mobile Navigation Drawer */}
-        <nav className={`nav-mobile ${isMenuOpen ? 'open' : ''}`}>
-          <ul className="mobile-links">
-            <li><button onClick={navigateToHome} className="mobile-nav-btn">HOME</button></li>
+        <nav className={`mobile-nav-drawer ${isMenuOpen ? 'open' : ''}`}>
+          <div className="mobile-drawer-content">
+            <ul className="mobile-nav-links">
+              <li>
+                <button onClick={navigateToHome} className="mobile-nav-title">HOME</button>
+              </li>
+              
+              <li className="mobile-services-group">
+                <button onClick={() => scrollToSection('latest-work')} className="mobile-nav-title">
+                  SERVICES
+                </button>
+                <div className="mobile-services-sublist">
+                  <button onClick={() => navigateToPage('/work/weddings')} className="mobile-sub-item">WEDDINGS</button>
+                  <button onClick={() => navigateToPage('/work/events')} className="mobile-sub-item">EVENTS</button>
+                  <button onClick={() => navigateToPage('/work/portraits')} className="mobile-sub-item">PORTRAITS</button>
+                  <button onClick={() => navigateToPage('/work/toddlers')} className="mobile-sub-item">TODDLERS</button>
+                </div>
+              </li>
 
-            {/* Mobile Services Submenu */}
-            <li className="mobile-dropdown-group">
-              <span className="mobile-nav-subtitle">SERVICES</span>
-              <ul className="mobile-sublinks">
-                <li><button onClick={() => navigateToPage('/work/weddings')} className="mobile-subnav-btn">WEDDINGS</button></li>
-                <li><button onClick={() => navigateToPage('/work/events')} className="mobile-subnav-btn">EVENTS</button></li>
-                <li><button onClick={() => navigateToPage('/work/portraits')} className="mobile-subnav-btn">PORTRAITS</button></li>
-                <li><button onClick={() => navigateToPage('/work/toddlers')} className="mobile-subnav-btn">TODDLERS</button></li>
-              </ul>
-            </li>
+              <li>
+                <button onClick={() => navigateToPage('/albums')} className="mobile-nav-title">ALBUMS</button>
+              </li>
+              <li>
+                <button onClick={() => navigateToPage('/profiles')} className="mobile-nav-title">ABOUT US</button>
+              </li>
+            </ul>
 
-            <li><button onClick={() => navigateToPage('/profiles')} className="mobile-nav-btn">ABOUT US</button></li>
-            
-            <li className="mobile-social-wrap">
-              <span className="mobile-social-title">FOLLOW ON INSTAGRAM</span>
-              <div className="mobile-social-links">
+            {/* Follow On Instagram Section */}
+            <div className="mobile-social-section">
+              <span className="mobile-social-heading">FOLLOW ON INSTAGRAM</span>
+              
+              <div className="mobile-instagram-pills">
                 <a 
                   href="https://www.instagram.com/storiesbynadodikalaignan?stkn=aG14N3o0NDlyMTQ1" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="mobile-instagram-link"
+                  className="mobile-insta-pill"
                 >
-                  <div className="mobile-insta-avatar-wrapper">
-                    <img src="/images/logo.png" alt="Stories by Nadodikalaignan" className="mobile-insta-avatar insta-avatar-logo" />
-                  </div>
+                  <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
                   <span>@storiesbynadodikalaignan</span>
                 </a>
 
@@ -289,22 +334,25 @@ export default function Header({ heroTone = 'dark' }) {
                   href="https://www.instagram.com/nadodikalaignan?stkn=MWd2M2Q4c3B3d2hpbg%3D%3D&utm_source=qr" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="mobile-instagram-link"
+                  className="mobile-insta-pill"
                 >
-                  <div className="mobile-insta-avatar-wrapper">
-                    <img src="/images/nadodikalaignan ceo.webp" alt="Nadodikalaignan" className="mobile-insta-avatar insta-avatar-photo" />
-                  </div>
+                  <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
                   <span>@nadodikalaignan</span>
                 </a>
               </div>
-            </li>
+            </div>
 
-            <li>
+            {/* Talk to Us Button */}
+            <div className="mobile-cta-wrapper">
               <button onClick={() => navigateToPage('/contact')} className="mobile-talk-btn">
                 TALK TO US
               </button>
-            </li>
-          </ul>
+            </div>
+          </div>
         </nav>
       </div>
     </header>

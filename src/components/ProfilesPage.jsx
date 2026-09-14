@@ -3,9 +3,9 @@ import { Award, Camera, Heart, Sparkles } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Header from './Header';
+import ContactForm from './ContactForm';
 import Footer from './Footer';
 import ThreeGallery from './ThreeGallery';
-import LazyImage from './LazyImage';
 import './ProfilesPage.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -25,7 +25,7 @@ export default function ProfilesPage() {
       );
 
       // CEO Section Reveals
-      gsap.fromTo('.about-ceo-photo-wrapper',
+      gsap.fromTo('.ceo-card-image',
         { opacity: 0, scale: 0.92, y: 40 },
         {
           opacity: 1,
@@ -34,22 +34,38 @@ export default function ProfilesPage() {
           duration: 1.2,
           ease: 'power3.out',
           scrollTrigger: {
-            trigger: '.about-ceo-section',
+            trigger: '.ceo-section',
             start: 'top 80%',
           }
         }
       );
 
-      gsap.fromTo('.about-ceo-details > *',
+      gsap.fromTo('.ceo-content-block > *',
         { opacity: 0, y: 35 },
         {
           opacity: 1,
           y: 0,
           duration: 1,
-          stagger: 0.12,
+          stagger: 0.15,
           ease: 'power3.out',
           scrollTrigger: {
-            trigger: '.about-ceo-section',
+            trigger: '.ceo-content-block',
+            start: 'top 80%',
+          }
+        }
+      );
+
+      // Studio Pillars Reveal
+      gsap.fromTo('.studio-pillar-card',
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          stagger: 0.2,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.studio-pillars-grid',
             start: 'top 80%',
           }
         }
@@ -57,18 +73,18 @@ export default function ProfilesPage() {
 
 
 
-
-
-      // Section Reveals
-      gsap.fromTo('.studio-gallery-header',
-        { opacity: 0, y: 30 },
+      // Studio Gallery Images Reveal
+      gsap.fromTo('.studio-gallery-item',
+        { opacity: 0, scale: 0.94, y: 30 },
         {
           opacity: 1,
+          scale: 1,
           y: 0,
-          duration: 1,
+          duration: 1.1,
+          stagger: 0.15,
           ease: 'power3.out',
           scrollTrigger: {
-            trigger: '.studio-section',
+            trigger: '.studio-gallery-grid',
             start: 'top 80%',
           }
         }
@@ -87,11 +103,11 @@ export default function ProfilesPage() {
         <div className="about-hero-container">
           <div className="about-hero-left">
             <h1 className="about-hero-title">About Us</h1>
-            <span className="about-hero-founded">13+ Years Successfully Completed</span>
+            <span className="about-hero-founded">Founded in 1992</span>
           </div>
           <div className="about-hero-right">
             <p className="about-hero-description">
-              Stories by Nadodikalaignan is an award-winning fine-art photography and luxury wedding studio. We craft candid documentary films, royal wedding portraits, and timeless family heirlooms that capture the raw, unscripted beauty of your most cherished celebrations.
+              This is the space to introduce visitors to your business or brand. Briefly explain who's behind it, what it does and what makes it unique. Share its core values and what your site has to offer.
             </p>
           </div>
         </div>
@@ -100,72 +116,90 @@ export default function ProfilesPage() {
       {/* SECTION: OUR STORY */}
       <section className="our-story-section">
         <div className="our-story-container">
-          <div className="our-story-content">
+          <div className="our-story-left">
             <span className="our-story-subtitle">Who We Are</span>
-            
-            <div className="our-story-image-mobile-box">
-              <LazyImage src="/images/WEEDING/1 (2).jpeg" alt="Our Story - Stories by Nadodikalaignan" />
-            </div>
-
             <h2 className="our-story-title">Our Story</h2>
             
             <div className="our-story-text-group">
               <p className="our-story-paragraph">
-                Founded on a passion for authentic human emotion, Stories by Nadodikalaignan began as a journey to capture life as it truly unfolds — unscripted, soulful, and deeply personal. What started as an intimate passion project has grown into an internationally acclaimed photography studio, trusted by hundreds of families to preserve their most sacred milestones.
+                This is the space to introduce the story of your business. Tell visitors how it got started. It's an opportunity for you to describe a special service or product it offers. You can use this section to share your company's history or highlight a particular feature that sets it apart from competitors.
               </p>
               <p className="our-story-paragraph">
-                We believe every couple, portrait subject, and family possesses a unique story that deserves to be told with cinematic artistry. Combining documentary realism with editorial elegance, our team crafts timeless visual legacies that allow you to relive every tear, laughter, and embrace for generations to come.
+                Let the writing speak for itself. Keep a consistent tone and voice throughout the website to stay true to the brand image and give visitors a taste of the company's values and personality.
               </p>
             </div>
           </div>
 
           <div className="our-story-right">
             <div className="our-story-image-box">
-              <LazyImage src="/images/WEEDING/1 (2).jpeg" alt="Our Story - Stories by Nadodikalaignan" />
+              <img src="\images\nadodikalaignan ceo.webp" alt="Our Story - Stories by Nadodikalaignan" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* SECTION: OUR CEO */}
-      <section className="about-ceo-section">
-        <div className="about-ceo-container">
-          <h2 className="about-ceo-header-title">Our CEO</h2>
+      {/* SECTION 1: ABOUT CEO / FOUNDER */}
+      <section className="profiles-section ceo-section">
+        <div className="profiles-container">
 
-          <div className="about-ceo-card-block">
-            <div className="about-ceo-photo-wrapper">
-              <LazyImage src="/images/nadodikalaignan ceo.webp" alt="Vasanth Chinnasamy - CEO Stories by Nadodikalaignan" />
-            </div>
-
-            <div className="about-ceo-details">
-              <h3 className="about-ceo-name">Vasanth Chinnasamy</h3>
-              <span className="about-ceo-role">Founder &amp; Chief Creative Director</span>
-
-              <p className="about-ceo-bio">
-                Under the creative vision of Vasanth Chinnasamy, Stories by Nadodikalaignan has redefined modern wedding and portrait photography. With over 15 years of documentary expertise across India and global destinations, Vasanth brings an artistic lens that captures raw emotion with royal grandeur.
-              </p>
-
-              <p className="about-ceo-bio">
-                Vasanth leads a dedicated team of master cinematographers, visual directors, and colorists who share an uncompromising commitment to perfection. Every photograph and film is meticulously handcrafted to celebrate the heritage, beauty, and unscripted magic of your journey.
-              </p>
-
-              <div className="about-ceo-social-wrap">
-                <a 
-                  href="https://www.instagram.com/nadodikalaignan?stkn=MWd2M2Q4c3B3d2hpbg%3D%3D&utm_source=qr" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="ceo-instagram-btn"
-                >
-                  <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                  </svg>
-                  <span>Follow @nadodikalaignan</span>
-                </a>
+          <div className="ceo-grid">
+            {/* CEO Image Container */}
+            <div className="ceo-card-image img-zoom-container">
+              <img src="/images/nadodikalaignan ceo.jpeg" alt="Founder & CEO - Stories by Nadodikalaignan" />
+              <div className="ceo-badge-floating">
+                <Sparkles size={18} className="badge-icon" />
+                <span>FOUNDER &amp; LEAD DIRECTOR</span>
               </div>
             </div>
+
+            {/* CEO Content Details */}
+            <div className="ceo-content-block">
+              <span className="section-label">ABOUT THE CEO</span>
+              <h2 className="ceo-name">Vasanth Chinnasamy</h2>
+              <h3 className="ceo-role">Founder &amp; Chief Creative Director</h3>
+
+              <div className="ceo-quote-box">
+                <p className="ceo-quote">
+                  "Photography isn't about setting up artificial scenes — it's about holding space for genuine emotion, legacy, and human connection."
+                </p>
+              </div>
+
+              <p className="ceo-bio-text">
+                With over 15 years of documentary photography experience across India and international destinations, Vasanth has redefined modern Indian wedding imagery. His distinctive visual language blends fine-art portraiture with candid storytelling.
+              </p>
+
+              <p className="ceo-bio-text">
+                Under his creative direction, Stories by Nadodikalaignan has captured over 500 iconic celebrations, earning international acclaim for authenticity, rich colors, and timeless emotional depth.
+              </p>
+
+              {/* Accolades & Highlights */}
+              <div className="ceo-highlights-grid">
+                <div className="highlight-item">
+                  <Award className="highlight-icon" size={24} />
+                  <div>
+                    <h4>15+ Years</h4>
+                    <span>Master Craftsmanship</span>
+                  </div>
+                </div>
+                <div className="highlight-item">
+                  <Camera className="highlight-icon" size={24} />
+                  <div>
+                    <h4>500+ Stories</h4>
+                    <span>Global Destinations</span>
+                  </div>
+                </div>
+                <div className="highlight-item">
+                  <Heart className="highlight-icon" size={24} />
+                  <div>
+                    <h4>98% Referral</h4>
+                    <span>Cherished Worldwide</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
           </div>
+
         </div>
       </section>
 
@@ -174,6 +208,41 @@ export default function ProfilesPage() {
       {/* SECTION 4: ABOUT STUDIO & PILLARS */}
       <section className="profiles-section studio-section">
         <div className="profiles-container">
+
+          <div className="studio-intro-header">
+            <span className="section-label">ABOUT THE STUDIO</span>
+            <h2 className="studio-title">Stories by Nadodikalaignan</h2>
+            <p className="studio-subtitle">
+              A collective of passionate cinematographers, visual artists, and editors dedicated to capturing extraordinary life journeys.
+            </p>
+          </div>
+
+          {/* 3 Core Studio Pillars */}
+          <div className="studio-pillars-grid">
+            <div className="studio-pillar-card">
+              <div className="pillar-number">01</div>
+              <h3 className="pillar-title">Documentary Realism</h3>
+              <p className="pillar-desc">
+                We believe the best memories happen naturally. Our unobtrusive approach allows you to remain fully present in your celebration while we capture unscripted magic.
+              </p>
+            </div>
+
+            <div className="studio-pillar-card">
+              <div className="pillar-number">02</div>
+              <h3 className="pillar-title">Cinematic Editing</h3>
+              <p className="pillar-desc">
+                Every frame and film is meticulously color-graded and handcrafted in-house, ensuring tailored color harmonies and heirloom-quality visual standards.
+              </p>
+            </div>
+
+            <div className="studio-pillar-card">
+              <div className="pillar-number">03</div>
+              <h3 className="pillar-title">Personal Connection</h3>
+              <p className="pillar-desc">
+                We take time to understand your personal vibe, family traditions, and unique story, building lasting trust that shines through in your photographs.
+              </p>
+            </div>
+          </div>
 
           {/* Studio Gallery Showcase - 3D Three.js Interactive Showcase */}
           <div className="studio-gallery-header">
@@ -185,6 +254,8 @@ export default function ProfilesPage() {
 
         </div>
       </section>
+
+      <ContactForm />
 
       <Footer />
     </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, ChevronLeft, ChevronRight, Sparkles, ArrowRight, Eye } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Sparkles, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -34,7 +34,13 @@ const LATEST_WORK_ITEMS = [
   { id: 23, title: 'Classic Elegance', category: 'Portraits', location: 'Studio Canvas', image: '/images/latest_image/1(22).webp', aspect: 'tall' },
   { id: 24, title: 'Regal Heritage', category: 'Weddings', location: 'Royal Lawn', image: '/images/latest_image/1 (23).jpeg', aspect: 'wide' },
   { id: 25, title: 'Heritage Essence', category: 'Weddings', location: 'Palace Courtyard', image: '/images/latest_image/1(23).webp', aspect: 'tall' },
-  { id: 26, title: 'Eternal Radiance', category: 'Weddings', location: 'Grand Mandapam', image: '/images/latest_image/1(24).webp', aspect: 'wide' }
+  { id: 26, title: 'Eternal Radiance', category: 'Weddings', location: 'Grand Mandapam', image: '/images/latest_image/1(24).webp', aspect: 'wide' },
+  { id: 27, title: 'Intimate Whispers', category: 'Weddings', location: 'Heritage Lawn', image: '/images/latest_image/CP-1130.webp', aspect: 'tall' },
+  { id: 28, title: 'Golden Vows', category: 'Weddings', location: 'Palace Corridor', image: '/images/latest_image/IMG_1361.JPG.webp', aspect: 'wide' },
+  { id: 29, title: 'Royal Ceremony', category: 'Weddings', location: 'Grand Hall', image: '/images/latest_image/IMG_1566.JPG.webp', aspect: 'tall' },
+  { id: 30, title: 'Auspicious Rituals', category: 'Weddings', location: 'Mandap Steps', image: '/images/latest_image/IMG_1578.JPG.webp', aspect: 'wide' },
+  { id: 31, title: 'Candid Smiles', category: 'Portraits', location: 'Studio Daylight', image: '/images/latest_image/Z7N_9531_websize.webp', aspect: 'tall' },
+  { id: 32, title: 'Timeless Grace', category: 'Portraits', location: 'Fine Art Loft', image: '/images/latest_image/Z7N_9539_websize.webp', aspect: 'wide' }
 ];
 
 const CATEGORIES = ['All', 'Weddings', 'Portraits', 'Baby & Maternity'];
@@ -89,6 +95,23 @@ export default function LatestWork() {
 
   const currentItem = lightboxIndex !== null ? filteredItems[lightboxIndex] : null;
 
+  const [touchStartX, setTouchStartX] = useState(0);
+
+  const handleTouchStart = (e) => {
+    setTouchStartX(e.changedTouches[0].screenX);
+  };
+
+  const handleTouchEnd = (e) => {
+    const diff = touchStartX - e.changedTouches[0].screenX;
+    if (diff > 45) {
+      // Swiped Left -> Next
+      setLightboxIndex((prev) => (prev + 1) % filteredItems.length);
+    } else if (diff < -45) {
+      // Swiped Right -> Prev
+      setLightboxIndex((prev) => (prev - 1 + filteredItems.length) % filteredItems.length);
+    }
+  };
+
   return (
     <section id="latest-work" ref={sectionRef} className="latest-work-section">
       <div className="container-fluid latest-work-container">
@@ -109,11 +132,6 @@ export default function LatestWork() {
             >
               <div className="card-image-box img-zoom-container">
                 <LazyImage src={item.image} alt={item.title || `Latest Work ${index + 1}`} />
-                <div className="card-hover-overlay">
-                  <div className="zoom-icon-circle">
-                    <Eye size={22} />
-                  </div>
-                </div>
               </div>
             </div>
           ))}
@@ -131,13 +149,18 @@ export default function LatestWork() {
 
       {/* Lightbox Modal */}
       {lightboxIndex !== null && currentItem && (
-        <div className="latest-lightbox-overlay" onClick={() => setLightboxIndex(null)}>
+        <div 
+          className="latest-lightbox-overlay" 
+          onClick={() => setLightboxIndex(null)}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
           <button
             className="lightbox-close-btn"
             onClick={() => setLightboxIndex(null)}
             aria-label="Close Lightbox"
           >
-            <X size={30} />
+            <X size={26} />
           </button>
 
           <button
@@ -148,7 +171,7 @@ export default function LatestWork() {
             }}
             aria-label="Previous Image"
           >
-            <ChevronLeft size={36} />
+            <ChevronLeft size={30} />
           </button>
 
           <div className="lightbox-image-container" onClick={(e) => e.stopPropagation()}>
@@ -163,7 +186,7 @@ export default function LatestWork() {
             }}
             aria-label="Next Image"
           >
-            <ChevronRight size={36} />
+            <ChevronRight size={30} />
           </button>
         </div>
       )}

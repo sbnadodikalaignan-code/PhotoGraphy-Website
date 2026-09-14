@@ -27,7 +27,7 @@ export default function Footer() {
           {/* Logo block */}
           <div className="footer-brand">
             <div className="logo" onClick={goHome}>
-              <img src="/images/logo.png" alt="Stories by Nadodikalaignan Logo" className="logo-img" />
+              <img src="/images/other/logo.png" alt="Stories by Nadodikalaignan Logo" className="logo-img" />
             </div>
             <p className="brand-tagline">Timeless storytelling through candid frames.</p>
           </div>
@@ -37,6 +37,7 @@ export default function Footer() {
             <h4 className="footer-heading">NAVIGATE</h4>
             <ul className="footer-links">
               <li><button type="button" className="footer-nav-btn" onClick={goHome}>Home</button></li>
+              <li><Link to="/albums">Wedding Films</Link></li>
               <li><Link to="/profiles">About Studio</Link></li>
               <li><Link to="/services/wedding">Latest Work</Link></li>
               <li><Link to="/#faq">FAQ</Link></li>
