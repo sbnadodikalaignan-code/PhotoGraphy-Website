@@ -77,7 +77,7 @@ export default function FAQ() {
           </div>
 
           <div className="faq-portrait-space">
-            <img src="/images/other/faq.jpg" alt="Stories by Nadodikalaignan portrait" />
+            <img src="https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/other/faq.jpg" alt="Stories by Nadodikalaignan portrait" />
           </div>
         </div>
       </div>

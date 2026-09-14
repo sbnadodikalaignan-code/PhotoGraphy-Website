@@ -7,7 +7,7 @@ const BLOGS = [
     title: '10 Crucial Tips for Your Dream Wedding Shoot',
     date: 'July 24, 2026',
     author: 'Maya',
-    image: '/images/WEEDING/1 (2).webp',
+    image: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/WEEDING/1 (2).webp',
     excerpt: 'Planning your wedding story can feel intense. From wardrobe selection to timing rituals, here is our guide to making every frame feel effortless.'
   },
   {
@@ -15,7 +15,7 @@ const BLOGS = [
     title: 'Chasing the Light: Destination Wedding in Udaipur',
     date: 'June 18, 2026',
     author: 'Rahul',
-    image: '/images/WEEDING/1 (4).webp',
+    image: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/WEEDING/1 (4).webp',
     excerpt: 'Udaipur offers a royal backdrop unlike any other. We share our experience navigating the palaces, lakes, and lighting setups.'
   },
   {
@@ -23,7 +23,7 @@ const BLOGS = [
     title: 'The Art of Capture: Why Candid Shots Matter Most',
     date: 'May 05, 2026',
     author: 'Rahul & Maya',
-    image: '/images/WEEDING/1 (5).webp',
+    image: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/WEEDING/1 (5).webp',
     excerpt: 'While portraits are timeless, candid moments hold the true emotions of your wedding day. Discover our approach to capturing unposed magic.'
   }
 ];

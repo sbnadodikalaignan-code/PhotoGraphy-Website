@@ -160,7 +160,7 @@ export default function Header({ heroTone = 'dark' }) {
           aria-label="Stories by Nadodikalaignan on Instagram"
           title="Visit @storiesbynadodikalaignan on Instagram"
         >
-          <img src="/images/other/logo.png" alt="Stories by Nadodikalaignan Logo" className="logo-img" />
+          <img src="https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/other/logo.png" alt="Stories by Nadodikalaignan Logo" className="logo-img" />
         </a>
 
         {/* Desktop Navigation */}
@@ -237,7 +237,7 @@ export default function Header({ heroTone = 'dark' }) {
                   onClick={() => setIsInstaOpen(false)}
                 >
                   <div className="insta-item-icon">
-                    <img src="/images/other/logo.png" alt="Stories by Nadodikalaignan Logo" className="insta-item-avatar insta-avatar-logo" />
+                    <img src="https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/other/logo.png" alt="Stories by Nadodikalaignan Logo" className="insta-item-avatar insta-avatar-logo" />
                   </div>
                   <div className="insta-item-info">
                     <span className="insta-item-handle">@storiesbynadodikalaignan</span>
@@ -255,7 +255,7 @@ export default function Header({ heroTone = 'dark' }) {
                   onClick={() => setIsInstaOpen(false)}
                 >
                   <div className="insta-item-icon">
-                    <img src="/images/other/nadodikalaignan ceo.webp" alt="Nadodikalaignan CEO" className="insta-item-avatar insta-avatar-photo" />
+                    <img src="https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/other/nadodikalaignan ceo.webp" alt="Nadodikalaignan CEO" className="insta-item-avatar insta-avatar-photo" />
                   </div>
                   <div className="insta-item-info">
                     <span className="insta-item-handle">@nadodikalaignan</span>

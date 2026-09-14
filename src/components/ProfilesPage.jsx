@@ -145,7 +145,7 @@ export default function ProfilesPage() {
           <div className="ceo-grid">
             {/* CEO Image Container */}
             <div className="ceo-card-image img-zoom-container">
-              <img src="/images/nadodikalaignan ceo.jpeg" alt="Founder & CEO - Stories by Nadodikalaignan" />
+              <img src="https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/nadodikalaignan ceo.jpeg" alt="Founder & CEO - Stories by Nadodikalaignan" />
               <div className="ceo-badge-floating">
                 <Sparkles size={18} className="badge-icon" />
                 <span>FOUNDER &amp; LEAD DIRECTOR</span>
