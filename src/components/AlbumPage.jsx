@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import Hls from 'hls.js';
 import { 
   ArrowRight, 
   X, 
@@ -12,10 +12,125 @@ import Footer from './Footer';
 import { ALBUMS_DATA } from '../data/albumData';
 import './AlbumPage.css';
 
+// Reusable Video Player supporting both Cloudflare R2 HLS (.m3u8) streams and standard files
+function AlbumVideoPlayer({
+  src,
+  poster,
+  isMuted = true,
+  autoPlay = true,
+  loop = true,
+  playsInline = true,
+  controls = false,
+  className = '',
+  onReady
+}) {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !src) return;
+
+    const isHls = src.includes('.m3u8');
+    let hls = null;
+
+    video.playsInline = true;
+
+    if (isHls) {
+      if (Hls.isSupported()) {
+        hls = new Hls({
+          enableWorker: true,
+          lowLatencyMode: false,
+          backBufferLength: 60
+        });
+
+        hls.loadSource(src);
+        hls.attachMedia(video);
+
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          if (autoPlay) {
+            video.play().catch(() => {});
+          }
+        });
+
+        hls.on(Hls.Events.ERROR, (_event, data) => {
+          if (data.fatal) {
+            switch (data.type) {
+              case Hls.ErrorTypes.NETWORK_ERROR:
+                hls.startLoad();
+                break;
+              case Hls.ErrorTypes.MEDIA_ERROR:
+                hls.recoverMediaError();
+                break;
+              default:
+                hls.destroy();
+                break;
+            }
+          }
+        });
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        // Native HLS for Safari / iOS WebKit
+        video.src = src;
+        const handleLoadedMetadata = () => {
+          if (autoPlay) {
+            video.play().catch(() => {});
+          }
+        };
+        video.addEventListener('loadedmetadata', handleLoadedMetadata);
+
+        return () => {
+          video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+        };
+      }
+    } else {
+      // Standard video file (mp4, webm)
+      video.src = src;
+      if (autoPlay) {
+        video.play().catch(() => {});
+      }
+    }
+
+    const handleEnded = () => {
+      if (loop) {
+        video.play().catch(() => {});
+      }
+    };
+    video.addEventListener('ended', handleEnded);
+
+    return () => {
+      video.removeEventListener('ended', handleEnded);
+      if (hls) {
+        hls.destroy();
+      }
+    };
+  }, [src, autoPlay, loop]);
+
+  // Keep DOM element muted property in sync with isMuted state
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = isMuted;
+    }
+  }, [isMuted]);
+
+  return (
+    <video
+      ref={videoRef}
+      poster={poster}
+      autoPlay={autoPlay}
+      muted={isMuted}
+      loop={loop}
+      playsInline={playsInline}
+      preload="metadata"
+      controls={controls}
+      onCanPlay={onReady}
+      onPlaying={onReady}
+      className={className}
+    />
+  );
+}
+
 // Card video player with instant thumbnail placeholder and smooth transition once video is ready to play
 function AlbumVideoCard({ album, isMuted }) {
   const [isVideoReady, setIsVideoReady] = useState(false);
-  const videoRef = useRef(null);
 
   return (
     <div className="album-image-wrapper">
@@ -29,17 +144,14 @@ function AlbumVideoCard({ album, isMuted }) {
 
       {/* 2. Video element loaded in background and played seamlessly */}
       {album.videoSrc ? (
-        <video
-          ref={videoRef}
+        <AlbumVideoPlayer
           src={album.videoSrc}
           poster={album.coverImage}
-          autoPlay
-          muted={isMuted}
-          loop
-          playsInline
-          preload="auto"
-          onCanPlay={() => setIsVideoReady(true)}
-          onPlaying={() => setIsVideoReady(true)}
+          isMuted={isMuted}
+          autoPlay={true}
+          loop={true}
+          playsInline={true}
+          onReady={() => setIsVideoReady(true)}
           className={`album-cover-video ${isVideoReady ? 'ready' : 'loading'}`}
         />
       ) : null}
@@ -57,7 +169,6 @@ function AlbumVideoCard({ album, isMuted }) {
 export default function AlbumPage() {
   const [selectedAlbum, setSelectedAlbum] = useState(null);
   const [mutedStates, setMutedStates] = useState({});
-  const navigate = useNavigate();
 
   // Scroll to top on mount
   useEffect(() => {
@@ -212,12 +323,14 @@ export default function AlbumPage() {
 
             {/* Video Player Box */}
             <div className="modal-video-player-box">
-              <video
+              <AlbumVideoPlayer
                 src={selectedAlbum.videoSrc}
                 poster={selectedAlbum.coverImage}
-                controls
-                autoPlay
-                playsInline
+                controls={true}
+                autoPlay={true}
+                loop={false}
+                isMuted={false}
+                playsInline={true}
                 className="modal-full-video"
               />
             </div>

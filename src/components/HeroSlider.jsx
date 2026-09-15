@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Hls from 'hls.js';
 import './HeroSlider.css';
 
 const SLIDES = [
   {
-    video: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/VIDEO/HEROSEACTIONVIDEO.webm',
+    video: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/VIDEO/HEROSEACTIONVIDEO/video.m3u8',
     image: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/HEROSEACTIONIMAGE/1.webp',
     title: '',
     tagline: '',
@@ -86,6 +87,89 @@ const SLIDES = [
   }
 ];
 
+function HeroHlsVideo({ src, poster, className }) {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !src) return;
+
+    let hls = null;
+
+    // Explicitly set DOM properties for reliable autoplay on mobile browsers
+    video.muted = true;
+    video.playsInline = true;
+    video.loop = true;
+
+    if (Hls.isSupported()) {
+      hls = new Hls({
+        enableWorker: true,
+        lowLatencyMode: false,
+        backBufferLength: 90
+      });
+
+      hls.loadSource(src);
+      hls.attachMedia(video);
+
+      hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        video.play().catch(() => {});
+      });
+
+      hls.on(Hls.Events.ERROR, (_event, data) => {
+        if (data.fatal) {
+          switch (data.type) {
+            case Hls.ErrorTypes.NETWORK_ERROR:
+              hls.startLoad();
+              break;
+            case Hls.ErrorTypes.MEDIA_ERROR:
+              hls.recoverMediaError();
+              break;
+            default:
+              hls.destroy();
+              break;
+          }
+        }
+      });
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      // Native HLS for Safari and iOS WebKit
+      video.src = src;
+      const onLoadedMetadata = () => {
+        video.play().catch(() => {});
+      };
+      video.addEventListener('loadedmetadata', onLoadedMetadata);
+
+      return () => {
+        video.removeEventListener('loadedmetadata', onLoadedMetadata);
+      };
+    }
+
+    const handleEnded = () => {
+      video.play().catch(() => {});
+    };
+    video.addEventListener('ended', handleEnded);
+
+    return () => {
+      video.removeEventListener('ended', handleEnded);
+      if (hls) {
+        hls.destroy();
+      }
+    };
+  }, [src]);
+
+  return (
+    <video
+      ref={videoRef}
+      poster={poster}
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      className={className}
+    />
+  );
+}
+
 export default function HeroSlider({ onToneChange }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -160,13 +244,9 @@ export default function HeroSlider({ onToneChange }) {
           >
             {slide.video ? (
               <div className="hero-video-wrapper">
-                <video
+                <HeroHlsVideo
                   src={slide.video}
                   poster={slide.image}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
                   className="hero-video-element"
                 />
                 {slide.overlay && (

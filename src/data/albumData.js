@@ -1,3 +1,5 @@
+export const SOWMIKA_HLS_VIDEO_URL = 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/VIDEO/Sowmika5/video.m3u8';
+
 export const ALBUMS_DATA = [
   {
     id: 'gloria-vishnu',
@@ -91,7 +93,7 @@ export const ALBUMS_DATA = [
       camera: 'Sony A7R V • 50mm f/1.2'
     },
     coverImage: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/thumbnail/kaanisham_sowmika.webp',
-    videoSrc: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/VIDEO/Sowmika5.mp4',
+    videoSrc: SOWMIKA_HLS_VIDEO_URL,
     accentColor: '#2980b9',
     accentLight: 'rgba(41, 128, 185, 0.08)',
     accentBorder: 'rgba(41, 128, 185, 0.25)',
