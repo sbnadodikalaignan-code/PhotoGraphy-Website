@@ -3,25 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { 
   ArrowRight, 
   X, 
-  ChevronLeft, 
-  ChevronRight, 
-  Maximize2, 
-  MapPin, 
-  Calendar, 
-  Camera, 
-  Layers, 
-  Sparkles, 
-  Share2, 
-  Check, 
   Play, 
   Volume2, 
-  VolumeX, 
-  Film,
-  Image as ImageIcon
+  VolumeX 
 } from 'lucide-react';
 import Header from './Header';
 import Footer from './Footer';
-import LazyImage from './LazyImage';
 import { ALBUMS_DATA } from '../data/albumData';
 import './AlbumPage.css';
 
@@ -69,9 +56,6 @@ function AlbumVideoCard({ album, isMuted }) {
 
 export default function AlbumPage() {
   const [selectedAlbum, setSelectedAlbum] = useState(null);
-  const [lightboxPhotoIndex, setLightboxPhotoIndex] = useState(null);
-  const [copiedLink, setCopiedLink] = useState(false);
-  const [activeModalTab, setActiveModalTab] = useState('video'); // 'video' | 'photos'
   const [mutedStates, setMutedStates] = useState({});
   const navigate = useNavigate();
 
@@ -80,29 +64,17 @@ export default function AlbumPage() {
     window.scrollTo(0, 0);
   }, []);
 
-  // Keyboard navigation for lightbox
+  // Keyboard navigation for closing video modal
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (!selectedAlbum) return;
-
       if (e.key === 'Escape') {
-        if (lightboxPhotoIndex !== null) {
-          setLightboxPhotoIndex(null);
-        } else {
-          setSelectedAlbum(null);
-        }
-      } else if (lightboxPhotoIndex !== null) {
-        if (e.key === 'ArrowRight') {
-          handleNextPhoto();
-        } else if (e.key === 'ArrowLeft') {
-          handlePrevPhoto();
-        }
+        setSelectedAlbum(null);
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedAlbum, lightboxPhotoIndex]);
+  }, []);
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -116,15 +88,12 @@ export default function AlbumPage() {
     };
   }, [selectedAlbum]);
 
-  const handleOpenAlbum = (album, defaultTab = 'video') => {
+  const handleOpenAlbum = (album) => {
     setSelectedAlbum(album);
-    setActiveModalTab(defaultTab);
-    setLightboxPhotoIndex(null);
   };
 
   const handleCloseAlbum = () => {
     setSelectedAlbum(null);
-    setLightboxPhotoIndex(null);
   };
 
   const toggleSound = (e, albumId) => {
@@ -135,28 +104,6 @@ export default function AlbumPage() {
     }));
   };
 
-  const handleNextPhoto = () => {
-    if (!selectedAlbum) return;
-    setLightboxPhotoIndex((prev) => 
-      prev === selectedAlbum.photos.length - 1 ? 0 : prev + 1
-    );
-  };
-
-  const handlePrevPhoto = () => {
-    if (!selectedAlbum) return;
-    setLightboxPhotoIndex((prev) => 
-      prev === 0 ? selectedAlbum.photos.length - 1 : prev - 1
-    );
-  };
-
-  const handleShare = () => {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(window.location.href);
-      setCopiedLink(true);
-      setTimeout(() => setCopiedLink(false), 2500);
-    }
-  };
-
   return (
     <div className="album-page-wrapper">
       <Header heroTone="light" />
@@ -165,14 +112,7 @@ export default function AlbumPage() {
         {/* Page Hero Header */}
         <section className="album-hero-section">
           <div className="album-hero-content">
-            <div className="album-pill-badge">
-              <Sparkles size={14} className="sparkle-icon" />
-              <span>STORIES BY NADODIKALAIGNAN</span>
-            </div>
-            <h1 className="album-main-title">ALBUMS</h1>
-            <p className="album-subtitle">
-              Cinematic wedding films, candid moments, and fine-art visual stories crafted with heart and soul.
-            </p>
+            <h1 className="album-main-title">WEDDING FILMS</h1>
           </div>
         </section>
 
@@ -223,46 +163,19 @@ export default function AlbumPage() {
                     </div>
                   </div>
 
-                  {/* Content & Details Block */}
+                  {/* Content & Details Block - Only Client Name and See Full Video */}
                   <div className="album-content-col">
                     <div className="album-content-inner">
-                      <div className="album-tag-row">
-                        <span className="album-category-pill">
-                          {(album.category || 'Film').toUpperCase()}
-                        </span>
-                        <span className="album-photo-count">
-                          <Film size={13} />
-                          Cinematic Film + {album.photos?.length || 0} Photos
-                        </span>
-                      </div>
+                      <h2 className="album-row-title">{album.clientName || album.title}</h2>
 
-                      <h2 className="album-row-title">{album.title}</h2>
-
-                      <p className="album-row-story">{album.story || ''}</p>
-
-                      <div className="album-meta-grid">
-                        <div className="meta-item">
-                          <MapPin size={14} className="meta-icon" />
-                          <span>{album.details?.location || 'On Location'}</span>
-                        </div>
-                        <div className="meta-item">
-                          <Calendar size={14} className="meta-icon" />
-                          <span>{album.details?.date || 'Recent'}</span>
-                        </div>
-                        <div className="meta-item">
-                          <Camera size={14} className="meta-icon" />
-                          <span>{album.details?.camera || 'Sony Cinema Line'}</span>
-                        </div>
-                      </div>
-
-                      {/* SEE MORE Action Button (Matching sketch design) */}
+                      {/* SEE FULL VIDEO Action Button */}
                       <div className="album-action-row">
                         <button
                           type="button"
                           className="album-see-more-btn"
                           onClick={() => handleOpenAlbum(album, 'video')}
                         >
-                          <span>SEE MORE</span>
+                          <span>SEE FULL VIDEO</span>
                           <div className="btn-arrow-box">
                             <ArrowRight size={15} />
                           </div>
@@ -275,209 +188,39 @@ export default function AlbumPage() {
             })}
           </div>
         </section>
-
-        {/* Bottom CTA Banner */}
-        <section className="album-cta-banner">
-          <div className="album-container">
-            <div className="album-cta-card">
-              <div className="cta-sparkle">✦</div>
-              <h2>Want Your Story In Our Next Film & Album?</h2>
-              <p>Every love story, milestone, and family moment deserves to be preserved in handcrafted fine art and 4K cinema.</p>
-              <button 
-                type="button" 
-                className="cta-book-btn"
-                onClick={() => navigate('/contact')}
-              >
-                <span>BOOK YOUR PHOTOSHOOT</span>
-                <ArrowRight size={16} />
-              </button>
-            </div>
-          </div>
-        </section>
       </main>
 
-      {/* Fullscreen Album Lightbox / Video Player & Gallery Modal */}
-      {selectedAlbum && (
+      {/* Clean Fullscreen Video Player Modal */}
+      {selectedAlbum && selectedAlbum.videoSrc && (
         <div className="album-modal-backdrop" onClick={handleCloseAlbum}>
           <div 
-            className="album-modal-window" 
+            className="album-modal-window video-only-window" 
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
-            aria-labelledby="modal-album-title"
+            aria-label={`${selectedAlbum.title} video`}
           >
-            {/* Modal Header */}
-            <div className="album-modal-header">
-              <div className="modal-title-wrap">
-                <span className="modal-badge">{selectedAlbum.badge || 'ALBUM'}</span>
-                <h3 id="modal-album-title" className="modal-heading">{selectedAlbum.title}</h3>
-                <p className="modal-subtext">{selectedAlbum.details?.location || 'On Location'} • {selectedAlbum.details?.date || 'Recent'}</p>
-              </div>
-
-              <div className="modal-actions-wrap">
-                <button
-                  type="button"
-                  className="modal-share-btn"
-                  onClick={handleShare}
-                  title="Share album"
-                >
-                  {copiedLink ? <Check size={16} color="#27ae60" /> : <Share2 size={16} />}
-                  <span>{copiedLink ? 'Link Copied!' : 'Share'}</span>
-                </button>
-                <button
-                  type="button"
-                  className="modal-close-btn"
-                  onClick={handleCloseAlbum}
-                  aria-label="Close album modal"
-                >
-                  <X size={22} />
-                </button>
-              </div>
-            </div>
-
-            {/* Modal Navigation Tabs (Film vs Photos) */}
-            <div className="modal-tabs-bar">
-              {selectedAlbum.videoSrc && (
-                <button
-                  type="button"
-                  className={`modal-tab-btn ${activeModalTab === 'video' ? 'active' : ''}`}
-                  onClick={() => setActiveModalTab('video')}
-                >
-                  <Film size={15} />
-                  <span>CINEMATIC FILM</span>
-                </button>
-              )}
-              <button
-                type="button"
-                className={`modal-tab-btn ${activeModalTab === 'photos' ? 'active' : ''}`}
-                onClick={() => setActiveModalTab('photos')}
-              >
-                <ImageIcon size={15} />
-                <span>PHOTO GALLERY ({selectedAlbum.photos.length})</span>
-              </button>
-            </div>
-
-            {/* Modal Body */}
-            <div className="album-modal-body">
-              {/* Video Player Tab */}
-              {activeModalTab === 'video' && selectedAlbum.videoSrc && (
-                <div className="modal-video-section">
-                  <div className="modal-video-player-box">
-                    <video
-                      src={selectedAlbum.videoSrc}
-                      poster={selectedAlbum.coverImage}
-                      controls
-                      autoPlay
-                      className="modal-full-video"
-                    />
-                  </div>
-                  <div className="video-meta-bar">
-                    <span className="video-tag">4K ULTRA HD CINEMATOGRAPHY</span>
-                    <span className="video-hint">Click full screen icon inside player for theater view</span>
-                  </div>
-                </div>
-              )}
-
-              {/* Photos Gallery Grid Tab */}
-              {(activeModalTab === 'photos' || !selectedAlbum.videoSrc) && (
-                <div className="album-photos-grid">
-                  {selectedAlbum.photos.map((photo, pIdx) => (
-                    <div
-                      key={photo.id}
-                      className="album-grid-photo-card"
-                      onClick={() => setLightboxPhotoIndex(pIdx)}
-                    >
-                      <div className="photo-card-media">
-                        <LazyImage
-                          src={photo.src}
-                          alt={photo.title}
-                          className="photo-card-img"
-                        />
-                        <div className="photo-card-hover-overlay">
-                          <div className="photo-zoom-icon">
-                            <Maximize2 size={18} />
-                          </div>
-                          <div className="photo-hover-meta">
-                            <span className="photo-hover-title">{photo.title}</span>
-                            <span className="photo-hover-sub">{photo.caption}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {/* Bottom Inquire Banner */}
-              <div className="modal-bottom-inquire">
-                <div className="modal-inquire-info">
-                  <h4>Loving this film & photography style?</h4>
-                  <p>Inquire now to check our date availability and customized package pricing.</p>
-                </div>
-                <button
-                  type="button"
-                  className="modal-inquire-btn"
-                  onClick={() => {
-                    handleCloseAlbum();
-                    navigate('/contact');
-                  }}
-                >
-                  <span>TALK TO US</span>
-                  <ArrowRight size={15} />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Individual Photo Zoom Fullscreen Lightbox */}
-      {selectedAlbum && lightboxPhotoIndex !== null && (
-        <div className="photo-zoom-lightbox" onClick={() => setLightboxPhotoIndex(null)}>
-          <div className="zoom-top-bar" onClick={(e) => e.stopPropagation()}>
-            <div className="zoom-counter">
-              <span>{lightboxPhotoIndex + 1}</span> / {selectedAlbum.photos.length}
-            </div>
-            <div className="zoom-title-box">
-              <span className="zoom-title">{selectedAlbum.photos[lightboxPhotoIndex].title}</span>
-              <span className="zoom-caption">{selectedAlbum.photos[lightboxPhotoIndex].caption}</span>
-            </div>
+            {/* Floating Close Button */}
             <button
               type="button"
-              className="zoom-close-btn"
-              onClick={() => setLightboxPhotoIndex(null)}
-              aria-label="Close zoom view"
+              className="modal-video-close-btn"
+              onClick={handleCloseAlbum}
+              aria-label="Close video"
             >
-              <X size={24} />
-            </button>
-          </div>
-
-          <div className="zoom-main-stage" onClick={(e) => e.stopPropagation()}>
-            <button
-              type="button"
-              className="zoom-nav-btn prev"
-              onClick={handlePrevPhoto}
-              aria-label="Previous photo"
-            >
-              <ChevronLeft size={30} />
+              <X size={26} />
             </button>
 
-            <div className="zoom-image-holder">
-              <img
-                src={selectedAlbum.photos[lightboxPhotoIndex].src}
-                alt={selectedAlbum.photos[lightboxPhotoIndex].title}
-                className="zoom-current-image"
+            {/* Video Player Box */}
+            <div className="modal-video-player-box">
+              <video
+                src={selectedAlbum.videoSrc}
+                poster={selectedAlbum.coverImage}
+                controls
+                autoPlay
+                playsInline
+                className="modal-full-video"
               />
             </div>
-
-            <button
-              type="button"
-              className="zoom-nav-btn next"
-              onClick={handleNextPhoto}
-              aria-label="Next photo"
-            >
-              <ChevronRight size={30} />
-            </button>
           </div>
         </div>
       )}
