@@ -25,6 +25,48 @@ import LazyImage from './LazyImage';
 import { ALBUMS_DATA } from '../data/albumData';
 import './AlbumPage.css';
 
+// Card video player with instant thumbnail placeholder and smooth transition once video is ready to play
+function AlbumVideoCard({ album, isMuted }) {
+  const [isVideoReady, setIsVideoReady] = useState(false);
+  const videoRef = useRef(null);
+
+  return (
+    <div className="album-image-wrapper">
+      {/* 1. Instant thumbnail placeholder image with smooth fade */}
+      <img
+        src={album.coverImage}
+        alt={album.title}
+        className={`album-cover-thumbnail ${isVideoReady ? 'faded' : 'visible'}`}
+        loading="lazy"
+      />
+
+      {/* 2. Video element loaded in background and played seamlessly */}
+      {album.videoSrc ? (
+        <video
+          ref={videoRef}
+          src={album.videoSrc}
+          poster={album.coverImage}
+          autoPlay
+          muted={isMuted}
+          loop
+          playsInline
+          preload="auto"
+          onCanPlay={() => setIsVideoReady(true)}
+          onPlaying={() => setIsVideoReady(true)}
+          className={`album-cover-video ${isVideoReady ? 'ready' : 'loading'}`}
+        />
+      ) : null}
+
+      <div className="album-image-overlay">
+        <div className="album-view-action">
+          <Play size={18} fill="currentColor" />
+          <span>WATCH FILM & VIEW ALBUM</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function AlbumPage() {
   const [selectedAlbum, setSelectedAlbum] = useState(null);
   const [lightboxPhotoIndex, setLightboxPhotoIndex] = useState(null);
@@ -160,32 +202,7 @@ export default function AlbumPage() {
                       tabIndex={0}
                       aria-label={`Play album video: ${album.title}`}
                     >
-                      <div className="album-image-wrapper">
-                        {album.videoSrc ? (
-                          <video
-                            src={album.videoSrc}
-                            poster={album.coverImage}
-                            autoPlay
-                            muted={isMuted}
-                            loop
-                            playsInline
-                            className="album-cover-video"
-                          />
-                        ) : (
-                          <LazyImage
-                            src={album.coverImage}
-                            alt={album.title}
-                            className="album-cover-img"
-                          />
-                        )}
-
-                        <div className="album-image-overlay">
-                          <div className="album-view-action">
-                            <Play size={18} fill="currentColor" />
-                            <span>WATCH FILM & VIEW ALBUM</span>
-                          </div>
-                        </div>
-                      </div>
+                      <AlbumVideoCard album={album} isMuted={isMuted} />
 
                       {/* Sound Toggle Button */}
                       {album.videoSrc && (
@@ -211,30 +228,30 @@ export default function AlbumPage() {
                     <div className="album-content-inner">
                       <div className="album-tag-row">
                         <span className="album-category-pill">
-                          {album.category.toUpperCase()}
+                          {(album.category || 'Film').toUpperCase()}
                         </span>
                         <span className="album-photo-count">
                           <Film size={13} />
-                          Cinematic Film + {album.photos.length} Photos
+                          Cinematic Film + {album.photos?.length || 0} Photos
                         </span>
                       </div>
 
                       <h2 className="album-row-title">{album.title}</h2>
 
-                      <p className="album-row-story">{album.story}</p>
+                      <p className="album-row-story">{album.story || ''}</p>
 
                       <div className="album-meta-grid">
                         <div className="meta-item">
                           <MapPin size={14} className="meta-icon" />
-                          <span>{album.details.location}</span>
+                          <span>{album.details?.location || 'On Location'}</span>
                         </div>
                         <div className="meta-item">
                           <Calendar size={14} className="meta-icon" />
-                          <span>{album.details.date}</span>
+                          <span>{album.details?.date || 'Recent'}</span>
                         </div>
                         <div className="meta-item">
                           <Camera size={14} className="meta-icon" />
-                          <span>{album.details.camera}</span>
+                          <span>{album.details?.camera || 'Sony Cinema Line'}</span>
                         </div>
                       </div>
 
@@ -292,9 +309,9 @@ export default function AlbumPage() {
             {/* Modal Header */}
             <div className="album-modal-header">
               <div className="modal-title-wrap">
-                <span className="modal-badge">{selectedAlbum.badge}</span>
+                <span className="modal-badge">{selectedAlbum.badge || 'ALBUM'}</span>
                 <h3 id="modal-album-title" className="modal-heading">{selectedAlbum.title}</h3>
-                <p className="modal-subtext">{selectedAlbum.details.location} • {selectedAlbum.details.date}</p>
+                <p className="modal-subtext">{selectedAlbum.details?.location || 'On Location'} • {selectedAlbum.details?.date || 'Recent'}</p>
               </div>
 
               <div className="modal-actions-wrap">
