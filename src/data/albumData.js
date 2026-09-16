@@ -1,3 +1,5 @@
+export const GLORIA_VISHNU_HLS_VIDEO_URL = 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/VIDEO/GloriaVishnu/video.m3u8';
+export const CANDID_HLS_VIDEO_URL = 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/VIDEO/CANDID/video.m3u8';
 export const SOWMIKA_HLS_VIDEO_URL = 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/VIDEO/Sowmika5/video.m3u8';
 
 export const ALBUMS_DATA = [
@@ -14,7 +16,7 @@ export const ALBUMS_DATA = [
       camera: 'Sony FX3 & Sony A7R V'
     },
     coverImage: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/thumbnail/gloria_vishnu.webp',
-    videoSrc: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/VIDEO/Gloria Vishnu.webm',
+    videoSrc: GLORIA_VISHNU_HLS_VIDEO_URL,
     accentColor: '#d9383a',
     accentLight: 'rgba(217, 56, 58, 0.08)',
     accentBorder: 'rgba(217, 56, 58, 0.25)',
@@ -117,7 +119,7 @@ export const ALBUMS_DATA = [
       camera: 'Sony A7R V • 85mm GM'
     },
     coverImage: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/thumbnail/z.webp',
-    videoSrc: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/VIDEO/CANDID VIDEO.mp4',
+    videoSrc: CANDID_HLS_VIDEO_URL,
     accentColor: '#8e44ad',
     accentLight: 'rgba(142, 68, 173, 0.08)',
     accentBorder: 'rgba(142, 68, 173, 0.25)',

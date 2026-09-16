@@ -267,10 +267,6 @@ export default function AlbumPage() {
                           {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
                         </button>
                       )}
-
-                      <div className="album-floating-badge">
-                        <span>{album.badge}</span>
-                      </div>
                     </div>
                   </div>
 
