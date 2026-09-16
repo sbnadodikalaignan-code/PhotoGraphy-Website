@@ -5,7 +5,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Header from './Header';
 import ContactForm from './ContactForm';
 import Footer from './Footer';
-import ThreeGallery from './ThreeGallery';
 import './ProfilesPage.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -25,31 +24,45 @@ export default function ProfilesPage() {
       );
 
       // CEO Section Reveals
-      gsap.fromTo('.ceo-card-image',
-        { opacity: 0, scale: 0.92, y: 40 },
+      gsap.fromTo('.about-ceo-header-title',
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.about-ceo-section',
+            start: 'top 82%',
+          }
+        }
+      );
+
+      gsap.fromTo('.about-ceo-photo-wrapper',
+        { opacity: 0, scale: 0.94, y: 30 },
         {
           opacity: 1,
           scale: 1,
           y: 0,
-          duration: 1.2,
+          duration: 1.1,
           ease: 'power3.out',
           scrollTrigger: {
-            trigger: '.ceo-section',
+            trigger: '.about-ceo-section',
             start: 'top 80%',
           }
         }
       );
 
-      gsap.fromTo('.ceo-content-block > *',
-        { opacity: 0, y: 35 },
+      gsap.fromTo('.about-ceo-details > *',
+        { opacity: 0, y: 30 },
         {
           opacity: 1,
           y: 0,
-          duration: 1,
-          stagger: 0.15,
+          duration: 0.9,
+          stagger: 0.12,
           ease: 'power3.out',
           scrollTrigger: {
-            trigger: '.ceo-content-block',
+            trigger: '.about-ceo-card-block',
             start: 'top 80%',
           }
         }
@@ -66,25 +79,6 @@ export default function ProfilesPage() {
           ease: 'power3.out',
           scrollTrigger: {
             trigger: '.studio-pillars-grid',
-            start: 'top 80%',
-          }
-        }
-      );
-
-
-
-      // Studio Gallery Images Reveal
-      gsap.fromTo('.studio-gallery-item',
-        { opacity: 0, scale: 0.94, y: 30 },
-        {
-          opacity: 1,
-          scale: 1,
-          y: 0,
-          duration: 1.1,
-          stagger: 0.15,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: '.studio-gallery-grid',
             start: 'top 80%',
           }
         }
@@ -119,6 +113,10 @@ export default function ProfilesPage() {
           <div className="our-story-left">
             <span className="our-story-subtitle">Who We Are</span>
             <h2 className="our-story-title">Our Story</h2>
+
+            <div className="our-story-image-mobile-box">
+              <img src="https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/other/about.jpeg" alt="Our Story - Stories by Nadodikalaignan" />
+            </div>
             
             <div className="our-story-text-group">
               <p className="our-story-paragraph">
@@ -132,74 +130,56 @@ export default function ProfilesPage() {
 
           <div className="our-story-right">
             <div className="our-story-image-box">
-              <img src="\images\nadodikalaignan ceo.webp" alt="Our Story - Stories by Nadodikalaignan" />
+              <img src="https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/other/about.jpeg" alt="Our Story - Stories by Nadodikalaignan" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* SECTION 1: ABOUT CEO / FOUNDER */}
-      <section className="profiles-section ceo-section">
-        <div className="profiles-container">
+      {/* SECTION 1: ABOUT CEO (TERRACOTTA CARD) */}
+      <section className="about-ceo-section">
+        <div className="about-ceo-container">
+          <h2 className="about-ceo-header-title">Our CEO</h2>
 
-          <div className="ceo-grid">
-            {/* CEO Image Container */}
-            <div className="ceo-card-image img-zoom-container">
-              <img src="https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/nadodikalaignan ceo.jpeg" alt="Founder & CEO - Stories by Nadodikalaignan" />
-              <div className="ceo-badge-floating">
-                <Sparkles size={18} className="badge-icon" />
-                <span>FOUNDER &amp; LEAD DIRECTOR</span>
-              </div>
+          <div className="about-ceo-card-block">
+            {/* CEO Photo */}
+            <div className="about-ceo-photo-wrapper">
+              <img
+                src="https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/other/nadodikalaignan%20ceo.webp"
+                alt="Vasanth Chinnasamy - Founder & Chief Creative Director"
+              />
             </div>
 
             {/* CEO Content Details */}
-            <div className="ceo-content-block">
-              <span className="section-label">ABOUT THE CEO</span>
-              <h2 className="ceo-name">Vasanth Chinnasamy</h2>
-              <h3 className="ceo-role">Founder &amp; Chief Creative Director</h3>
+            <div className="about-ceo-details">
+              <h3 className="about-ceo-name">Vasanth Chinnasamy</h3>
+              <h4 className="about-ceo-role">Founder &amp; Chief Creative Director</h4>
 
-              <div className="ceo-quote-box">
-                <p className="ceo-quote">
-                  "Photography isn't about setting up artificial scenes — it's about holding space for genuine emotion, legacy, and human connection."
-                </p>
-              </div>
-
-              <p className="ceo-bio-text">
-                With over 15 years of documentary photography experience across India and international destinations, Vasanth has redefined modern Indian wedding imagery. His distinctive visual language blends fine-art portraiture with candid storytelling.
+              <p className="about-ceo-bio">
+                Under the creative vision of Vasanth Chinnasamy, Stories by Nadodikalaignan has redefined modern wedding and portrait photography. With over 15 years of documentary expertise across India and global destinations, Vasanth brings an artistic lens that captures raw emotion with royal grandeur.
               </p>
 
-              <p className="ceo-bio-text">
-                Under his creative direction, Stories by Nadodikalaignan has captured over 500 iconic celebrations, earning international acclaim for authenticity, rich colors, and timeless emotional depth.
+              <p className="about-ceo-bio">
+                Vasanth leads a dedicated team of master cinematographers, visual directors, and colorists who share an uncompromising commitment to perfection. Every photograph and film is meticulously handcrafted to celebrate the heritage, beauty, and unscripted magic of your journey.
               </p>
 
-              {/* Accolades & Highlights */}
-              <div className="ceo-highlights-grid">
-                <div className="highlight-item">
-                  <Award className="highlight-icon" size={24} />
-                  <div>
-                    <h4>15+ Years</h4>
-                    <span>Master Craftsmanship</span>
-                  </div>
-                </div>
-                <div className="highlight-item">
-                  <Camera className="highlight-icon" size={24} />
-                  <div>
-                    <h4>500+ Stories</h4>
-                    <span>Global Destinations</span>
-                  </div>
-                </div>
-                <div className="highlight-item">
-                  <Heart className="highlight-icon" size={24} />
-                  <div>
-                    <h4>98% Referral</h4>
-                    <span>Cherished Worldwide</span>
-                  </div>
-                </div>
+              <div className="about-ceo-social-wrap">
+                <a
+                  href="https://www.instagram.com/nadodikalaignan"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="ceo-instagram-btn"
+                >
+                  <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                  <span>FOLLOW @NADODIKALAIGNAN</span>
+                </a>
               </div>
-
             </div>
           </div>
-
         </div>
       </section>
 
@@ -243,14 +223,6 @@ export default function ProfilesPage() {
               </p>
             </div>
           </div>
-
-          {/* Studio Gallery Showcase - 3D Three.js Interactive Showcase */}
-          <div className="studio-gallery-header">
-            <h3>Behind the Craft</h3>
-            <p>A glimpse into our visual storytelling across weddings, portraits, and baby &amp; maternity albums.</p>
-          </div>
-
-          <ThreeGallery />
 
         </div>
       </section>
