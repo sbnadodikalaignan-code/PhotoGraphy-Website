@@ -21,7 +21,7 @@ const WEDDING_IMAGE_FILES = [
 const WEDDING_ITEMS = WEDDING_IMAGE_FILES.map((fileName, index) => ({
   id: index + 1,
   title: `Wedding ${index + 1}`,
-  image: `https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/WEEDING/${fileName}`,
+  image: `https://media.nadodikalaignan.com/images/WEEDING/${fileName}`,
   size: index % 2 === 0 ? 'size-medium' : 'size-small'
 }));
 
@@ -34,7 +34,7 @@ const BABY_IMAGE_FILES = [
 const BABY_ITEMS = BABY_IMAGE_FILES.map((fileName, index) => ({
   id: index + 1,
   title: `Baby & Maternity ${index + 1}`,
-  image: `https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/BABYIMAGE/${fileName}`,
+  image: `https://media.nadodikalaignan.com/images/BABYIMAGE/${fileName}`,
   size: index % 2 === 0 ? 'size-medium' : 'size-small'
 }));
 
@@ -48,7 +48,7 @@ const PORTRAIT_IMAGE_FILES = [
 const PORTRAIT_ITEMS = PORTRAIT_IMAGE_FILES.map((fileName, index) => ({
   id: index + 1,
   title: `Portrait ${index + 1}`,
-  image: `https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/protrate/${fileName}`,
+  image: `https://media.nadodikalaignan.com/images/protrate/${fileName}`,
   size: index % 2 === 0 ? 'size-medium' : 'size-small'
 }));
 
@@ -232,7 +232,7 @@ export default function PortfolioGrid() {
         <div className="portfolio-hero">
           <div
             className="portfolio-hero-bg"
-            style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/WEEDING/1 (1).webp')` }}
+            style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('https://media.nadodikalaignan.com/images/WEEDING/1 (1).webp')` }}
           ></div>
           <div className="hero-content hero-title-anim">
             <h2 className="hero-title">Wedding</h2>
@@ -277,7 +277,7 @@ export default function PortfolioGrid() {
         <div className="portfolio-hero">
           <div
             className="portfolio-hero-bg"
-            style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/BABYIMAGE/1 (8).webp')` }}
+            style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('https://media.nadodikalaignan.com/images/BABYIMAGE/1 (8).webp')` }}
           ></div>
           <div className="hero-content hero-title-anim">
             <h2 className="hero-title">Baby &amp; Maternity</h2>
@@ -322,7 +322,7 @@ export default function PortfolioGrid() {
         <div className="portfolio-hero">
           <div
             className="portfolio-hero-bg"
-            style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/protrate/1 (1).webp')` }}
+            style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('https://media.nadodikalaignan.com/images/protrate/1 (1).webp')` }}
           ></div>
           <div className="hero-content hero-title-anim">
             <h2 className="hero-title">Portrait Shoot</h2>

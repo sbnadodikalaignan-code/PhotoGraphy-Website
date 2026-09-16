@@ -27,7 +27,7 @@ export default function Footer() {
           {/* Logo block */}
           <div className="footer-brand">
             <div className="logo" onClick={goHome}>
-              <img src="https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/other/logo.png" alt="Stories by Nadodikalaignan Logo" className="logo-img" />
+              <img src="https://media.nadodikalaignan.com/images/other/logo.png" alt="Stories by Nadodikalaignan Logo" className="logo-img" />
             </div>
             <p className="brand-tagline">Timeless storytelling through candid frames.</p>
           </div>

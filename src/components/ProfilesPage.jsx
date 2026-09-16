@@ -115,7 +115,7 @@ export default function ProfilesPage() {
             <h2 className="our-story-title">Our Story</h2>
 
             <div className="our-story-image-mobile-box">
-              <img src="https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/other/about.jpeg" alt="Our Story - Stories by Nadodikalaignan" />
+              <img src="https://media.nadodikalaignan.com/images/other/about.jpeg" alt="Our Story - Stories by Nadodikalaignan" />
             </div>
             
             <div className="our-story-text-group">
@@ -130,7 +130,7 @@ export default function ProfilesPage() {
 
           <div className="our-story-right">
             <div className="our-story-image-box">
-              <img src="https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/other/about.jpeg" alt="Our Story - Stories by Nadodikalaignan" />
+              <img src="https://media.nadodikalaignan.com/images/other/about.jpeg" alt="Our Story - Stories by Nadodikalaignan" />
             </div>
           </div>
         </div>
@@ -145,7 +145,7 @@ export default function ProfilesPage() {
             {/* CEO Photo */}
             <div className="about-ceo-photo-wrapper">
               <img
-                src="https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/other/nadodikalaignan%20ceo.webp"
+                src="https://media.nadodikalaignan.com/images/other/nadodikalaignan%20ceo.webp"
                 alt="Vasanth Chinnasamy - Founder & Chief Creative Director"
               />
             </div>

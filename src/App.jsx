@@ -19,7 +19,7 @@ const AlbumPage = lazy(() => import('./components/AlbumPage'));
 function PageLoader() {
   return (
     <div style={{ minHeight: '80vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#ffffff', gap: '1.2rem', padding: '2rem' }}>
-      <img src="https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/other/logo.png" alt="Loading" style={{ height: '54px', width: 'auto', filter: 'brightness(0)', opacity: 0.85, animation: 'pulseLogo 1.8s ease-in-out infinite' }} />
+      <img src="https://media.nadodikalaignan.com/images/other/logo.png" alt="Loading" style={{ height: '54px', width: 'auto', filter: 'brightness(0)', opacity: 0.85, animation: 'pulseLogo 1.8s ease-in-out infinite' }} />
       <div style={{ width: '32px', height: '32px', border: '2px solid rgba(0,0,0,0.08)', borderTopColor: '#0a0a0c', borderRadius: '50%', animation: 'spin 0.8s cubic-bezier(0.6, 0.2, 0.4, 0.8) infinite' }}></div>
       <style>{`
         @keyframes spin { to { transform: rotate(360deg); } }

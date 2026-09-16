@@ -5,8 +5,8 @@ import './HeroSlider.css';
 
 const SLIDES = [
   {
-    video: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/VIDEO/HEROSEACTIONVIDEO/video.m3u8',
-    image: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/HEROSEACTIONIMAGE/1.webp',
+    video: 'https://media.nadodikalaignan.com/images/VIDEO/HEROSEACTIONVIDEO/video.m3u8',
+    image: 'https://media.nadodikalaignan.com/images/HEROSEACTIONIMAGE/1.webp',
     title: '',
     tagline: '',
     copyTheme: 'copy-light',
@@ -14,7 +14,7 @@ const SLIDES = [
     overlay: null
   },
   {
-    image: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/HEROSEACTIONIMAGE/1.webp',
+    image: 'https://media.nadodikalaignan.com/images/HEROSEACTIONIMAGE/1.webp',
     title: 'A PROMISE, HELD CLOSE',
     tagline: 'BEFORE THE CELEBRATION BEGINS',
     copyTheme: 'copy-light',
@@ -22,7 +22,7 @@ const SLIDES = [
     overlay: 'linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0.72) 100%)'
   },
   {
-    image: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/HEROSEACTIONIMAGE/2.webp',
+    image: 'https://media.nadodikalaignan.com/images/HEROSEACTIONIMAGE/2.webp',
     title: 'GOLDEN HOUR, TWO HEARTS',
     tagline: 'A LOVE STORY LIT BY THE LAST LIGHT',
     copyTheme: 'copy-light',
@@ -30,7 +30,7 @@ const SLIDES = [
     overlay: 'linear-gradient(to bottom, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.15) 60%, rgba(0,0,0,0.7) 100%)'
   },
   {
-    image: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/HEROSEACTIONIMAGE/3.webp',
+    image: 'https://media.nadodikalaignan.com/images/HEROSEACTIONIMAGE/3.webp',
     title: 'THE JOY OF US',
     tagline: 'THE LITTLE GLANCES THAT LAST FOREVER',
     copyTheme: 'copy-ink',
@@ -38,7 +38,7 @@ const SLIDES = [
     overlay: null
   },
   {
-    image: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/HEROSEACTIONIMAGE/4.webp',
+    image: 'https://media.nadodikalaignan.com/images/HEROSEACTIONIMAGE/4.webp',
     title: 'A NIGHT MADE OF MAGIC',
     tagline: 'WHERE LOVE DANCES THROUGH THE RAIN',
     copyTheme: 'copy-light',
@@ -46,7 +46,7 @@ const SLIDES = [
     overlay: 'linear-gradient(to bottom, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.14) 60%, rgba(0,0,0,0.72) 100%)'
   },
   {
-    image: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/HEROSEACTIONIMAGE/5.webp',
+    image: 'https://media.nadodikalaignan.com/images/HEROSEACTIONIMAGE/5.webp',
     title: 'HEARTS IN HARMONY',
     tagline: 'THE MOST BEAUTIFUL MOMENTS ARE UNSCRIPTED',
     copyTheme: 'copy-light',
@@ -54,7 +54,7 @@ const SLIDES = [
     overlay: 'linear-gradient(to bottom, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.12) 60%, rgba(0,0,0,0.68) 100%)'
   },
   {
-    image: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/HEROSEACTIONIMAGE/6.webp',
+    image: 'https://media.nadodikalaignan.com/images/HEROSEACTIONIMAGE/6.webp',
     title: 'JOY, IN ITS PUREST FORM',
     tagline: 'REAL LAUGHTER. REAL LOVE. FOREVER REMEMBERED.',
     copyTheme: 'copy-light',
@@ -62,7 +62,7 @@ const SLIDES = [
     overlay: 'linear-gradient(to bottom, rgba(0,0,0,0.26) 0%, rgba(0,0,0,0.12) 60%, rgba(0,0,0,0.68) 100%)'
   },
   {
-    image: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/HEROSEACTIONIMAGE/7.webp',
+    image: 'https://media.nadodikalaignan.com/images/HEROSEACTIONIMAGE/7.webp',
     title: 'JOY TAKES THE STAGE',
     tagline: 'A CELEBRATION LIT WITH LAUGHTER',
     copyTheme: 'copy-light',
@@ -70,7 +70,7 @@ const SLIDES = [
     overlay: 'linear-gradient(to bottom, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.08) 60%, rgba(0,0,0,0.66) 100%)'
   },
   {
-    image: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/HEROSEACTIONIMAGE/8.webp',
+    image: 'https://media.nadodikalaignan.com/images/HEROSEACTIONIMAGE/8.webp',
     title: 'YOUR STORY, BEAUTIFULLY YOURS',
     tagline: 'TRADITIONS HELD CLOSE. MEMORIES MADE NEW.',
     copyTheme: 'copy-ink',
@@ -78,7 +78,7 @@ const SLIDES = [
     overlay: null
   },
   {
-    image: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/HEROSEACTIONIMAGE/9.webp',
+    image: 'https://media.nadodikalaignan.com/images/HEROSEACTIONIMAGE/9.webp',
     title: 'FOREVER BEGINS HERE',
     tagline: 'TWO SOULS, ONE BEAUTIFUL JOURNEY',
     copyTheme: 'copy-ink',

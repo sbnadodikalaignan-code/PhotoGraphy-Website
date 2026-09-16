@@ -8,28 +8,28 @@ const CATEGORIES = [
     id: 'weddings',
     title: 'Weddings',
     path: '/work/weddings',
-    image: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/WEEDING/1 (2).webp',
+    image: 'https://media.nadodikalaignan.com/images/WEEDING/1 (2).webp',
     alt: 'Weddings photography and films by Stories by Nadodikalaignan'
   },
   {
     id: 'events',
     title: 'Events',
     path: '/work/events',
-    image: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/events seaction/1 (1).webp',
+    image: 'https://media.nadodikalaignan.com/images/events seaction/1 (1).webp',
     alt: 'Events photography and films by Stories by Nadodikalaignan'
   },
   {
     id: 'portraits',
     title: 'Portraits',
     path: '/work/portraits',
-    image: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/protrate/1 (1).webp',
+    image: 'https://media.nadodikalaignan.com/images/protrate/1 (1).webp',
     alt: 'Portraits photography by Stories by Nadodikalaignan'
   },
   {
     id: 'toddlers',
     title: 'Toddlers',
     path: '/work/toddlers',
-    image: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/BABYIMAGE/1 (3).webp',
+    image: 'https://media.nadodikalaignan.com/images/BABYIMAGE/1 (3).webp',
     alt: 'Toddlers photography by Stories by Nadodikalaignan'
   }
 ];

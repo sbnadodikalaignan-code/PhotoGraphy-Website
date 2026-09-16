@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 const TESTIMONIAL_ITEMS = [
   {
     id: 1,
-    image: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/HEROSEACTIONIMAGE/4.webp',
+    image: 'https://media.nadodikalaignan.com/images/HEROSEACTIONIMAGE/4.webp',
     quote: '"They make you look confident in front of the camera!"',
     rating: 5,
     names: 'Keerthana & Ajay',
@@ -17,7 +17,7 @@ const TESTIMONIAL_ITEMS = [
   },
   {
     id: 2,
-    image: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/HEROSEACTIONIMAGE/8.webp',
+    image: 'https://media.nadodikalaignan.com/images/HEROSEACTIONIMAGE/8.webp',
     quote: '"The most Punctual, Responsive & Reliable team we ever met"',
     rating: 5,
     names: 'Yusra & Shuja',
@@ -25,7 +25,7 @@ const TESTIMONIAL_ITEMS = [
   },
   {
     id: 3,
-    image: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/HEROSEACTIONIMAGE/6.webp',
+    image: 'https://media.nadodikalaignan.com/images/HEROSEACTIONIMAGE/6.webp',
     quote: '"They capture true emotions and love"',
     rating: 5,
     names: 'Raizel & Ashwin',
@@ -33,7 +33,7 @@ const TESTIMONIAL_ITEMS = [
   },
   {
     id: 4,
-    image: 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/HEROSEACTIONIMAGE/2.webp',
+    image: 'https://media.nadodikalaignan.com/images/HEROSEACTIONIMAGE/2.webp',
     quote: '"Fun to work with!"',
     rating: 5,
     names: 'Reza & Paula',

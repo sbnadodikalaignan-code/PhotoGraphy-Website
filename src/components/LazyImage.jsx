@@ -27,7 +27,7 @@ export default function LazyImage({
       )}
 
       <img
-        src={hasError ? 'https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/placeholder.webp' : src}
+        src={hasError ? 'https://media.nadodikalaignan.com/images/placeholder.webp' : src}
         alt={alt}
         loading="lazy"
         decoding="async"
