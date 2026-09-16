@@ -19,10 +19,22 @@ export default function ServicePage({ serviceId: propServiceId }) {
   const activeKey = propServiceId || paramsServiceId || 'wedding';
   const serviceData = SERVICES_DATA[activeKey] || SERVICES_DATA['wedding'];
 
+  // Canonical path mapping for indexable work pages
+  const WORK_CANONICAL_MAP = {
+    'wedding': '/work/weddings',
+    'weddings': '/work/weddings',
+    'events': '/work/events',
+    'event': '/work/events',
+    'portrait': '/work/portraits',
+    'portraits': '/work/portraits',
+    'toddlers': '/work/toddlers',
+    'baby-maternity': '/work/toddlers'
+  };
+
   useSEO({
     title: `${serviceData.title} | Stories by Nadodikalaignan`,
     description: `Discover exceptional ${serviceData.title.toLowerCase()} by Stories by Nadodikalaignan. Luxury fine-art photography and cinematography capturing authentic elegance and heirloom moments.`,
-    canonical: `/services/${activeKey}`,
+    canonical: WORK_CANONICAL_MAP[activeKey] || `/work/${activeKey}`,
     ogImage: serviceData.heroImage
   });
 
