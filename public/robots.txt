@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nadodikalaignan.com/sitemap.xml
+

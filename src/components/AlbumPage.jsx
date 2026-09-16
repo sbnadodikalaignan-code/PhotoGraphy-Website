@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import Header from './Header';
 import Footer from './Footer';
+import { useSEO } from '../hooks/useSEO';
 import { ALBUMS_DATA } from '../data/albumData';
 import './AlbumPage.css';
 
@@ -137,7 +138,7 @@ function AlbumVideoCard({ album, isMuted }) {
       {/* 1. Instant thumbnail placeholder image with smooth fade */}
       <img
         src={album.coverImage}
-        alt={album.title}
+        alt={`${album.title} - Wedding film and photography album`}
         className={`album-cover-thumbnail ${isVideoReady ? 'faded' : 'visible'}`}
         loading="lazy"
       />
@@ -167,6 +168,13 @@ function AlbumVideoCard({ album, isMuted }) {
 }
 
 export default function AlbumPage() {
+  useSEO({
+    title: 'Wedding Films & Cinematic Stories | Stories by Nadodikalaignan',
+    description: 'Experience cinematic wedding films, emotional vows, and fine-art wedding albums crafted by Stories by Nadodikalaignan across India and destination venues worldwide.',
+    canonical: '/albums',
+    ogImage: 'https://media.nadodikalaignan.com/images/thumbnail/gloria_vishnu.webp'
+  });
+
   const [selectedAlbum, setSelectedAlbum] = useState(null);
   const [mutedStates, setMutedStates] = useState({});
 

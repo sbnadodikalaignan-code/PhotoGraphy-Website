@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Award, Camera, Heart, Sparkles } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useSEO } from '../hooks/useSEO';
 import Header from './Header';
 import ContactForm from './ContactForm';
 import Footer from './Footer';
@@ -10,6 +11,13 @@ import './ProfilesPage.css';
 gsap.registerPlugin(ScrollTrigger);
 
 export default function ProfilesPage() {
+  useSEO({
+    title: 'About Stories by Nadodikalaignan | Vasanth Chinnasamy & Studio Profiles',
+    description: 'Learn about Stories by Nadodikalaignan and founder Vasanth Chinnasamy. Premier luxury wedding and fine-art photography studio capturing timeless heirlooms across India and destinations worldwide.',
+    canonical: '/profiles',
+    ogImage: 'https://media.nadodikalaignan.com/images/other/nadodikalaignan%20ceo.webp'
+  });
+
   const pageRef = useRef(null);
   const heroBgRef = useRef(null);
 

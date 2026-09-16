@@ -8,6 +8,7 @@ import Header from './Header';
 import Footer from './Footer';
 import Testimonials from './Testimonials';
 import LazyImage from './LazyImage';
+import { useSEO } from '../hooks/useSEO';
 import { SERVICES_DATA } from '../data/servicesData';
 import './ServicePage.css';
 
@@ -17,6 +18,13 @@ export default function ServicePage({ serviceId: propServiceId }) {
   // Resolve active service key
   const activeKey = propServiceId || paramsServiceId || 'wedding';
   const serviceData = SERVICES_DATA[activeKey] || SERVICES_DATA['wedding'];
+
+  useSEO({
+    title: `${serviceData.title} | Stories by Nadodikalaignan`,
+    description: `Discover exceptional ${serviceData.title.toLowerCase()} by Stories by Nadodikalaignan. Luxury fine-art photography and cinematography capturing authentic elegance and heirloom moments.`,
+    canonical: `/services/${activeKey}`,
+    ogImage: serviceData.heroImage
+  });
 
   // Gallery & Action state
   const [activeCategory, setActiveCategory] = useState('All');

@@ -2,7 +2,7 @@ import React from 'react';
 import { Phone, MessageCircle, ArrowRight } from 'lucide-react';
 import './ContactForm.css';
 
-export default function ContactForm() {
+export default function ContactForm({ asH1 = false }) {
   return (
     <section id="contact" className="section contact-direct-section">
       <div className="container">
@@ -10,7 +10,11 @@ export default function ContactForm() {
         {/* Section Header */}
         <div className="section-title-wrapper text-center">
           <span className="section-subtitle">LET'S CONNECT</span>
-          <h2 className="section-title">Start Your Visual Journey</h2>
+          {asH1 ? (
+            <h1 className="section-title">Start Your Visual Journey</h1>
+          ) : (
+            <h2 className="section-title">Start Your Visual Journey</h2>
+          )}
           <p className="contact-section-desc">
             Whether you are planning a grand royal wedding, a fine-art portrait shoot, or a newborn milestone, our team is excited to craft your memories.
           </p>

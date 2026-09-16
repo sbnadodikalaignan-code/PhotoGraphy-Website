@@ -131,7 +131,10 @@ export default function LatestWork() {
               onClick={() => setLightboxIndex(index)}
             >
               <div className="card-image-box img-zoom-container">
-                <LazyImage src={item.image} alt={item.title || `Latest Work ${index + 1}`} />
+                <LazyImage 
+                  src={item.image} 
+                  alt={`${item.title} - ${item.category} photography captured at ${item.location}`} 
+                />
               </div>
             </div>
           ))}

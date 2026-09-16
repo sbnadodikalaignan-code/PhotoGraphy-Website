@@ -41,9 +41,9 @@ export default function About() {
 
         {/* Small Studio Introduction Header */}
         <div className="services-intro-header text-center">
-          <h2 className="services-intro-title">
+          <h1 className="services-intro-title">
             Let us capture the real story
-          </h2>
+          </h1>
         </div>
 
         {/* Compact 4-Column Category Cards Grid */}

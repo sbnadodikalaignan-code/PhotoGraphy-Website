@@ -1,5 +1,6 @@
 import React, { useState, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useSEO } from './hooks/useSEO';
 import ScrollToTop from './components/ScrollToTop';
 import Header from './components/Header';
 import HeroSlider from './components/HeroSlider';
@@ -29,8 +30,16 @@ function PageLoader() {
   );
 }
 
+
 function MainLandingPage() {
   const [heroTone, setHeroTone] = useState('light');
+
+  useSEO({
+    title: 'Stories by Nadodikalaignan | Luxury Wedding & Fine-Art Photography',
+    description: 'Stories by Nadodikalaignan is an award-winning luxury wedding, fine-art portrait, and cinematic wedding film studio founded by Vasanth Chinnasamy. Documenting royal grandeur and raw emotions across India and destination venues worldwide.',
+    canonical: '/',
+    ogImage: 'https://media.nadodikalaignan.com/images/thumbnail/gloria_vishnu.webp'
+  });
 
   return (
     <>
