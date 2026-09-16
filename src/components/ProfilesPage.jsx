@@ -132,7 +132,7 @@ export default function ProfilesPage() {
 
           <div className="our-story-right">
             <div className="our-story-image-box">
-              <img src="\images\nadodikalaignan ceo.webp" alt="Our Story - Stories by Nadodikalaignan" />
+              <img src="https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/WEEDING/1%20(2).jpeg" alt="Our Story - Stories by Nadodikalaignan" />
             </div>
           </div>
         </div>
@@ -145,7 +145,7 @@ export default function ProfilesPage() {
           <div className="ceo-grid">
             {/* CEO Image Container */}
             <div className="ceo-card-image img-zoom-container">
-              <img src="https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/nadodikalaignan ceo.jpeg" alt="Founder & CEO - Stories by Nadodikalaignan" />
+              <img src="https://pub-b0ccb583bc624dbfbd4a27312386356f.r2.dev/images/nadodikalaignan%20ceo.webp" alt="Founder & CEO - Stories by Nadodikalaignan" />
               <div className="ceo-badge-floating">
                 <Sparkles size={18} className="badge-icon" />
                 <span>FOUNDER &amp; LEAD DIRECTOR</span>
