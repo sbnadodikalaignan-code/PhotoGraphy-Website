@@ -12,6 +12,9 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
+            if (id.includes('hls.js')) {
+              return 'vendor-hls';
+            }
             if (id.includes('three')) {
               return 'vendor-three';
             }

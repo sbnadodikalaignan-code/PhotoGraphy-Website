@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import Hls from 'hls.js';
+import { getHls } from '../utils/hlsLoader';
 import './HeroSlider.css';
 
 const SLIDES = [
@@ -87,61 +87,104 @@ const SLIDES = [
   }
 ];
 
-function HeroHlsVideo({ src, poster, className }) {
+function HeroHlsVideo({ src, isCurrentSlide, onPlaying, className }) {
   const videoRef = useRef(null);
+  const [canLoad, setCanLoad] = useState(false);
+
+  // Defer video loading until after the initial page render is visually complete
+  useEffect(() => {
+    if (!isCurrentSlide) return;
+
+    let timer;
+    const startLoading = () => {
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(() => setCanLoad(true), { timeout: 2500 });
+      } else {
+        timer = setTimeout(() => setCanLoad(true), 1200);
+      }
+    };
+
+    if (document.readyState === 'complete') {
+      startLoading();
+    } else {
+      window.addEventListener('load', startLoading, { once: true });
+    }
+
+    return () => {
+      if (timer) clearTimeout(timer);
+      window.removeEventListener('load', startLoading);
+    };
+  }, [isCurrentSlide]);
 
   useEffect(() => {
+    if (!canLoad || !src) return;
     const video = videoRef.current;
-    if (!video || !src) return;
+    if (!video) return;
 
     let hls = null;
+    let isMounted = true;
 
-    // Explicitly set DOM properties for reliable autoplay on mobile browsers
     video.muted = true;
     video.playsInline = true;
     video.loop = true;
 
-    if (Hls.isSupported()) {
-      hls = new Hls({
-        enableWorker: true,
-        lowLatencyMode: false,
-        backBufferLength: 90
-      });
+    const handlePlaySuccess = () => {
+      if (isMounted) {
+        onPlaying?.();
+      }
+    };
 
-      hls.loadSource(src);
-      hls.attachMedia(video);
-
-      hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        video.play().catch(() => {});
-      });
-
-      hls.on(Hls.Events.ERROR, (_event, data) => {
-        if (data.fatal) {
-          switch (data.type) {
-            case Hls.ErrorTypes.NETWORK_ERROR:
-              hls.startLoad();
-              break;
-            case Hls.ErrorTypes.MEDIA_ERROR:
-              hls.recoverMediaError();
-              break;
-            default:
-              hls.destroy();
-              break;
-          }
-        }
-      });
-    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      // Native HLS for Safari and iOS WebKit
+    // 1. Native HLS for Safari & iOS WebKit (0kb extra JS required)
+    if (video.canPlayType('application/vnd.apple.mpegurl')) {
       video.src = src;
       const onLoadedMetadata = () => {
-        video.play().catch(() => {});
+        video.play().then(handlePlaySuccess).catch(() => {});
       };
-      video.addEventListener('loadedmetadata', onLoadedMetadata);
+      video.addEventListener('loadedmetadata', onLoadedMetadata, { once: true });
+      video.load();
 
       return () => {
+        isMounted = false;
         video.removeEventListener('loadedmetadata', onLoadedMetadata);
       };
     }
+
+    // 2. Dynamic Hls.js loader for Chrome, Firefox, Edge, Android
+    getHls().then((Hls) => {
+      if (!isMounted || !videoRef.current) return;
+      if (Hls && Hls.isSupported()) {
+        hls = new Hls({
+          enableWorker: true,
+          lowLatencyMode: false,
+          backBufferLength: 30,
+          maxBufferLength: 10,
+          maxMaxBufferLength: 20
+        });
+
+        hls.loadSource(src);
+        hls.attachMedia(video);
+
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          video.play().then(handlePlaySuccess).catch(() => {});
+        });
+
+        hls.on(Hls.Events.ERROR, (_event, data) => {
+          if (data.fatal) {
+            switch (data.type) {
+              case Hls.ErrorTypes.NETWORK_ERROR:
+                hls.startLoad();
+                break;
+              case Hls.ErrorTypes.MEDIA_ERROR:
+                hls.recoverMediaError();
+                break;
+              default:
+                hls.destroy();
+                break;
+            }
+          }
+        });
+      }
+    }).catch(() => {});
 
     const handleEnded = () => {
       video.play().catch(() => {});
@@ -149,22 +192,21 @@ function HeroHlsVideo({ src, poster, className }) {
     video.addEventListener('ended', handleEnded);
 
     return () => {
+      isMounted = false;
       video.removeEventListener('ended', handleEnded);
       if (hls) {
         hls.destroy();
       }
     };
-  }, [src]);
+  }, [canLoad, src, onPlaying]);
 
   return (
     <video
       ref={videoRef}
-      poster={poster}
-      autoPlay
       muted
-      loop
       playsInline
-      preload="metadata"
+      loop
+      preload="none"
       className={className}
     />
   );
@@ -173,18 +215,21 @@ function HeroHlsVideo({ src, poster, className }) {
 export default function HeroSlider({ onToneChange }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isVideoReady, setIsVideoReady] = useState(false);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
 
   const handleNext = useCallback(() => {
     if (isTransitioning) return;
     setIsTransitioning(true);
+    setIsVideoReady(false);
     setCurrentIndex((prev) => (prev + 1) % SLIDES.length);
   }, [isTransitioning]);
 
   const handlePrev = useCallback(() => {
     if (isTransitioning) return;
     setIsTransitioning(true);
+    setIsVideoReady(false);
     setCurrentIndex((prev) => (prev - 1 + SLIDES.length) % SLIDES.length);
   }, [isTransitioning]);
 
@@ -244,11 +289,24 @@ export default function HeroSlider({ onToneChange }) {
           >
             {slide.video ? (
               <div className="hero-video-wrapper">
+                {/* 1. Instant LCP Hero Poster Image */}
+                <img
+                  src={slide.image}
+                  alt="Stories by Nadodikalaignan - Luxury Wedding & Fine-Art Photography"
+                  fetchPriority={index === 0 ? "high" : "auto"}
+                  loading={index === 0 ? "eager" : "lazy"}
+                  decoding={index === 0 ? "sync" : "async"}
+                  className={`hero-poster-img ${isVideoReady && index === currentIndex ? 'hero-poster-faded' : 'hero-poster-visible'}`}
+                />
+
+                {/* 2. Defer-loaded HLS Video with preload="none" */}
                 <HeroHlsVideo
                   src={slide.video}
-                  poster={slide.image}
-                  className="hero-video-element"
+                  isCurrentSlide={index === currentIndex}
+                  className={`hero-video-element ${isVideoReady && index === currentIndex ? 'hero-video-ready' : 'hero-video-loading'}`}
+                  onPlaying={() => setIsVideoReady(true)}
                 />
+
                 {slide.overlay && (
                   <div 
                     className="hero-video-overlay" 
@@ -257,10 +315,22 @@ export default function HeroSlider({ onToneChange }) {
                 )}
               </div>
             ) : (
-              <div
-                className="hero-image-bg"
-                style={{ backgroundImage: `${slide.overlay ? `${slide.overlay}, ` : ''}url(${slide.image})` }}
-              />
+              <div className="hero-image-wrapper">
+                <img
+                  src={slide.image}
+                  alt={slide.title || "Stories by Nadodikalaignan Photography"}
+                  fetchPriority={index === 0 ? "high" : "auto"}
+                  loading={index === 0 ? "eager" : "lazy"}
+                  decoding="async"
+                  className="hero-slide-img"
+                />
+                {slide.overlay && (
+                  <div 
+                    className="hero-video-overlay" 
+                    style={{ background: slide.overlay }} 
+                  />
+                )}
+              </div>
             )}
 
             {/* Smooth-appearing content overlay (only when slide has text) */}

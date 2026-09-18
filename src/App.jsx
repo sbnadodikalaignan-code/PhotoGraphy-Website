@@ -5,10 +5,7 @@ import ScrollToTop from './components/ScrollToTop';
 import Header from './components/Header';
 import HeroSlider from './components/HeroSlider';
 import About from './components/About';
-import ProfilesSection from './components/ProfilesSection';
-import Testimonials from './components/Testimonials';
 import LatestWork from './components/LatestWork';
-import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 
 // Lazy-loaded route pages for optimized performance
@@ -16,6 +13,11 @@ const ProfilesPage = lazy(() => import('./components/ProfilesPage'));
 const ServicePage = lazy(() => import('./components/ServicePage'));
 const ContactPage = lazy(() => import('./components/ContactPage'));
 const AlbumPage = lazy(() => import('./components/AlbumPage'));
+
+// Lazy-load below-the-fold homepage sections to reduce initial TBT and bundle size
+const ProfilesSection = lazy(() => import('./components/ProfilesSection'));
+const Testimonials = lazy(() => import('./components/Testimonials'));
+const FAQ = lazy(() => import('./components/FAQ'));
 
 function PageLoader() {
   return (
@@ -48,9 +50,11 @@ function MainLandingPage() {
         <HeroSlider onToneChange={setHeroTone} />
         <About />
         <LatestWork />
-        <ProfilesSection />
-        <Testimonials />
-        <FAQ />
+        <Suspense fallback={null}>
+          <ProfilesSection />
+          <Testimonials />
+          <FAQ />
+        </Suspense>
       </main>
       <Footer />
     </>

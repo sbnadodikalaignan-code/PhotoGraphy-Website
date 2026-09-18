@@ -39,6 +39,29 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
+    <!-- LCP Hero Image Preload for Instant First Paint -->
+    <link 
+      rel="preload" 
+      as="image" 
+      href="https://media.nadodikalaignan.com/images/HEROSEACTIONIMAGE/1.webp" 
+      fetchpriority="high" 
+      type="image/webp" 
+    />
+
+    <!-- Non-render-blocking Google Fonts with font-display: swap -->
+    <link 
+      rel="stylesheet" 
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" 
+      media="print" 
+      onload="this.media='all'" 
+    />
+    <noscript>
+      <link 
+        rel="stylesheet" 
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" 
+      />
+    </noscript>
+
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
     {

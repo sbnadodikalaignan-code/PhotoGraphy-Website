@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Hls from 'hls.js';
 import { 
   ArrowRight, 
   X, 
@@ -10,6 +9,7 @@ import {
 import Header from './Header';
 import Footer from './Footer';
 import { useSEO } from '../hooks/useSEO';
+import { getHls } from '../utils/hlsLoader';
 import { ALBUMS_DATA } from '../data/albumData';
 import './AlbumPage.css';
 
@@ -33,42 +33,12 @@ function AlbumVideoPlayer({
 
     const isHls = src.includes('.m3u8');
     let hls = null;
+    let isCancelled = false;
 
     video.playsInline = true;
 
     if (isHls) {
-      if (Hls.isSupported()) {
-        hls = new Hls({
-          enableWorker: true,
-          lowLatencyMode: false,
-          backBufferLength: 60
-        });
-
-        hls.loadSource(src);
-        hls.attachMedia(video);
-
-        hls.on(Hls.Events.MANIFEST_PARSED, () => {
-          if (autoPlay) {
-            video.play().catch(() => {});
-          }
-        });
-
-        hls.on(Hls.Events.ERROR, (_event, data) => {
-          if (data.fatal) {
-            switch (data.type) {
-              case Hls.ErrorTypes.NETWORK_ERROR:
-                hls.startLoad();
-                break;
-              case Hls.ErrorTypes.MEDIA_ERROR:
-                hls.recoverMediaError();
-                break;
-              default:
-                hls.destroy();
-                break;
-            }
-          }
-        });
-      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      if (video.canPlayType('application/vnd.apple.mpegurl')) {
         // Native HLS for Safari / iOS WebKit
         video.src = src;
         const handleLoadedMetadata = () => {
@@ -81,6 +51,43 @@ function AlbumVideoPlayer({
         return () => {
           video.removeEventListener('loadedmetadata', handleLoadedMetadata);
         };
+      } else {
+        // Dynamic HLS.js loader
+        getHls().then((Hls) => {
+          if (isCancelled || !videoRef.current) return;
+          if (Hls && Hls.isSupported()) {
+            hls = new Hls({
+              enableWorker: true,
+              lowLatencyMode: false,
+              backBufferLength: 40
+            });
+
+            hls.loadSource(src);
+            hls.attachMedia(video);
+
+            hls.on(Hls.Events.MANIFEST_PARSED, () => {
+              if (autoPlay) {
+                video.play().catch(() => {});
+              }
+            });
+
+            hls.on(Hls.Events.ERROR, (_event, data) => {
+              if (data.fatal) {
+                switch (data.type) {
+                  case Hls.ErrorTypes.NETWORK_ERROR:
+                    hls.startLoad();
+                    break;
+                  case Hls.ErrorTypes.MEDIA_ERROR:
+                    hls.recoverMediaError();
+                    break;
+                  default:
+                    hls.destroy();
+                    break;
+                }
+              }
+            });
+          }
+        }).catch(() => {});
       }
     } else {
       // Standard video file (mp4, webm)
