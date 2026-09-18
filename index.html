@@ -151,7 +151,19 @@
     </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Instant Hero Shell: Discovered by browser before JavaScript downloads -->
+      <section style="position: relative; width: 100%; height: 100vh; height: 100dvh; min-height: 520px; overflow: hidden; background-color: #0b0b0e;">
+        <img
+          src="https://media.nadodikalaignan.com/images/HEROSEACTIONIMAGE/1.webp"
+          alt="Stories by Nadodikalaignan - Luxury Wedding & Fine-Art Photography"
+          fetchpriority="high"
+          loading="eager"
+          decoding="sync"
+          style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center center; display: block;"
+        />
+      </section>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

@@ -91,28 +91,51 @@ function HeroHlsVideo({ src, isCurrentSlide, onPlaying, className }) {
   const videoRef = useRef(null);
   const [canLoad, setCanLoad] = useState(false);
 
-  // Defer video loading until after the initial page render is visually complete
+  // Defer video loading until user interaction or desktop hover to protect initial LCP
   useEffect(() => {
     if (!isCurrentSlide) return;
 
-    let timer;
-    const startLoading = () => {
-      if ('requestIdleCallback' in window) {
-        window.requestIdleCallback(() => setCanLoad(true), { timeout: 2500 });
-      } else {
-        timer = setTimeout(() => setCanLoad(true), 1200);
+    let isMounted = true;
+    const startPlayback = () => {
+      if (isMounted) {
+        setCanLoad(true);
       }
+      removeListeners();
     };
 
-    if (document.readyState === 'complete') {
-      startLoading();
-    } else {
-      window.addEventListener('load', startLoading, { once: true });
+    const events = ['touchstart', 'scroll', 'pointerdown', 'mousemove', 'wheel', 'keydown', 'click'];
+    const addListeners = () => {
+      events.forEach((evt) => {
+        window.addEventListener(evt, startPlayback, { once: true, passive: true });
+      });
+    };
+
+    const removeListeners = () => {
+      events.forEach((evt) => {
+        window.removeEventListener(evt, startPlayback);
+      });
+    };
+
+    addListeners();
+
+    // On desktop devices with mouse cursor, also auto-start playback after brief idle
+    let idleTimer = null;
+    if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(() => {
+          if (isMounted) setCanLoad(true);
+        }, { timeout: 3500 });
+      } else {
+        idleTimer = setTimeout(() => {
+          if (isMounted) setCanLoad(true);
+        }, 3000);
+      }
     }
 
     return () => {
-      if (timer) clearTimeout(timer);
-      window.removeEventListener('load', startLoading);
+      isMounted = false;
+      removeListeners();
+      if (idleTimer) clearTimeout(idleTimer);
     };
   }, [isCurrentSlide]);
 
@@ -199,6 +222,10 @@ function HeroHlsVideo({ src, isCurrentSlide, onPlaying, className }) {
       }
     };
   }, [canLoad, src, onPlaying]);
+
+  if (!canLoad) {
+    return null;
+  }
 
   return (
     <video
@@ -295,8 +322,7 @@ export default function HeroSlider({ onToneChange }) {
                   alt="Stories by Nadodikalaignan - Luxury Wedding & Fine-Art Photography"
                   fetchPriority={index === 0 ? "high" : "auto"}
                   loading={index === 0 ? "eager" : "lazy"}
-                  decoding={index === 0 ? "sync" : "async"}
-                  className={`hero-poster-img ${isVideoReady && index === currentIndex ? 'hero-poster-faded' : 'hero-poster-visible'}`}
+                  className="hero-poster-img hero-poster-visible"
                 />
 
                 {/* 2. Defer-loaded HLS Video with preload="none" */}
