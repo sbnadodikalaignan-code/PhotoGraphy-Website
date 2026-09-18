@@ -7,6 +7,10 @@ export default function LazyImage({
   className = '', 
   wrapperClassName = '',
   aspectRatio,
+  width,
+  height,
+  srcSet,
+  sizes,
   onClick,
   ...props 
 }) {
@@ -42,11 +46,13 @@ export default function LazyImage({
     return () => observer.disconnect();
   }, []);
 
+  const computedAspectRatio = aspectRatio || (width && height ? `${width} / ${height}` : undefined);
+
   return (
     <div 
       ref={containerRef}
       className={`lazy-image-container ${wrapperClassName} ${isLoaded ? 'loaded' : 'loading'}`}
-      style={aspectRatio ? { aspectRatio } : undefined}
+      style={computedAspectRatio ? { aspectRatio: computedAspectRatio } : undefined}
       onClick={onClick}
     >
       {/* Shimmer skeleton placeholder visible until image loads */}
@@ -59,6 +65,10 @@ export default function LazyImage({
       {isInView && (
         <img
           src={hasError ? 'https://media.nadodikalaignan.com/images/placeholder.webp' : src}
+          srcSet={srcSet}
+          sizes={sizes}
+          width={width}
+          height={height}
           alt={alt}
           loading="lazy"
           decoding="async"

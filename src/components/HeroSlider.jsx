@@ -282,56 +282,67 @@ export default function HeroSlider({ onToneChange }) {
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        {SLIDES.map((slide, index) => (
-          <div
-            key={index}
-            className={`slide-item ${slide.copyTheme} ${index === currentIndex ? 'slide-active' : ''}`}
-          >
-            {slide.video ? (
-              <div className="hero-video-wrapper">
-                {/* 1. Instant LCP Hero Poster Image */}
-                <img
-                  src={slide.image}
-                  alt="Stories by Nadodikalaignan - Luxury Wedding & Fine-Art Photography"
-                  fetchPriority={index === 0 ? "high" : "auto"}
-                  loading={index === 0 ? "eager" : "lazy"}
-                  decoding={index === 0 ? "sync" : "async"}
-                  className={`hero-poster-img ${isVideoReady && index === currentIndex ? 'hero-poster-faded' : 'hero-poster-visible'}`}
-                />
+        {SLIDES.map((slide, index) => {
+          const isNearCurrent = 
+            index === currentIndex || 
+            index === (currentIndex + 1) % SLIDES.length || 
+            index === (currentIndex - 1 + SLIDES.length) % SLIDES.length;
 
-                {/* 2. Defer-loaded HLS Video with preload="none" */}
-                <HeroHlsVideo
-                  src={slide.video}
-                  isCurrentSlide={index === currentIndex}
-                  className={`hero-video-element ${isVideoReady && index === currentIndex ? 'hero-video-ready' : 'hero-video-loading'}`}
-                  onPlaying={() => setIsVideoReady(true)}
-                />
+          return (
+            <div
+              key={index}
+              className={`slide-item ${slide.copyTheme} ${index === currentIndex ? 'slide-active' : ''}`}
+            >
+              {slide.video ? (
+                <div className="hero-video-wrapper">
+                  {/* 1. Instant LCP Hero Poster Image */}
+                  <img
+                    src={slide.image}
+                    alt="Stories by Nadodikalaignan - Luxury Wedding & Fine-Art Photography"
+                    width="1920"
+                    height="1080"
+                    fetchPriority={index === 0 ? "high" : "auto"}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    decoding={index === 0 ? "sync" : "async"}
+                    className={`hero-poster-img ${isVideoReady && index === currentIndex ? 'hero-poster-faded' : 'hero-poster-visible'}`}
+                  />
 
-                {slide.overlay && (
-                  <div 
-                    className="hero-video-overlay" 
-                    style={{ background: slide.overlay }} 
+                  {/* 2. Defer-loaded HLS Video with preload="none" */}
+                  <HeroHlsVideo
+                    src={slide.video}
+                    isCurrentSlide={index === currentIndex}
+                    className={`hero-video-element ${isVideoReady && index === currentIndex ? 'hero-video-ready' : 'hero-video-loading'}`}
+                    onPlaying={() => setIsVideoReady(true)}
                   />
-                )}
-              </div>
-            ) : (
-              <div className="hero-image-wrapper">
-                <img
-                  src={slide.image}
-                  alt={slide.title || "Stories by Nadodikalaignan Photography"}
-                  fetchPriority={index === 0 ? "high" : "auto"}
-                  loading={index === 0 ? "eager" : "lazy"}
-                  decoding="async"
-                  className="hero-slide-img"
-                />
-                {slide.overlay && (
-                  <div 
-                    className="hero-video-overlay" 
-                    style={{ background: slide.overlay }} 
-                  />
-                )}
-              </div>
-            )}
+
+                  {slide.overlay && (
+                    <div 
+                      className="hero-video-overlay" 
+                      style={{ background: slide.overlay }} 
+                    />
+                  )}
+                </div>
+              ) : (
+                <div className="hero-image-wrapper">
+                  {isNearCurrent && (
+                    <img
+                      src={slide.image}
+                      alt={slide.title || "Stories by Nadodikalaignan Photography"}
+                      width="1920"
+                      height="1080"
+                      loading="lazy"
+                      decoding="async"
+                      className="hero-slide-img"
+                    />
+                  )}
+                  {slide.overlay && (
+                    <div 
+                      className="hero-video-overlay" 
+                      style={{ background: slide.overlay }} 
+                    />
+                  )}
+                </div>
+              )}
 
             {/* Smooth-appearing content overlay (only when slide has text) */}
             {index === currentIndex && (slide.title || slide.tagline) ? (
@@ -341,7 +352,8 @@ export default function HeroSlider({ onToneChange }) {
               </div>
             ) : null}
           </div>
-        ))}
+        );
+      })}
       </div>
 
       {/* Navigation Arrows matching style */}
