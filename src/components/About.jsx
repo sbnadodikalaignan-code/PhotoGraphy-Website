@@ -15,14 +15,14 @@ const CATEGORIES = [
     id: 'events',
     title: 'Events',
     path: '/work/events',
-    image: 'https://media.nadodikalaignan.com/images/events seaction/19.webp',
+    image: 'https://media.nadodikalaignan.com/images/events seaction/1 (1).webp',
     alt: 'Events photography and films by Stories by Nadodikalaignan'
   },
   {
     id: 'portraits',
     title: 'Portraits',
     path: '/work/portraits',
-    image: 'https://media.nadodikalaignan.com/images/protrate/1 (2).webp',
+    image: 'https://media.nadodikalaignan.com/images/protrate/1 (1).webp',
     alt: 'Portraits photography by Stories by Nadodikalaignan'
   },
   {
