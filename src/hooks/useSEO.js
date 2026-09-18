@@ -52,11 +52,15 @@ export function useSEO({
     setMetaTag('property', 'og:url', canonicalHref);
     setMetaTag('property', 'og:image', ogImage);
     setMetaTag('property', 'og:type', ogType);
+    setMetaTag('property', 'og:site_name', 'Stories by Nadodikalaignan');
+    setMetaTag('property', 'og:image:alt', 'Stories by Nadodikalaignan Luxury Wedding Photography');
 
     // 5. Twitter Card Tags
     setMetaTag('name', 'twitter:title', fullTitle);
     setMetaTag('name', 'twitter:description', description);
     setMetaTag('name', 'twitter:image', ogImage);
+    setMetaTag('name', 'twitter:card', 'summary_large_image');
+    setMetaTag('name', 'twitter:image:alt', 'Stories by Nadodikalaignan Luxury Wedding Photography');
   }, [title, description, canonical, ogImage, ogType]);
 }
 
