@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, ChevronLeft, ChevronRight, Sparkles, ArrowRight } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -43,18 +43,12 @@ const LATEST_WORK_ITEMS = [
   { id: 32, title: 'Timeless Grace', category: 'Portraits', location: 'Fine Art Loft', image: 'https://media.nadodikalaignan.com/images/latest_image/Z7N_9539_websize.webp', aspect: 'wide' }
 ];
 
-const CATEGORIES = ['All', 'Weddings', 'Portraits', 'Baby & Maternity'];
-
 export default function LatestWork() {
-  const [activeCategory, setActiveCategory] = useState('All');
   const [lightboxIndex, setLightboxIndex] = useState(null);
   const sectionRef = useRef(null);
   const gridRef = useRef(null);
 
-  const filteredItems = LATEST_WORK_ITEMS.filter(item => {
-    if (activeCategory === 'All') return true;
-    return item.category === activeCategory;
-  });
+  const filteredItems = LATEST_WORK_ITEMS;
 
   // Reveal Animations
   useEffect(() => {
@@ -73,7 +67,7 @@ export default function LatestWork() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [activeCategory]);
+  }, []);
 
   // Keyboard controls for lightbox
   useEffect(() => {

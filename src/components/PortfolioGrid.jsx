@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, ChevronLeft, ChevronRight, Play } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import LazyImage from './LazyImage';
@@ -174,18 +174,6 @@ export default function PortfolioGrid() {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, []);
-
-  const handleScrollNext = () => {
-    if (trackContainerRef.current) {
-      trackContainerRef.current.scrollBy({ left: 550, behavior: 'smooth' });
-    }
-  };
-
-  const handleScrollPrev = () => {
-    if (trackContainerRef.current) {
-      trackContainerRef.current.scrollBy({ left: -550, behavior: 'smooth' });
-    }
-  };
 
   // Keyboard navigation for lightbox
   useEffect(() => {

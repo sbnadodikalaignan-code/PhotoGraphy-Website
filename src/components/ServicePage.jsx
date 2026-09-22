@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { 
-  Heart, Download, Share2, Play, Pause, X, ChevronLeft, ChevronRight, 
-  Camera, Check, Calendar, User, Phone, Mail, MapPin, Sparkles, Star, ArrowRight, CheckCircle, Video, Award, Globe, Film
+  Heart, X, ChevronLeft, ChevronRight, 
+  Camera, Check, Calendar, User, Phone, Mail, MapPin, ArrowRight
 } from 'lucide-react';
 import Header from './Header';
 import Footer from './Footer';
@@ -38,16 +38,9 @@ export default function ServicePage({ serviceId: propServiceId }) {
     ogImage: serviceData.heroImage
   });
 
-  // Gallery & Action state
+  // Gallery state
   const [activeCategory, setActiveCategory] = useState('All');
-  const [favorites, setFavorites] = useState([]);
-  const [showOnlyFavs, setShowOnlyFavs] = useState(false);
-  const [toastMessage, setToastMessage] = useState(null);
-  
-  // Lightbox & Slideshow state
   const [lightboxIndex, setLightboxIndex] = useState(null);
-  const [isSlideshow, setIsSlideshow] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [touchStartX, setTouchStartX] = useState(0);
 
   // Booking Modal
@@ -66,82 +59,18 @@ export default function ServicePage({ serviceId: propServiceId }) {
   // Reset category on service change
   useEffect(() => {
     setActiveCategory('All');
-    setShowOnlyFavs(false);
     window.scrollTo(0, 0);
   }, [activeKey]);
 
   // Filter items
   const displayItems = serviceData.gallery.filter(item => {
-    if (showOnlyFavs) return favorites.includes(item.id);
     if (activeCategory === 'All') return true;
     return item.category.toLowerCase() === activeCategory.toLowerCase();
   });
 
-  // Toast notification helper
-  const triggerToast = (msg) => {
-    setToastMessage(msg);
-    setTimeout(() => setToastMessage(null), 3000);
-  };
-
-  // Toggle favorite
-  const toggleFavorite = (e, id) => {
-    e.stopPropagation();
-    if (favorites.includes(id)) {
-      setFavorites(favorites.filter(favId => favId !== id));
-      triggerToast('Removed from your favorites collection.');
-    } else {
-      setFavorites([...favorites, id]);
-      triggerToast('Added photo to your favorites collection!');
-    }
-  };
-
-  // Trigger single download
-  const handleDownload = (e, photo) => {
-    e.stopPropagation();
-    const a = document.createElement('a');
-    a.href = photo.image;
-    a.download = `${serviceData.id}-${photo.title.replace(/\s+/g, '-').toLowerCase()}.webp`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    triggerToast(`Downloading photo: "${photo.title}"`);
-  };
-
-  // Share action
-  const handleShare = (e, photoTitle = '') => {
-    if (e) e.stopPropagation();
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(window.location.href);
-      triggerToast(`Gallery link copied to clipboard! ${photoTitle ? `(${photoTitle})` : ''}`);
-    } else {
-      triggerToast('Link copied to clipboard!');
-    }
-  };
-
-  // Automatic Slideshow Timer Effect
-  useEffect(() => {
-    let interval = null;
-    if (isSlideshow && isPlaying && displayItems.length > 0) {
-      interval = setInterval(() => {
-        setLightboxIndex(prev => (prev === null ? 0 : (prev + 1) % displayItems.length));
-      }, 3500);
-    }
-    return () => clearInterval(interval);
-  }, [isSlideshow, isPlaying, displayItems.length]);
-
-  // Start Slideshow
-  const startSlideshow = () => {
-    if (displayItems.length === 0) return;
-    setLightboxIndex(0);
-    setIsSlideshow(true);
-    setIsPlaying(true);
-  };
-
-  // Close Lightbox / Slideshow
+  // Close Lightbox
   const closeLightbox = () => {
     setLightboxIndex(null);
-    setIsSlideshow(false);
-    setIsPlaying(false);
   };
 
   // Keyboard Navigation
@@ -151,21 +80,10 @@ export default function ServicePage({ serviceId: propServiceId }) {
       if (e.key === 'Escape') closeLightbox();
       if (e.key === 'ArrowRight') setLightboxIndex(prev => (prev + 1) % displayItems.length);
       if (e.key === 'ArrowLeft') setLightboxIndex(prev => (prev - 1 + displayItems.length) % displayItems.length);
-      if (e.key === ' ') {
-        e.preventDefault();
-        setIsPlaying(prev => !prev);
-      }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [lightboxIndex, displayItems.length]);
-
-  // Open booking modal
-  const openBooking = (pkgName = '') => {
-    setFormData(prev => ({ ...prev, packageSelected: pkgName || serviceData.title }));
-    setBookingModal({ isOpen: true, packageName: pkgName });
-    setFormSubmitted(false);
-  };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -176,30 +94,9 @@ export default function ServicePage({ serviceId: propServiceId }) {
     }, 2800);
   };
 
-  // Icon mapping helper
-  const renderFeatureIcon = (iconName) => {
-    switch (iconName) {
-      case 'Camera': return <Camera size={26} />;
-      case 'Video': return <Video size={26} />;
-      case 'Award': return <Award size={26} />;
-      case 'Globe': return <Globe size={26} />;
-      case 'Film': return <Film size={26} />;
-      case 'Heart': return <Heart size={26} />;
-      default: return <Sparkles size={26} />;
-    }
-  };
-
   return (
     <div className="service-editorial-page">
       <Header />
-
-      {/* Toast Floating Notification */}
-      {toastMessage && (
-        <div className="editorial-toast animate-slide-down">
-          <Sparkles size={16} className="gold-icon" />
-          <span>{toastMessage}</span>
-        </div>
-      )}
 
       {/* SERVICE HERO BANNER */}
       <section className="service-hero-section" style={{ backgroundImage: `linear-gradient(to bottom, rgba(10, 10, 12, 0.55) 0%, rgba(10, 10, 12, 0.75) 100%), url('${serviceData.heroImage}')` }}>

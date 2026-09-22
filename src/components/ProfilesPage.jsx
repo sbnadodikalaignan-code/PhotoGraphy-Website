@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { Award, Camera, Heart, Sparkles } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useSEO } from '../hooks/useSEO';
@@ -19,7 +18,6 @@ export default function ProfilesPage() {
   });
 
   const pageRef = useRef(null);
-  const heroBgRef = useRef(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -105,7 +103,7 @@ export default function ProfilesPage() {
         <div className="about-hero-container">
           <div className="about-hero-left">
             <h1 className="about-hero-title">About Us</h1>
-            <span className="about-hero-founded">Founded in 1992</span>
+            <span className="about-hero-founded">Founded in 2018</span>
           </div>
           <div className="about-hero-right">
             <p className="about-hero-description">
