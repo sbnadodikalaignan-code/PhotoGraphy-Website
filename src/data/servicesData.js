@@ -311,9 +311,9 @@ export const SERVICES_DATA = {
     title: 'Fine-Art Portrait & Editorial Photography',
     subtitle: 'Expressive, timeless, and editorial portraits crafted with dramatic studio lighting and raw emotion',
     badge: 'ELEGANT & EDITORIAL',
-    heroImage: 'https://media.nadodikalaignan.com/images/protrate/1 (1).webp',
+    heroImage: 'https://media.nadodikalaignan.com/images/protrate/1 (13).webp',
     heroGallery: [
-      'https://media.nadodikalaignan.com/images/protrate/1 (1).webp',
+      'https://media.nadodikalaignan.com/images/protrate/1 (13).webp',
       'https://media.nadodikalaignan.com/images/protrate/1 (2).webp',
       'https://media.nadodikalaignan.com/images/protrate/1 (3).webp',
       'https://media.nadodikalaignan.com/images/protrate/1 (5).webp'
@@ -327,7 +327,7 @@ export const SERVICES_DATA = {
     ],
     categories: ['All', 'Editorial', 'Studio', 'Outdoor', 'B&W', 'Creative'],
     gallery: [
-      { id: 1, title: 'Mystic Solitude', image: 'https://media.nadodikalaignan.com/images/protrate/1 (1).webp', category: 'Editorial', location: 'Studio Daylight', camera: 'Sony A7R V • 85mm f/1.4' },
+      { id: 1, title: 'Dramatic Mood', image: 'https://media.nadodikalaignan.com/images/protrate/1 (13).webp', category: 'Editorial', location: 'Dark Studio', camera: 'Sony A7R V • 85mm f/1.4' },
       { id: 2, title: 'Golden Silhouette', image: 'https://media.nadodikalaignan.com/images/protrate/1 (2).webp', category: 'Studio', location: 'Dark Mood Studio', camera: 'Sony A7IV • 50mm f/1.2' },
       { id: 3, title: 'Monochrome Gaze', image: 'https://media.nadodikalaignan.com/images/protrate/1 (3).webp', category: 'B&W', location: 'Fine Art Studio', camera: 'Sony A7R V • 135mm f/1.8' },
       { id: 4, title: 'Cinematic Essence', image: 'https://media.nadodikalaignan.com/images/protrate/1 (4).webp', category: 'Creative', location: 'Natural Light Studio', camera: 'Sony FX3 • 35mm GM' },

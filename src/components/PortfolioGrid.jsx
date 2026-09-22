@@ -322,7 +322,7 @@ export default function PortfolioGrid() {
         <div className="portfolio-hero">
           <div
             className="portfolio-hero-bg"
-            style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('https://media.nadodikalaignan.com/images/protrate/1 (1).webp')` }}
+            style={{ backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('https://media.nadodikalaignan.com/images/protrate/1 (13).webp')` }}
           ></div>
           <div className="hero-content hero-title-anim">
             <h2 className="hero-title">Portrait Shoot</h2>

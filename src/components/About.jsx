@@ -22,7 +22,7 @@ const CATEGORIES = [
     id: 'portraits',
     title: 'Portraits',
     path: '/work/portraits',
-    image: 'https://media.nadodikalaignan.com/images/protrate/1 (1).webp',
+    image: 'https://media.nadodikalaignan.com/images/protrate/1 (13).webp',
     alt: 'Portraits photography by Stories by Nadodikalaignan'
   },
   {

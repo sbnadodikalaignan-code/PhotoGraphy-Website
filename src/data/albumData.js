@@ -124,7 +124,7 @@ export const ALBUMS_DATA = [
     accentLight: 'rgba(142, 68, 173, 0.08)',
     accentBorder: 'rgba(142, 68, 173, 0.25)',
     photos: [
-      { id: 'p1', src: 'https://media.nadodikalaignan.com/images/protrate/1 (1).webp', title: 'The Gaze', caption: 'Direct, soulful portrait with soft window lighting.' },
+      { id: 'p1', src: 'https://media.nadodikalaignan.com/images/protrate/1 (13).webp', title: 'The Gaze', caption: 'Direct, soulful portrait with soft window lighting.' },
       { id: 'p2', src: 'https://media.nadodikalaignan.com/images/protrate/1 (2).webp', title: 'Monochrome Mood', caption: 'High contrast black and white study of expression.' },
       { id: 'p3', src: 'https://media.nadodikalaignan.com/images/protrate/1 (3).webp', title: 'Colonial Street Light', caption: 'Warm vintage sunlight framing classical architecture.' },
       { id: 'p4', src: 'https://media.nadodikalaignan.com/images/protrate/1 (4).webp', title: 'Editorial Silhouette', caption: 'Graphic shadows and bold contemporary styling.' }

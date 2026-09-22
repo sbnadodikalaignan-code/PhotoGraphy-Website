@@ -89,8 +89,8 @@ const PORTFOLIO_ITEMS = [
   },
   {
     id: 13,
-    src: 'https://media.nadodikalaignan.com/images/protrate/1 (1).webp',
-    title: 'Mystic Solitude',
+    src: 'https://media.nadodikalaignan.com/images/protrate/1 (13).webp',
+    title: 'Dramatic Mood',
     category: 'Portrait Shoot',
     desc: 'Expressive editorial portrait with fine-art studio lighting.',
   },
