@@ -200,7 +200,7 @@ export default function Header({ heroTone = 'dark' }) {
               </div>
             </li>
 
-            <li><button onClick={() => navigateToPage('/albums')} className="nav-btn">ALBUMS</button></li>
+            <li><button onClick={() => navigateToPage('/albums')} className="nav-btn">FILMS</button></li>
             <li><button onClick={() => navigateToPage('/profiles')} className="nav-btn">ABOUT US</button></li>
           </ul>
 
@@ -304,7 +304,7 @@ export default function Header({ heroTone = 'dark' }) {
               </li>
 
               <li>
-                <button onClick={() => navigateToPage('/albums')} className="mobile-nav-title">ALBUMS</button>
+                <button onClick={() => navigateToPage('/albums')} className="mobile-nav-title">FILMS</button>
               </li>
               <li>
                 <button onClick={() => navigateToPage('/profiles')} className="mobile-nav-title">ABOUT US</button>

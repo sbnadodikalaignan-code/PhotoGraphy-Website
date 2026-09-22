@@ -167,7 +167,7 @@ function AlbumVideoCard({ album, isMuted }) {
       <div className="album-image-overlay">
         <div className="album-view-action">
           <Play size={18} fill="currentColor" />
-          <span>WATCH FILM & VIEW ALBUM</span>
+          <span>WATCH FILM</span>
         </div>
       </div>
     </div>

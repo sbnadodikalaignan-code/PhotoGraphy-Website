@@ -37,7 +37,7 @@ export default function Footer() {
             <h4 className="footer-heading">NAVIGATE</h4>
             <ul className="footer-links">
               <li><button type="button" className="footer-nav-btn" onClick={goHome}>Home</button></li>
-              <li><Link to="/albums">Wedding Films</Link></li>
+              <li><Link to="/albums">Films</Link></li>
               <li><Link to="/profiles">About Studio</Link></li>
               <li><Link to="/services/wedding">Latest Work</Link></li>
               <li><Link to="/#faq">FAQ</Link></li>
