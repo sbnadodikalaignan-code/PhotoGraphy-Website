@@ -11,8 +11,6 @@ gsap.registerPlugin(ScrollTrigger);
 const LATEST_WORK_ITEMS = [
   { id: 1, title: 'Eternal Whispers', category: 'Weddings', location: 'Royal Palace, Udaipur', image: 'https://media.nadodikalaignan.com/images/latest_image/1 (1).webp', aspect: 'tall' },
   { id: 2, title: 'Golden Hour Solitude', category: 'Portraits', location: 'Heritage Fort', image: 'https://media.nadodikalaignan.com/images/latest_image/1 (2).webp', aspect: 'wide' },
-  { id: 3, title: 'Coastal Serenade', category: 'Weddings', location: 'Mahabalipuram Coast', image: 'https://media.nadodikalaignan.com/images/latest_image/1 (3).webp', aspect: 'tall' },
-  { id: 4, title: 'Tender Beginnings', category: 'Baby & Maternity', location: 'Cozy Studio', image: 'https://media.nadodikalaignan.com/images/latest_image/1 (4).webp', aspect: 'wide' },
   { id: 5, title: 'Sacred Muhurtham', category: 'Weddings', location: 'Grand Mandapam', image: 'https://media.nadodikalaignan.com/images/latest_image/1 (5).webp', aspect: 'tall' },
   { id: 6, title: 'Velvet Horizon', category: 'Portraits', location: 'Daylight Loft', image: 'https://media.nadodikalaignan.com/images/latest_image/1 (6).webp', aspect: 'tall' },
   { id: 7, title: 'Mist & Magic', category: 'Weddings', location: 'Munnar Tea Hills', image: 'https://media.nadodikalaignan.com/images/latest_image/1 (7).webp', aspect: 'wide' },
@@ -21,7 +19,6 @@ const LATEST_WORK_ITEMS = [
   { id: 10, title: 'Festive Garland', category: 'Weddings', location: 'Heritage Court', image: 'https://media.nadodikalaignan.com/images/latest_image/1 (10).webp', aspect: 'tall' },
   { id: 11, title: 'Sunlit Romance', category: 'Weddings', location: 'Pondicherry French Quarter', image: 'https://media.nadodikalaignan.com/images/latest_image/1 (11).webp', aspect: 'tall' },
   { id: 12, title: 'Little Wonder', category: 'Baby & Maternity', location: 'Cloud Setup', image: 'https://media.nadodikalaignan.com/images/latest_image/1 (12).webp', aspect: 'wide' },
-  { id: 13, title: 'Ceremonial Splendor', category: 'Weddings', location: 'Choultry Mandap', image: 'https://media.nadodikalaignan.com/images/latest_image/1 (13).webp', aspect: 'tall' },
   { id: 14, title: 'Regal Stance', category: 'Portraits', location: 'Vintage Set', image: 'https://media.nadodikalaignan.com/images/latest_image/1 (14).webp', aspect: 'tall' },
   { id: 15, title: 'Twilight Promise', category: 'Weddings', location: 'Backwater Sunset', image: 'https://media.nadodikalaignan.com/images/latest_image/1 (15).webp', aspect: 'wide' },
   { id: 16, title: 'Angelic Lullaby', category: 'Baby & Maternity', location: 'Newborn Suite', image: 'https://media.nadodikalaignan.com/images/latest_image/1 (16).webp', aspect: 'tall' },
@@ -29,7 +26,6 @@ const LATEST_WORK_ITEMS = [
   { id: 18, title: 'Monochrome Soul', category: 'Portraits', location: 'Black Studio', image: 'https://media.nadodikalaignan.com/images/latest_image/1 (18).webp', aspect: 'tall' },
   { id: 19, title: 'Pine Trail Walk', category: 'Weddings', location: 'Ooty Pines', image: 'https://media.nadodikalaignan.com/images/latest_image/1 (19).webp', aspect: 'tall' },
   { id: 20, title: 'Sweet Milestones', category: 'Baby & Maternity', location: 'Cake Smash Studio', image: 'https://media.nadodikalaignan.com/images/latest_image/1 (20).webp', aspect: 'wide' },
-  { id: 21, title: 'Festive Sangeet', category: 'Weddings', location: 'Arena Stage', image: 'https://media.nadodikalaignan.com/images/latest_image/1 (21).webp', aspect: 'tall' },
   { id: 22, title: 'Celebration Glow', category: 'Weddings', location: 'Ballroom Hall', image: 'https://media.nadodikalaignan.com/images/latest_image/1 (22).webp', aspect: 'wide' },
   { id: 23, title: 'Classic Elegance', category: 'Portraits', location: 'Studio Canvas', image: 'https://media.nadodikalaignan.com/images/latest_image/1(22).webp', aspect: 'tall' },
   { id: 24, title: 'Regal Heritage', category: 'Weddings', location: 'Royal Lawn', image: 'https://media.nadodikalaignan.com/images/latest_image/1 (23).jpeg', aspect: 'wide' },
@@ -39,7 +35,6 @@ const LATEST_WORK_ITEMS = [
   { id: 28, title: 'Golden Vows', category: 'Weddings', location: 'Palace Corridor', image: 'https://media.nadodikalaignan.com/images/latest_image/IMG_1361.JPG.webp', aspect: 'wide' },
   { id: 29, title: 'Royal Ceremony', category: 'Weddings', location: 'Grand Hall', image: 'https://media.nadodikalaignan.com/images/latest_image/IMG_1566.JPG.webp', aspect: 'tall' },
   { id: 30, title: 'Auspicious Rituals', category: 'Weddings', location: 'Mandap Steps', image: 'https://media.nadodikalaignan.com/images/latest_image/IMG_1578.JPG.webp', aspect: 'wide' },
-  { id: 31, title: 'Candid Smiles', category: 'Portraits', location: 'Studio Daylight', image: 'https://media.nadodikalaignan.com/images/latest_image/Z7N_9531_websize.webp', aspect: 'tall' },
   { id: 32, title: 'Timeless Grace', category: 'Portraits', location: 'Fine Art Loft', image: 'https://media.nadodikalaignan.com/images/latest_image/Z7N_9539_websize.webp', aspect: 'wide' }
 ];
 
