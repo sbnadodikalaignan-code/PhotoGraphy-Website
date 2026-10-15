@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-10-15T10:21:34.964Z",
+  "lastUpdated": "2026-10-15T11:03:35.045Z",
   "heroSlides": [
     {
       "video": "https://media.nadodikalaignan.com/images/VIDEO/HEROSEACTIONVIDEO/video.m3u8",
@@ -1544,14 +1544,6 @@
           "category": "Editorial",
           "location": "Heritage Room",
           "camera": "Sony A7R V • 35mm GM"
-        },
-        {
-          "id": 15,
-          "title": "Subtle Harmony",
-          "image": "https://media.nadodikalaignan.com/images/protrate/1 (16).webp",
-          "category": "Studio",
-          "location": "Daylight Arena",
-          "camera": "Sony FX3 • 50mm GM"
         },
         {
           "id": 16,
