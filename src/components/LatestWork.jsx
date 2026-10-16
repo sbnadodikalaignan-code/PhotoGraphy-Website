@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import LazyImage from './LazyImage';
+import { useSiteData } from '../context/SiteDataContext';
 import './LatestWork.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -39,11 +40,12 @@ const LATEST_WORK_ITEMS = [
 ];
 
 export default function LatestWork() {
+  const { latestWork } = useSiteData();
   const [lightboxIndex, setLightboxIndex] = useState(null);
   const sectionRef = useRef(null);
   const gridRef = useRef(null);
 
-  const filteredItems = LATEST_WORK_ITEMS;
+  const filteredItems = latestWork && latestWork.length > 0 ? latestWork : LATEST_WORK_ITEMS;
 
   // Reveal Animations
   useEffect(() => {

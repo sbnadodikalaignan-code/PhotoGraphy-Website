@@ -7,12 +7,14 @@ import HeroSlider from './components/HeroSlider';
 import About from './components/About';
 import LatestWork from './components/LatestWork';
 import Footer from './components/Footer';
+import { SiteDataProvider } from './context/SiteDataContext';
 
 // Lazy-loaded route pages for optimized performance
 const ProfilesPage = lazy(() => import('./components/ProfilesPage'));
 const ServicePage = lazy(() => import('./components/ServicePage'));
 const ContactPage = lazy(() => import('./components/ContactPage'));
 const AlbumPage = lazy(() => import('./components/AlbumPage'));
+const AdminPanel = lazy(() => import('./components/AdminPanel'));
 
 // Lazy-load below-the-fold homepage sections to reduce initial TBT and bundle size
 const ProfilesSection = lazy(() => import('./components/ProfilesSection'));
@@ -63,30 +65,33 @@ function MainLandingPage() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
-          <Route path="/" element={<MainLandingPage />} />
-          <Route path="/profiles" element={<ProfilesPage />} />
-          <Route path="/album" element={<AlbumPage />} />
-          <Route path="/albums" element={<AlbumPage />} />
-          <Route path="/wedding-films" element={<AlbumPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/work/weddings" element={<ServicePage serviceId="wedding" />} />
-          <Route path="/work/events" element={<ServicePage serviceId="events" />} />
-          <Route path="/work/portraits" element={<ServicePage serviceId="portrait" />} />
-          <Route path="/work/toddlers" element={<ServicePage serviceId="toddlers" />} />
-          <Route path="/work/:serviceId" element={<ServicePage />} />
-          <Route path="/services/wedding" element={<ServicePage serviceId="wedding" />} />
-          <Route path="/services/events" element={<ServicePage serviceId="events" />} />
-          <Route path="/services/portrait" element={<ServicePage serviceId="portrait" />} />
-          <Route path="/services/toddlers" element={<ServicePage serviceId="toddlers" />} />
-          <Route path="/services/baby-maternity" element={<ServicePage serviceId="toddlers" />} />
-          <Route path="/services/:serviceId" element={<ServicePage />} />
-        </Routes>
-      </Suspense>
-    </BrowserRouter>
+    <SiteDataProvider>
+      <BrowserRouter>
+        <ScrollToTop />
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/" element={<MainLandingPage />} />
+            <Route path="/admin" element={<AdminPanel />} />
+            <Route path="/profiles" element={<ProfilesPage />} />
+            <Route path="/album" element={<AlbumPage />} />
+            <Route path="/albums" element={<AlbumPage />} />
+            <Route path="/wedding-films" element={<AlbumPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/work/weddings" element={<ServicePage serviceId="wedding" />} />
+            <Route path="/work/events" element={<ServicePage serviceId="events" />} />
+            <Route path="/work/portraits" element={<ServicePage serviceId="portrait" />} />
+            <Route path="/work/toddlers" element={<ServicePage serviceId="toddlers" />} />
+            <Route path="/work/:serviceId" element={<ServicePage />} />
+            <Route path="/services/wedding" element={<ServicePage serviceId="wedding" />} />
+            <Route path="/services/events" element={<ServicePage serviceId="events" />} />
+            <Route path="/services/portrait" element={<ServicePage serviceId="portrait" />} />
+            <Route path="/services/toddlers" element={<ServicePage serviceId="toddlers" />} />
+            <Route path="/services/baby-maternity" element={<ServicePage serviceId="toddlers" />} />
+            <Route path="/services/:serviceId" element={<ServicePage />} />
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
+    </SiteDataProvider>
   );
 }
 

@@ -31,4 +31,6 @@ public/images/VIDEO/
 *.avi
 public\images\VIDEO  
 public/images/
-\.env.txt
+.env
+.env.*
+.env.txt

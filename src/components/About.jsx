@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import LazyImage from './LazyImage';
+import { useSiteData } from '../context/SiteDataContext';
 import './About.css';
 
 const CATEGORIES = [
@@ -35,6 +36,9 @@ const CATEGORIES = [
 ];
 
 export default function About() {
+  const { categories } = useSiteData();
+  const displayCategories = categories && categories.length > 0 ? categories : CATEGORIES;
+
   return (
     <section id="about" className="section services-category-section">
       <div className="container">
@@ -48,10 +52,10 @@ export default function About() {
 
         {/* Compact 4-Column Category Cards Grid */}
         <div className="category-cards-grid">
-          {CATEGORIES.map((cat) => (
-            <Link key={cat.id} to={cat.path} className="category-card-item">
+          {displayCategories.map((cat) => (
+            <Link key={cat.id} to={cat.path || `/work/${cat.id}`} className="category-card-item">
               <div className="category-image-wrapper">
-                <LazyImage src={cat.image} alt={cat.alt} />
+                <LazyImage src={cat.image} alt={cat.alt || cat.title} />
               </div>
               <h3 className="category-card-title">{cat.title}</h3>
             </Link>
