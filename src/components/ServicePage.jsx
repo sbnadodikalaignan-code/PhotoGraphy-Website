@@ -9,15 +9,25 @@ import Footer from './Footer';
 import Testimonials from './Testimonials';
 import LazyImage from './LazyImage';
 import { useSEO } from '../hooks/useSEO';
+import { useSiteData } from '../context/SiteDataContext';
 import { SERVICES_DATA } from '../data/servicesData';
 import './ServicePage.css';
 
 export default function ServicePage({ serviceId: propServiceId }) {
+  const { services } = useSiteData();
   const { serviceId: paramsServiceId } = useParams();
   
   // Resolve active service key
   const activeKey = propServiceId || paramsServiceId || 'wedding';
-  const serviceData = SERVICES_DATA[activeKey] || SERVICES_DATA['wedding'];
+  const keyAliases = {
+    'weddings': 'wedding',
+    'portraits': 'portrait',
+    'baby-maternity': 'toddlers',
+    'toddler': 'toddlers',
+    'event': 'events'
+  };
+  const resolvedKey = keyAliases[activeKey] || activeKey;
+  const serviceData = services?.[resolvedKey] || services?.[activeKey] || SERVICES_DATA[resolvedKey] || SERVICES_DATA['wedding'];
 
   // Canonical path mapping for indexable work pages
   const WORK_CANONICAL_MAP = {

@@ -10,6 +10,7 @@ import Header from './Header';
 import Footer from './Footer';
 import { useSEO } from '../hooks/useSEO';
 import { getHls } from '../utils/hlsLoader';
+import { useSiteData } from '../context/SiteDataContext';
 import { ALBUMS_DATA } from '../data/albumData';
 import './AlbumPage.css';
 
@@ -175,6 +176,9 @@ function AlbumVideoCard({ album, isMuted }) {
 }
 
 export default function AlbumPage() {
+  const { albums } = useSiteData();
+  const displayAlbums = albums && albums.length > 0 ? albums : ALBUMS_DATA;
+
   useSEO({
     title: 'Wedding Films & Cinematic Stories | Stories by Nadodikalaignan',
     description: 'Experience cinematic wedding films, emotional vows, and fine-art wedding albums crafted by Stories by Nadodikalaignan across India and destination venues worldwide.',
@@ -245,7 +249,7 @@ export default function AlbumPage() {
         {/* Alternating / Zigzag Album Showcase (Matching Wireframe Sketch with Video & Photo Playback) */}
         <section className="album-showcase-section">
           <div className="album-container">
-            {ALBUMS_DATA.map((album, index) => {
+            {displayAlbums.map((album, index) => {
               const isReversed = index % 2 !== 0;
               const isMuted = mutedStates[album.id] !== false; // default muted
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { getHls } from '../utils/hlsLoader';
+import { useSiteData } from '../context/SiteDataContext';
 import './HeroSlider.css';
 
 const SLIDES = [
@@ -240,45 +241,53 @@ function HeroHlsVideo({ src, isCurrentSlide, onPlaying, className }) {
 }
 
 export default function HeroSlider({ onToneChange }) {
+  const { heroSlides } = useSiteData();
+  const slides = heroSlides && heroSlides.length > 0 ? heroSlides : SLIDES;
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isVideoReady, setIsVideoReady] = useState(false);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
 
+  // Guard if index exceeds new length
+  const safeIndex = currentIndex >= slides.length ? 0 : currentIndex;
+
   const handleNext = useCallback(() => {
     if (isTransitioning) return;
     setIsTransitioning(true);
     setIsVideoReady(false);
-    setCurrentIndex((prev) => (prev + 1) % SLIDES.length);
-  }, [isTransitioning]);
+    setCurrentIndex((prev) => (prev + 1) % slides.length);
+  }, [isTransitioning, slides.length]);
 
   const handlePrev = useCallback(() => {
     if (isTransitioning) return;
     setIsTransitioning(true);
     setIsVideoReady(false);
-    setCurrentIndex((prev) => (prev - 1 + SLIDES.length) % SLIDES.length);
-  }, [isTransitioning]);
+    setCurrentIndex((prev) => (prev - 1 + slides.length) % slides.length);
+  }, [isTransitioning, slides.length]);
 
   useEffect(() => {
-    onToneChange?.(SLIDES[currentIndex].navTone);
-  }, [currentIndex, onToneChange]);
+    if (slides[safeIndex]) {
+      onToneChange?.(slides[safeIndex].navTone);
+    }
+  }, [safeIndex, slides, onToneChange]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsTransitioning(false);
     }, 800); // Must match transition time in CSS
     return () => clearTimeout(timer);
-  }, [currentIndex]);
+  }, [safeIndex]);
 
   // Auto-play for image slides; video plays until user navigates or scrolls
   useEffect(() => {
-    if (SLIDES[currentIndex].video) {
+    if (slides[safeIndex]?.video) {
       return; // Keep video playing seamlessly without auto-switching
     }
     const autoPlayTimer = setInterval(handleNext, 7000);
     return () => clearInterval(autoPlayTimer);
-  }, [currentIndex, handleNext]);
+  }, [safeIndex, slides, handleNext]);
 
   // Touch Swipe Handlers
   const handleTouchStart = (e) => {
@@ -302,17 +311,17 @@ export default function HeroSlider({ onToneChange }) {
   };
 
   return (
-    <section id="home" className={`hero-slider-section ${SLIDES[currentIndex].copyTheme}`}>
+    <section id="home" className={`hero-slider-section ${slides[safeIndex]?.copyTheme || 'copy-light'}`}>
       <div 
         className="slider-wrapper"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        {SLIDES.map((slide, index) => (
+        {slides.map((slide, index) => (
           <div
             key={index}
-            className={`slide-item ${slide.copyTheme} ${index === currentIndex ? 'slide-active' : ''}`}
+            className={`slide-item ${slide.copyTheme || 'copy-light'} ${index === safeIndex ? 'slide-active' : ''}`}
           >
             {slide.video ? (
               <div className="hero-video-wrapper">
@@ -328,8 +337,8 @@ export default function HeroSlider({ onToneChange }) {
                 {/* 2. Defer-loaded HLS Video with preload="none" */}
                 <HeroHlsVideo
                   src={slide.video}
-                  isCurrentSlide={index === currentIndex}
-                  className={`hero-video-element ${isVideoReady && index === currentIndex ? 'hero-video-ready' : 'hero-video-loading'}`}
+                  isCurrentSlide={index === safeIndex}
+                  className={`hero-video-element ${isVideoReady && index === safeIndex ? 'hero-video-ready' : 'hero-video-loading'}`}
                   onPlaying={() => setIsVideoReady(true)}
                 />
 
@@ -360,7 +369,7 @@ export default function HeroSlider({ onToneChange }) {
             )}
 
             {/* Smooth-appearing content overlay (only when slide has text) */}
-            {index === currentIndex && (slide.title || slide.tagline) ? (
+            {index === safeIndex && (slide.title || slide.tagline) ? (
               <div className="slide-content">
                 {slide.tagline && <span className="slide-tagline animate-slide-up">{slide.tagline}</span>}
                 {slide.title && <h2 className="slide-title animate-slide-up-delayed">{slide.title}</h2>}
