@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-10-15T11:03:35.045Z",
+  "lastUpdated": "2026-10-21T15:31:30.114Z",
   "heroSlides": [
     {
       "video": "https://media.nadodikalaignan.com/images/VIDEO/HEROSEACTIONVIDEO/video.m3u8",
@@ -71,14 +71,6 @@
       "image": "https://media.nadodikalaignan.com/images/HEROSEACTIONIMAGE/8.webp",
       "title": "YOUR STORY, BEAUTIFULLY YOURS",
       "tagline": "TRADITIONS HELD CLOSE. MEMORIES MADE NEW.",
-      "copyTheme": "copy-ink",
-      "navTone": "dark",
-      "overlay": null
-    },
-    {
-      "image": "https://media.nadodikalaignan.com/images/HEROSEACTIONIMAGE/9.webp",
-      "title": "FOREVER BEGINS HERE",
-      "tagline": "TWO SOULS, ONE BEAUTIFUL JOURNEY",
       "copyTheme": "copy-ink",
       "navTone": "dark",
       "overlay": null
