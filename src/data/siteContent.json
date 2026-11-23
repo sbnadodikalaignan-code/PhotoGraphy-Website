@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-10-15T11:03:35.045Z",
+  "lastUpdated": "2026-11-23T10:55:38.900Z",
   "heroSlides": [
     {
       "video": "https://media.nadodikalaignan.com/images/VIDEO/HEROSEACTIONVIDEO/video.m3u8",
@@ -85,6 +85,14 @@
     }
   ],
   "latestWork": [
+    {
+      "image": "https://media.nadodikalaignan.com/images/latest/images_protrate_1__25__1795431302502.webp",
+      "title": "Timeless Frame",
+      "category": "Weddings",
+      "location": "Fine Art Set",
+      "aspect": "tall",
+      "id": 1795431338900
+    },
     {
       "id": 1,
       "title": "Eternal Whispers",
