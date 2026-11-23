@@ -157,7 +157,14 @@ export default function AdminPanel() {
         await emailjs.send(
           EMAILJS_SERVICE,
           EMAILJS_TEMPLATE,
-          { otp, to_email: OTP_EMAIL, studio: 'Nadodikalaignan' },
+          {
+            otp,
+            passcode: otp,
+            to_email: OTP_EMAIL,
+            email: OTP_EMAIL,
+            to_name: 'Studio Admin',
+            studio: 'Nadodikalaignan'
+          },
           EMAILJS_KEY
         );
       }
