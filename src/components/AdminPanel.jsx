@@ -1,1077 +1,832 @@
-import React, { useState } from 'react';
-import { 
-  Plus, 
-  Trash2, 
-  UploadCloud, 
-  CheckCircle2, 
-  AlertCircle, 
-  Settings, 
-  Download, 
-  RotateCcw, 
-  Lock, 
-  Eye, 
-  Image as ImageIcon,
-  KeyRound
+import React, { useState, useRef } from 'react';
+import emailjs from '@emailjs/browser';
+import {
+  Plus, Trash2, UploadCloud, CheckCircle2, AlertCircle,
+  Settings, Download, RotateCcw, Eye, Image as ImageIcon,
+  LogOut, Send, Shield, Lock, Upload
 } from 'lucide-react';
 import { useSiteData } from '../context/SiteDataContext';
+import { uploadToR2 } from '../utils/r2Upload';
 import './AdminPanel.css';
 
-const DEFAULT_PIN = '1234';
+// ─── Credentials (from .env) ─────────────────────────────────────────────────
+const ADMIN_USERNAME = import.meta.env.VITE_ADMIN_USERNAME || 'admin';
+const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || 'nadodi@2024';
+const EMAILJS_SERVICE  = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_KEY      = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+const OTP_EMAIL        = import.meta.env.VITE_ADMIN_OTP_EMAIL || 'sbnadodikalaignan@gmail.com';
+const OTP_EXPIRY_MS    = 5 * 60 * 1000; // 5 minutes
 
+// ─── Upload Progress Bar ──────────────────────────────────────────────────────
+function ProgressBar({ value }) {
+  return (
+    <div className="ap-progress-track">
+      <div className="ap-progress-fill" style={{ width: `${value}%` }} />
+      <span className="ap-progress-label">{value}%</span>
+    </div>
+  );
+}
+
+// ─── File Upload Widget ───────────────────────────────────────────────────────
+function R2Uploader({ folder, onUploaded, label = 'Upload Image / Video' }) {
+  const [progress, setProgress] = useState(0);
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState('');
+  const fileRef = useRef();
+
+  const handleFile = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setError('');
+    setUploading(true);
+    setProgress(0);
+    try {
+      const publicUrl = await uploadToR2(file, folder, setProgress);
+      onUploaded(publicUrl);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setUploading(false);
+      e.target.value = '';
+    }
+  };
+
+  return (
+    <div className="ap-uploader">
+      <button
+        type="button"
+        className="ap-upload-btn"
+        onClick={() => fileRef.current?.click()}
+        disabled={uploading}
+      >
+        <Upload size={16} />
+        {uploading ? 'Uploading to R2…' : label}
+      </button>
+      <input
+        ref={fileRef}
+        type="file"
+        accept="image/*,video/*"
+        onChange={handleFile}
+        style={{ display: 'none' }}
+      />
+      {uploading && <ProgressBar value={progress} />}
+      {error && <p className="ap-error">{error}</p>}
+    </div>
+  );
+}
+
+// ─── Main AdminPanel ──────────────────────────────────────────────────────────
 export default function AdminPanel() {
   const {
-    heroSlides,
-    latestWork,
-    categories,
-    albums,
-    services,
-    hasLocalChanges,
-    githubToken,
-    githubConfig,
-    saveGithubToken,
-    addHeroSlide,
-    removeHeroSlide,
-    addLatestWorkItem,
-    removeLatestWorkItem,
-    addServiceImage,
-    removeServiceImage,
-    updateServiceHero,
-    addAlbumPhoto,
-    removeAlbumPhoto,
-    updateAlbumCover,
-    updateCategoryCard,
-    resetToDefaults,
-    exportJsonBackup,
-    publishToGitHub
+    heroSlides, latestWork, categories, albums, services,
+    hasLocalChanges, githubToken, githubConfig,
+    saveGithubToken, addHeroSlide, removeHeroSlide,
+    addLatestWorkItem, removeLatestWorkItem,
+    addServiceImage, removeServiceImage,
+    updateServiceHero, addAlbumPhoto, removeAlbumPhoto,
+    updateAlbumCover, updateCategoryCard,
+    resetToDefaults, exportJsonBackup, publishToGitHub
   } = useSiteData();
 
-  // Authentication State
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return sessionStorage.getItem('sb_admin_auth') === 'true';
-  });
-  const [pinInput, setPinInput] = useState('');
-  const [pinError, setPinError] = useState('');
+  // ── Auth State ──────────────────────────────────────────────────────────────
+  // step: 'credentials' | 'otp' | 'done'
+  const [authStep, setAuthStep] = useState(() =>
+    sessionStorage.getItem('sb_admin_auth') === 'true' ? 'done' : 'credentials'
+  );
+  const [username, setUsername]       = useState('');
+  const [password, setPassword]       = useState('');
+  const [otpInput, setOtpInput]       = useState('');
+  const [generatedOtp, setGeneratedOtp]   = useState('');
+  const [otpExpiry, setOtpExpiry]     = useState(0);
+  const [authError, setAuthError]     = useState('');
+  const [sendingOtp, setSendingOtp]   = useState(false);
 
-  // Active Tab
-  const [activeTab, setActiveTab] = useState('hero'); // 'hero', 'latest', 'wedding', 'events', 'portrait', 'toddlers', 'albums', 'categories'
-  const [activeAlbumId, setActiveAlbumId] = useState(albums[0]?.id || 'gloria-vishnu');
+  // ── UI State ────────────────────────────────────────────────────────────────
+  const [activeTab, setActiveTab]   = useState('hero');
+  const [activeAlbumId, setActiveAlbumId] = useState(albums[0]?.id || '');
+  const [isPublishing, setIsPublishing]   = useState(false);
+  const [publishMsg, setPublishMsg]       = useState(null);
+  const [notification, setNotification]   = useState(null);
+  const [showSettings, setShowSettings]   = useState(false);
+  const [tempToken, setTempToken]         = useState(githubToken);
 
-  // Publishing / API State
-  const [isPublishing, setIsPublishing] = useState(false);
-  const [publishMessage, setPublishMessage] = useState(null);
-  const [showSettingsModal, setShowSettingsModal] = useState(false);
-  const [tempToken, setTempToken] = useState(githubToken);
-
-  // Form Inputs
-  const [formUrl, setFormUrl] = useState('');
-  const [formTitle, setFormTitle] = useState('');
-  const [formTagline, setFormTagline] = useState('');
+  // ── Form Fields ─────────────────────────────────────────────────────────────
+  const [formUrl,      setFormUrl]      = useState('');
+  const [formTitle,    setFormTitle]    = useState('');
+  const [formTagline,  setFormTagline]  = useState('');
   const [formLocation, setFormLocation] = useState('');
-  const [formCategory, setFormCategory] = useState('');
-  const [formAspect, setFormAspect] = useState('tall');
-  const [formCamera, setFormCamera] = useState('');
-  const [imageLoadError, setImageLoadError] = useState(false);
-  const [notification, setNotification] = useState(null);
+  const [formCategory, setFormCategory] = useState('Weddings');
+  const [formAspect,   setFormAspect]   = useState('tall');
+  const [formCamera,   setFormCamera]   = useState('');
+  const [imgError,     setImgError]     = useState(false);
 
-  // Toast notification helper
-  const showNotification = (text, type = 'success') => {
+  // ─── Helpers ─────────────────────────────────────────────────────────────────
+  const toast = (text, type = 'success') => {
     setNotification({ text, type });
     setTimeout(() => setNotification(null), 4000);
   };
 
-  // Handle PIN Login
-  const handleLogin = (e) => {
+  const clearForm = () => {
+    setFormUrl(''); setFormTitle(''); setFormTagline('');
+    setFormLocation(''); setFormCamera(''); setImgError(false);
+  };
+
+  // ─── LOGIN STEP 1: credentials ───────────────────────────────────────────────
+  const handleCredentials = async (e) => {
     e.preventDefault();
-    if (pinInput === DEFAULT_PIN || pinInput === 'admin') {
-      sessionStorage.setItem('sb_admin_auth', 'true');
-      setIsAuthenticated(true);
-      setPinError('');
-    } else {
-      setPinError('Incorrect PIN. (Default: 1234)');
+    if (username !== ADMIN_USERNAME || password !== ADMIN_PASSWORD) {
+      setAuthError('Username or password is incorrect.');
+      return;
+    }
+    setAuthError('');
+    setSendingOtp(true);
+
+    // Generate 6-digit OTP
+    const otp = String(Math.floor(100000 + Math.random() * 900000));
+    setGeneratedOtp(otp);
+    setOtpExpiry(Date.now() + OTP_EXPIRY_MS);
+
+    // Send via EmailJS
+    try {
+      if (!EMAILJS_SERVICE || !EMAILJS_TEMPLATE || !EMAILJS_KEY || EMAILJS_KEY === 'YOUR_EMAILJS_PUBLIC_KEY') {
+        // Dev fallback: show OTP in console
+        console.warn('⚠️ EmailJS not configured — OTP is:', otp);
+        toast(`Dev mode: OTP is ${otp} (check console)`, 'info');
+      } else {
+        await emailjs.send(
+          EMAILJS_SERVICE,
+          EMAILJS_TEMPLATE,
+          { otp, to_email: OTP_EMAIL, studio: 'Nadodikalaignan' },
+          EMAILJS_KEY
+        );
+      }
+      setAuthStep('otp');
+    } catch (err) {
+      setAuthError('Failed to send OTP email. ' + (err?.text || err?.message || ''));
+    } finally {
+      setSendingOtp(false);
     }
   };
 
-  // Handle Publish to GitHub
-  const handlePublishLive = async () => {
-    if (!githubToken) {
-      setShowSettingsModal(true);
+  // ─── LOGIN STEP 2: OTP verify ─────────────────────────────────────────────
+  const handleOtpVerify = (e) => {
+    e.preventDefault();
+    if (Date.now() > otpExpiry) {
+      setAuthError('OTP expired. Please go back and try again.');
       return;
     }
+    if (otpInput.trim() !== generatedOtp) {
+      setAuthError('Incorrect OTP. Please check your email.');
+      return;
+    }
+    sessionStorage.setItem('sb_admin_auth', 'true');
+    setAuthStep('done');
+    setAuthError('');
+  };
 
-    const confirmPub = window.confirm(
-      'Publish your changes live to www.nadodikalaignan.com?\n\nThis will update the repository and trigger an automatic worldwide build (~1 minute).'
-    );
-    if (!confirmPub) return;
+  const handleLogout = () => {
+    sessionStorage.removeItem('sb_admin_auth');
+    setAuthStep('credentials');
+    setUsername(''); setPassword(''); setOtpInput('');
+  };
 
+  // ─── PUBLISH ─────────────────────────────────────────────────────────────────
+  const handlePublish = async () => {
+    if (!githubToken) { setShowSettings(true); return; }
+    if (!window.confirm('Publish changes live to www.nadodikalaignan.com?')) return;
     setIsPublishing(true);
-    setPublishMessage({ type: 'info', text: 'Connecting to GitHub and publishing updates...' });
-
+    setPublishMsg({ type: 'info', text: 'Publishing to GitHub…' });
     try {
       await publishToGitHub();
-      setPublishMessage({
-        type: 'success',
-        text: 'Changes published successfully! www.nadodikalaignan.com will update live in ~45 seconds.'
-      });
-      showNotification('Successfully published live to website!', 'success');
+      setPublishMsg({ type: 'success', text: 'Published! Website updates in ~45 seconds.' });
+      toast('Published live!', 'success');
     } catch (err) {
-      console.error(err);
-      setPublishMessage({
-        type: 'error',
-        text: err.message || 'Failed to publish to GitHub. Please check your token settings.'
-      });
+      setPublishMsg({ type: 'error', text: err.message || 'Publish failed.' });
     } finally {
       setIsPublishing(false);
     }
   };
 
-  // Section Add Handlers
-  const handleAddHeroSlide = (e) => {
+  // ─── Add Handlers ─────────────────────────────────────────────────────────
+  const handleAddHero = (e) => {
     e.preventDefault();
     if (!formUrl) return;
-
     addHeroSlide({
       image: formUrl.trim(),
       title: formTitle.trim().toUpperCase(),
       tagline: formTagline.trim().toUpperCase(),
-      copyTheme: 'copy-light',
-      navTone: 'light',
+      copyTheme: 'copy-light', navTone: 'light',
       overlay: 'linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0.72) 100%)'
     });
-
-    setFormUrl('');
-    setFormTitle('');
-    setFormTagline('');
-    showNotification('Hero slide added successfully!');
+    clearForm();
+    toast('Hero slide added!');
   };
 
-  const handleAddLatestWork = (e) => {
+  const handleAddLatest = (e) => {
     e.preventDefault();
     if (!formUrl) return;
-
     addLatestWorkItem({
       image: formUrl.trim(),
       title: formTitle.trim() || 'Timeless Frame',
-      category: formCategory.trim() || 'Weddings',
+      category: formCategory,
       location: formLocation.trim() || 'Fine Art Set',
       aspect: formAspect
     });
-
-    setFormUrl('');
-    setFormTitle('');
-    setFormLocation('');
-    showNotification('Latest work item added successfully!');
+    clearForm();
+    toast('Latest work added!');
   };
 
-  const handleAddServicePhoto = (serviceKey) => (e) => {
+  const handleAddService = (serviceKey) => (e) => {
     e.preventDefault();
     if (!formUrl) return;
-
     addServiceImage(serviceKey, {
       image: formUrl.trim(),
       title: formTitle.trim() || 'Signature Frame',
-      category: formCategory.trim() || 'Featured',
+      category: formCategory,
       location: formLocation.trim() || 'Scenic Location',
       camera: formCamera.trim() || 'Sony A7R V • 85mm f/1.4'
     });
-
-    setFormUrl('');
-    setFormTitle('');
-    setFormLocation('');
-    setFormCamera('');
-    showNotification(`Photo added to ${serviceKey} gallery!`);
+    clearForm();
+    toast(`Photo added to ${serviceKey}!`);
   };
 
   const handleAddAlbumPhoto = (e) => {
     e.preventDefault();
     if (!formUrl) return;
-
     addAlbumPhoto(activeAlbumId, {
       src: formUrl.trim(),
       title: formTitle.trim() || 'Cinematic Moment',
-      caption: formTagline.trim() || 'Artistic memory captured in natural light.'
+      caption: formTagline.trim() || 'Artistic memory in natural light.'
     });
-
-    setFormUrl('');
-    setFormTitle('');
-    setFormTagline('');
-    showNotification('Photo added to film album!');
+    clearForm();
+    toast('Photo added to album!');
   };
 
-  // Reset confirmation
   const handleReset = () => {
-    if (window.confirm('Are you sure you want to reset all data back to original defaults?')) {
+    if (window.confirm('Reset ALL data to original defaults?')) {
       resetToDefaults();
-      showNotification('All sections reset to initial default data.', 'info');
+      toast('Reset to defaults.', 'info');
     }
   };
 
-  // Render Authentication Wall
-  if (!isAuthenticated) {
-    return (
-      <div className="admin-login-wrapper">
-        <div className="admin-login-card">
-          <div className="admin-login-logo">
-            <Lock className="admin-lock-icon" size={28} />
+  // ─── URL Preview helper ───────────────────────────────────────────────────
+  const UrlPreview = () => formUrl ? (
+    <div className="ap-preview-box">
+      <p className="ap-preview-label">Preview</p>
+      <div className="ap-preview-img-wrap">
+        <img
+          src={formUrl}
+          alt="Preview"
+          onError={() => setImgError(true)}
+          onLoad={() => setImgError(false)}
+        />
+        {imgError && (
+          <div className="ap-preview-error">
+            <AlertCircle size={22} />
+            <span>Cannot load URL — verify your Cloudflare R2 link.</span>
           </div>
-          <h1 className="admin-login-title">Stories by Nadodikalaignan</h1>
-          <p className="admin-login-subtitle">Studio Content Management Panel</p>
+        )}
+      </div>
+    </div>
+  ) : null;
 
-          <form onSubmit={handleLogin} className="admin-login-form">
-            <label className="admin-label">Enter Studio PIN</label>
+  // ─── RENDER: Credentials Step ─────────────────────────────────────────────
+  if (authStep === 'credentials') {
+    return (
+      <div className="ap-login-bg">
+        <div className="ap-login-card">
+          <div className="ap-login-icon"><Lock size={28} /></div>
+          <h1 className="ap-login-title">Studio Admin</h1>
+          <p className="ap-login-sub">Nadodikalaignan Content Panel</p>
+          <form onSubmit={handleCredentials} className="ap-login-form">
+            <label className="ap-label">Username</label>
             <input
-              type="password"
-              className="admin-input admin-pin-input"
-              placeholder="Enter PIN (Default: 1234)"
-              value={pinInput}
-              onChange={(e) => setPinInput(e.target.value)}
+              className="ap-input"
+              type="text"
+              autoComplete="username"
+              value={username}
+              onChange={e => { setUsername(e.target.value); setAuthError(''); }}
+              required
               autoFocus
             />
-            {pinError && <p className="admin-error-text">{pinError}</p>}
-            <button type="submit" className="admin-btn admin-btn-primary" style={{ width: '100%', marginTop: '1rem' }}>
-              Access Dashboard
+            <label className="ap-label">Password</label>
+            <input
+              className="ap-input"
+              type="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={e => { setPassword(e.target.value); setAuthError(''); }}
+              required
+            />
+            {authError && <p className="ap-error">{authError}</p>}
+            <button className="ap-btn-primary" type="submit" disabled={sendingOtp}>
+              <Send size={16} />
+              {sendingOtp ? 'Sending OTP…' : 'Send OTP to Email'}
             </button>
           </form>
-          <div className="admin-login-footer">
-            <a href="/" className="admin-back-link">← Return to Public Website</a>
-          </div>
+          <a href="/" className="ap-back-link">← Return to Website</a>
         </div>
       </div>
     );
   }
 
-  // Active Service Data if active tab is a service
+  // ─── RENDER: OTP Step ─────────────────────────────────────────────────────
+  if (authStep === 'otp') {
+    return (
+      <div className="ap-login-bg">
+        <div className="ap-login-card">
+          <div className="ap-login-icon"><Shield size={28} /></div>
+          <h1 className="ap-login-title">Verify OTP</h1>
+          <p className="ap-login-sub">
+            A 6-digit code was sent to<br />
+            <strong>{OTP_EMAIL}</strong>
+          </p>
+          <form onSubmit={handleOtpVerify} className="ap-login-form">
+            <label className="ap-label">Enter OTP Code</label>
+            <input
+              className="ap-input ap-otp-input"
+              type="text"
+              inputMode="numeric"
+              maxLength={6}
+              placeholder="000000"
+              value={otpInput}
+              onChange={e => { setOtpInput(e.target.value.replace(/\D/g, '')); setAuthError(''); }}
+              autoFocus
+              required
+            />
+            {authError && <p className="ap-error">{authError}</p>}
+            <button className="ap-btn-primary" type="submit">
+              <CheckCircle2 size={16} /> Verify & Login
+            </button>
+            <button
+              type="button"
+              className="ap-btn-secondary"
+              onClick={() => { setAuthStep('credentials'); setOtpInput(''); setAuthError(''); }}
+            >
+              ← Back
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
+  // ─── RENDER: Dashboard ────────────────────────────────────────────────────
   const currentService = services[activeTab];
-  const activeAlbum = albums.find(a => a.id === activeAlbumId) || albums[0];
+  const activeAlbum    = albums.find(a => a.id === activeAlbumId) || albums[0];
+
+  const serviceFolder = {
+    wedding: 'images/weddings', events: 'images/events',
+    portrait: 'images/portraits', toddlers: 'images/toddlers',
+    'pre-wedding': 'images/pre-wedding'
+  };
+
+  const NAV_TABS = [
+    { key: 'hero',        label: 'Hero Slides',  count: heroSlides.length },
+    { key: 'latest',      label: 'Latest Work',  count: latestWork.length },
+    { key: 'categories',  label: 'About Cards',  count: categories.length },
+    { key: 'wedding',     label: 'Weddings',     count: services.wedding?.gallery?.length || 0 },
+    { key: 'events',      label: 'Events',       count: services.events?.gallery?.length || 0 },
+    { key: 'portrait',    label: 'Portraits',    count: services.portrait?.gallery?.length || 0 },
+    { key: 'toddlers',    label: 'Toddlers',     count: services.toddlers?.gallery?.length || 0 },
+    { key: 'pre-wedding', label: 'Pre-Wedding',  count: services['pre-wedding']?.gallery?.length || 0 },
+    { key: 'albums',      label: 'Films & Albums', count: albums.length },
+  ];
 
   return (
-    <div className="admin-container">
-      {/* Top Header */}
-      <header className="admin-header">
-        <div className="admin-header-brand">
-          <h1 className="admin-brand-title">NADODIKALAIGNAN</h1>
-          <span className="admin-brand-badge">ADMIN STUDIO</span>
-        </div>
-
-        <div className="admin-header-actions">
+    <div className="ap-wrap">
+      {/* ── Top Bar ─────────────────────────────────────────── */}
+      <header className="ap-topbar">
+        <span className="ap-topbar-brand">Nadodikalaignan <span className="ap-topbar-badge">Admin</span></span>
+        <div className="ap-topbar-actions">
           {hasLocalChanges && (
-            <span className="admin-status-pill local-ready">
-              <span className="pill-dot"></span> Local Changes Ready
-            </span>
+            <span className="ap-pill-changes">● Unsaved Changes</span>
           )}
-
-          <a href="/" target="_blank" rel="noreferrer" className="admin-action-btn secondary">
-            <Eye size={16} /> View Live Website
+          <a href="/" target="_blank" rel="noreferrer" className="ap-topbar-btn">
+            <Eye size={15} /> View Site
           </a>
-
-          <button onClick={exportJsonBackup} className="admin-action-btn secondary" title="Download backup of all current site data">
-            <Download size={16} /> Export Backup
+          <button onClick={exportJsonBackup} className="ap-topbar-btn" title="Download JSON backup">
+            <Download size={15} /> Backup
           </button>
-
-          <button onClick={handleReset} className="admin-action-btn secondary" title="Reset all changes back to original defaults">
-            <RotateCcw size={16} /> Reset Defaults
+          <button onClick={() => setShowSettings(true)} className="ap-topbar-btn" title="GitHub token">
+            <Settings size={15} />
           </button>
-
-          <button onClick={() => setShowSettingsModal(true)} className="admin-action-btn secondary" title="Configure GitHub Auto-Publish Token">
-            <Settings size={16} /> GitHub Sync
-          </button>
-
-          <button 
-            onClick={handlePublishLive} 
-            disabled={isPublishing} 
-            className="admin-action-btn primary publish-btn"
+          <button
+            onClick={handlePublish}
+            disabled={isPublishing}
+            className="ap-publish-btn"
           >
-            <UploadCloud size={18} />
-            {isPublishing ? 'Publishing...' : 'Publish Live Worldwide'}
+            <UploadCloud size={15} />
+            {isPublishing ? 'Publishing…' : 'Publish Live'}
+          </button>
+          <button onClick={handleLogout} className="ap-topbar-btn" title="Logout">
+            <LogOut size={15} />
           </button>
         </div>
       </header>
 
-      {/* Global Notification Banner */}
+      {/* ── Notifications ───────────────────────────────────── */}
       {notification && (
-        <div className={`admin-notification-bar ${notification.type}`}>
-          <CheckCircle2 size={18} />
-          <span>{notification.text}</span>
+        <div className={`ap-toast ${notification.type}`}>
+          <CheckCircle2 size={16} /> {notification.text}
         </div>
       )}
 
-      {/* Publish Status Alert */}
-      {publishMessage && (
-        <div className={`admin-publish-alert ${publishMessage.type}`}>
-          {publishMessage.type === 'success' ? <CheckCircle2 size={20} /> : <AlertCircle size={20} />}
-          <div>
-            <p className="publish-alert-title">
-              {publishMessage.type === 'success' ? 'Published Live' : publishMessage.type === 'info' ? 'Publishing' : 'Publish Error'}
-            </p>
-            <p className="publish-alert-desc">{publishMessage.text}</p>
-          </div>
-          <button onClick={() => setPublishMessage(null)} className="admin-alert-close">×</button>
+      {publishMsg && (
+        <div className={`ap-publish-bar ${publishMsg.type}`}>
+          {publishMsg.type === 'success' ? <CheckCircle2 size={18} /> : <AlertCircle size={18} />}
+          <span>{publishMsg.text}</span>
+          <button onClick={() => setPublishMsg(null)} className="ap-close-btn">×</button>
         </div>
       )}
 
-      {/* Main Admin Body */}
-      <div className="admin-main-layout">
-        {/* Sidebar Navigation */}
-        <aside className="admin-sidebar">
-          <div className="admin-nav-group-title">MAIN SECTIONS</div>
-          <button 
-            className={`admin-nav-item ${activeTab === 'hero' ? 'active' : ''}`}
-            onClick={() => setActiveTab('hero')}
+      {/* ── Tab Nav ─────────────────────────────────────────── */}
+      <nav className="ap-tabs">
+        {NAV_TABS.map(t => (
+          <button
+            key={t.key}
+            className={`ap-tab ${activeTab === t.key ? 'active' : ''}`}
+            onClick={() => { setActiveTab(t.key); clearForm(); }}
           >
-            <span>Hero Slider</span>
-            <span className="nav-count">{heroSlides.length}</span>
+            {t.label}
+            <span className="ap-tab-count">{t.count}</span>
           </button>
+        ))}
+      </nav>
 
-          <button 
-            className={`admin-nav-item ${activeTab === 'latest' ? 'active' : ''}`}
-            onClick={() => setActiveTab('latest')}
-          >
-            <span>Latest Work</span>
-            <span className="nav-count">{latestWork.length}</span>
-          </button>
+      {/* ── Content ─────────────────────────────────────────── */}
+      <main className="ap-content">
 
-          <button 
-            className={`admin-nav-item ${activeTab === 'categories' ? 'active' : ''}`}
-            onClick={() => setActiveTab('categories')}
-          >
-            <span>About Category Cards</span>
-            <span className="nav-count">{categories.length}</span>
-          </button>
+        {/* ════════════ HERO SLIDES ════════════ */}
+        {activeTab === 'hero' && (
+          <section className="ap-section">
+            <h2 className="ap-section-title">Hero Slider</h2>
 
-          <div className="admin-nav-group-title" style={{ marginTop: '1.5rem' }}>SERVICES GALLERIES</div>
-          <button 
-            className={`admin-nav-item ${activeTab === 'wedding' ? 'active' : ''}`}
-            onClick={() => setActiveTab('wedding')}
-          >
-            <span>Weddings</span>
-            <span className="nav-count">{services.wedding?.gallery?.length || 0}</span>
-          </button>
-
-          <button 
-            className={`admin-nav-item ${activeTab === 'events' ? 'active' : ''}`}
-            onClick={() => setActiveTab('events')}
-          >
-            <span>Events</span>
-            <span className="nav-count">{services.events?.gallery?.length || 0}</span>
-          </button>
-
-          <button 
-            className={`admin-nav-item ${activeTab === 'portrait' ? 'active' : ''}`}
-            onClick={() => setActiveTab('portrait')}
-          >
-            <span>Portraits</span>
-            <span className="nav-count">{services.portrait?.gallery?.length || 0}</span>
-          </button>
-
-          <button 
-            className={`admin-nav-item ${activeTab === 'toddlers' ? 'active' : ''}`}
-            onClick={() => setActiveTab('toddlers')}
-          >
-            <span>Toddlers & Baby</span>
-            <span className="nav-count">{services.toddlers?.gallery?.length || 0}</span>
-          </button>
-
-          <button 
-            className={`admin-nav-item ${activeTab === 'pre-wedding' ? 'active' : ''}`}
-            onClick={() => setActiveTab('pre-wedding')}
-          >
-            <span>Pre-Wedding</span>
-            <span className="nav-count">{services['pre-wedding']?.gallery?.length || 0}</span>
-          </button>
-
-          <div className="admin-nav-group-title" style={{ marginTop: '1.5rem' }}>FILMS & ALBUMS</div>
-          <button 
-            className={`admin-nav-item ${activeTab === 'albums' ? 'active' : ''}`}
-            onClick={() => setActiveTab('albums')}
-          >
-            <span>Films & Albums</span>
-            <span className="nav-count">{albums.length}</span>
-          </button>
-        </aside>
-
-        {/* Content Area */}
-        <main className="admin-content-area">
-          {/* ================================= HERO SLIDER ================================= */}
-          {activeTab === 'hero' && (
-            <div>
-              <div className="admin-section-header">
-                <div>
-                  <h2 className="admin-section-title">Hero Slider Management</h2>
-                  <p className="admin-section-desc">Add or remove large banner slides featured on the homepage hero section.</p>
-                </div>
+            {/* Upload from R2 */}
+            <div className="ap-card">
+              <h3 className="ap-card-title">Add New Hero Slide</h3>
+              <div className="ap-upload-row">
+                <R2Uploader
+                  folder="images/hero"
+                  label="Upload Hero Image to R2"
+                  onUploaded={url => { setFormUrl(url); setImgError(false); }}
+                />
+                <span className="ap-or">or paste URL</span>
               </div>
-
-              {/* Add New Slide Form */}
-              <div className="admin-card add-image-card">
-                <h3 className="admin-card-title"><Plus size={18} /> Add New Hero Slide</h3>
-                <form onSubmit={handleAddHeroSlide} className="admin-form-grid">
-                  <div className="admin-field-full">
-                    <label className="admin-label">Cloudflare Image URL <span className="req">*</span></label>
-                    <input
-                      type="url"
-                      className="admin-input"
-                      placeholder="https://media.nadodikalaignan.com/images/HEROSEACTIONIMAGE/..."
-                      value={formUrl}
-                      onChange={(e) => {
-                        setFormUrl(e.target.value);
-                        setImageLoadError(false);
-                      }}
-                      required
-                    />
+              <form onSubmit={handleAddHero} className="ap-form">
+                <label className="ap-label">Image URL *</label>
+                <input className="ap-input" type="url" required value={formUrl}
+                  onChange={e => { setFormUrl(e.target.value); setImgError(false); }}
+                  placeholder="https://media.nadodikalaignan.com/images/hero/..." />
+                <div className="ap-row">
+                  <div>
+                    <label className="ap-label">Title</label>
+                    <input className="ap-input" type="text" value={formTitle}
+                      onChange={e => setFormTitle(e.target.value)} placeholder="A PROMISE, HELD CLOSE" />
                   </div>
-
-                  <div className="admin-field-half">
-                    <label className="admin-label">Title (Headline)</label>
-                    <input
-                      type="text"
-                      className="admin-input"
-                      placeholder="e.g. A PROMISE, HELD CLOSE"
-                      value={formTitle}
-                      onChange={(e) => setFormTitle(e.target.value)}
-                    />
+                  <div>
+                    <label className="ap-label">Tagline</label>
+                    <input className="ap-input" type="text" value={formTagline}
+                      onChange={e => setFormTagline(e.target.value)} placeholder="BEFORE THE CELEBRATION BEGINS" />
                   </div>
-
-                  <div className="admin-field-half">
-                    <label className="admin-label">Tagline (Subtitle)</label>
-                    <input
-                      type="text"
-                      className="admin-input"
-                      placeholder="e.g. BEFORE THE CELEBRATION BEGINS"
-                      value={formTagline}
-                      onChange={(e) => setFormTagline(e.target.value)}
-                    />
-                  </div>
-
-                  {/* Live Image Preview */}
-                  {formUrl && (
-                    <div className="admin-field-full admin-preview-box">
-                      <p className="preview-label">Live Cloudflare Image Preview:</p>
-                      <div className="preview-image-wrapper">
-                        <img 
-                          src={formUrl} 
-                          alt="Preview" 
-                          onError={() => setImageLoadError(true)}
-                          onLoad={() => setImageLoadError(false)}
-                        />
-                        {imageLoadError && (
-                          <div className="preview-error-overlay">
-                            <AlertCircle size={24} />
-                            <span>Unable to load image. Please verify the Cloudflare URL.</span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="admin-field-full">
-                    <button type="submit" disabled={!formUrl || imageLoadError} className="admin-btn admin-btn-primary">
-                      <Plus size={16} /> Add Hero Slide
-                    </button>
-                  </div>
-                </form>
-              </div>
-
-              {/* Current Slides Grid */}
-              <div className="admin-card">
-                <h3 className="admin-card-title">Current Hero Slides ({heroSlides.length})</h3>
-                <div className="admin-gallery-grid">
-                  {heroSlides.map((slide, idx) => (
-                    <div key={idx} className="admin-image-item">
-                      <div className="item-thumb-wrapper">
-                        <img src={slide.image} alt={slide.title || `Slide ${idx + 1}`} />
-                        <span className="item-badge">Slide #{idx + 1}</span>
-                      </div>
-                      <div className="item-meta">
-                        <div className="item-title">{slide.title || '(No Title / Logo Slide)'}</div>
-                        <div className="item-subtitle">{slide.tagline || 'Homepage Slide'}</div>
-                        <div className="item-url-text" title={slide.image}>{slide.image}</div>
-                      </div>
-                      <button 
-                        onClick={() => {
-                          if (window.confirm('Remove this slide from the homepage hero?')) {
-                            removeHeroSlide(idx);
-                            showNotification('Slide removed successfully.');
-                          }
-                        }}
-                        className="admin-delete-btn"
-                        title="Delete Slide"
-                      >
-                        <Trash2 size={16} /> Remove
-                      </button>
-                    </div>
-                  ))}
                 </div>
+                <UrlPreview />
+                <button className="ap-btn-primary" type="submit" disabled={!formUrl || imgError}>
+                  <Plus size={16} /> Add Hero Slide
+                </button>
+              </form>
+            </div>
+
+            {/* Existing slides */}
+            <div className="ap-card">
+              <h3 className="ap-card-title">Current Slides ({heroSlides.length})</h3>
+              <div className="ap-grid">
+                {heroSlides.map((slide, idx) => (
+                  <div key={idx} className="ap-item">
+                    <img src={slide.image} alt={slide.title || `Slide ${idx + 1}`} className="ap-thumb" />
+                    <div className="ap-item-meta">
+                      <div className="ap-item-title">{slide.title || '(Logo Slide)'}</div>
+                      <div className="ap-item-sub">{slide.tagline}</div>
+                      <div className="ap-item-url">{slide.image}</div>
+                    </div>
+                    <button
+                      className="ap-delete-btn"
+                      onClick={() => { if (window.confirm('Remove slide?')) { removeHeroSlide(idx); toast('Slide removed.'); } }}
+                    ><Trash2 size={14} /></button>
+                  </div>
+                ))}
               </div>
             </div>
-          )}
+          </section>
+        )}
 
-          {/* ================================= LATEST WORK ================================= */}
-          {activeTab === 'latest' && (
-            <div>
-              <div className="admin-section-header">
-                <div>
-                  <h2 className="admin-section-title">Latest Work Gallery</h2>
-                  <p className="admin-section-desc">Manage the curated portfolio showcase visible on the homepage.</p>
-                </div>
+        {/* ════════════ LATEST WORK ════════════ */}
+        {activeTab === 'latest' && (
+          <section className="ap-section">
+            <h2 className="ap-section-title">Latest Work Gallery</h2>
+            <div className="ap-card">
+              <h3 className="ap-card-title">Add New Photo</h3>
+              <div className="ap-upload-row">
+                <R2Uploader folder="images/latest" label="Upload to R2"
+                  onUploaded={url => { setFormUrl(url); setImgError(false); }} />
+                <span className="ap-or">or paste URL</span>
               </div>
-
-              {/* Add New Latest Work Form */}
-              <div className="admin-card add-image-card">
-                <h3 className="admin-card-title"><Plus size={18} /> Add New Photo to Latest Work</h3>
-                <form onSubmit={handleAddLatestWork} className="admin-form-grid">
-                  <div className="admin-field-full">
-                    <label className="admin-label">Cloudflare Image URL <span className="req">*</span></label>
-                    <input
-                      type="url"
-                      className="admin-input"
-                      placeholder="https://media.nadodikalaignan.com/images/latest_image/..."
-                      value={formUrl}
-                      onChange={(e) => {
-                        setFormUrl(e.target.value);
-                        setImageLoadError(false);
-                      }}
-                      required
-                    />
+              <form onSubmit={handleAddLatest} className="ap-form">
+                <label className="ap-label">Image URL *</label>
+                <input className="ap-input" type="url" required value={formUrl}
+                  onChange={e => { setFormUrl(e.target.value); setImgError(false); }}
+                  placeholder="https://media.nadodikalaignan.com/images/latest/..." />
+                <div className="ap-row">
+                  <div>
+                    <label className="ap-label">Title</label>
+                    <input className="ap-input" type="text" value={formTitle}
+                      onChange={e => setFormTitle(e.target.value)} placeholder="Eternal Whispers" />
                   </div>
-
-                  <div className="admin-field-third">
-                    <label className="admin-label">Title</label>
-                    <input
-                      type="text"
-                      className="admin-input"
-                      placeholder="e.g. Eternal Whispers"
-                      value={formTitle}
-                      onChange={(e) => setFormTitle(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="admin-field-third">
-                    <label className="admin-label">Category</label>
-                    <select
-                      className="admin-input"
-                      value={formCategory}
-                      onChange={(e) => setFormCategory(e.target.value)}
-                    >
-                      <option value="Weddings">Weddings</option>
-                      <option value="Portraits">Portraits</option>
-                      <option value="Baby & Maternity">Baby & Maternity</option>
-                      <option value="Events">Events</option>
+                  <div>
+                    <label className="ap-label">Category</label>
+                    <select className="ap-input" value={formCategory} onChange={e => setFormCategory(e.target.value)}>
+                      <option>Weddings</option><option>Portraits</option>
+                      <option>Baby &amp; Maternity</option><option>Events</option>
                     </select>
                   </div>
-
-                  <div className="admin-field-third">
-                    <label className="admin-label">Aspect Ratio</label>
-                    <select
-                      className="admin-input"
-                      value={formAspect}
-                      onChange={(e) => setFormAspect(e.target.value)}
-                    >
+                  <div>
+                    <label className="ap-label">Aspect Ratio</label>
+                    <select className="ap-input" value={formAspect} onChange={e => setFormAspect(e.target.value)}>
                       <option value="tall">Portrait (Tall)</option>
                       <option value="wide">Landscape (Wide)</option>
                     </select>
                   </div>
-
-                  <div className="admin-field-full">
-                    <label className="admin-label">Location / Subtitle</label>
-                    <input
-                      type="text"
-                      className="admin-input"
-                      placeholder="e.g. Royal Palace, Udaipur"
-                      value={formLocation}
-                      onChange={(e) => setFormLocation(e.target.value)}
-                    />
-                  </div>
-
-                  {/* Live Image Preview */}
-                  {formUrl && (
-                    <div className="admin-field-full admin-preview-box">
-                      <p className="preview-label">Live Cloudflare Image Preview:</p>
-                      <div className="preview-image-wrapper">
-                        <img 
-                          src={formUrl} 
-                          alt="Preview" 
-                          onError={() => setImageLoadError(true)}
-                          onLoad={() => setImageLoadError(false)}
-                        />
-                        {imageLoadError && (
-                          <div className="preview-error-overlay">
-                            <AlertCircle size={24} />
-                            <span>Unable to load image. Please verify the Cloudflare URL.</span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="admin-field-full">
-                    <button type="submit" disabled={!formUrl || imageLoadError} className="admin-btn admin-btn-primary">
-                      <Plus size={16} /> Add to Latest Work
-                    </button>
-                  </div>
-                </form>
-              </div>
-
-              {/* Current Items Grid */}
-              <div className="admin-card">
-                <h3 className="admin-card-title">Current Portfolio Items ({latestWork.length})</h3>
-                <div className="admin-gallery-grid">
-                  {latestWork.map((item) => (
-                    <div key={item.id} className="admin-image-item">
-                      <div className="item-thumb-wrapper">
-                        <img src={item.image} alt={item.title} />
-                        <span className="item-badge">{item.category} • {item.aspect}</span>
-                      </div>
-                      <div className="item-meta">
-                        <div className="item-title">{item.title}</div>
-                        <div className="item-subtitle">{item.location}</div>
-                        <div className="item-url-text" title={item.image}>{item.image}</div>
-                      </div>
-                      <button 
-                        onClick={() => {
-                          if (window.confirm(`Delete "${item.title}" from Latest Work?`)) {
-                            removeLatestWorkItem(item.id);
-                            showNotification('Item removed successfully.');
-                          }
-                        }}
-                        className="admin-delete-btn"
-                        title="Delete Item"
-                      >
-                        <Trash2 size={16} /> Remove
-                      </button>
-                    </div>
-                  ))}
                 </div>
-              </div>
+                <label className="ap-label">Location</label>
+                <input className="ap-input" type="text" value={formLocation}
+                  onChange={e => setFormLocation(e.target.value)} placeholder="Royal Palace, Udaipur" />
+                <UrlPreview />
+                <button className="ap-btn-primary" type="submit" disabled={!formUrl || imgError}>
+                  <Plus size={16} /> Add to Latest Work
+                </button>
+              </form>
             </div>
-          )}
 
-          {/* ================================= ABOUT CATEGORY CARDS ================================= */}
-          {activeTab === 'categories' && (
-            <div>
-              <div className="admin-section-header">
-                <div>
-                  <h2 className="admin-section-title">About Section Category Cards</h2>
-                  <p className="admin-section-desc">Update the 4 prominent preview image cards displayed on the homepage introduction.</p>
-                </div>
-              </div>
-
-              <div className="admin-cards-2col">
-                {categories.map((cat) => (
-                  <div key={cat.id} className="admin-card">
-                    <h3 className="admin-card-title">{cat.title} Preview Card</h3>
-                    <div className="cat-card-preview">
-                      <img src={cat.image} alt={cat.title} />
+            <div className="ap-card">
+              <h3 className="ap-card-title">Current Items ({latestWork.length})</h3>
+              <div className="ap-grid">
+                {latestWork.map(item => (
+                  <div key={item.id} className="ap-item">
+                    <img src={item.image} alt={item.title} className="ap-thumb" />
+                    <div className="ap-item-meta">
+                      <div className="ap-item-title">{item.title}</div>
+                      <div className="ap-item-sub">{item.category} · {item.location}</div>
+                      <div className="ap-item-url">{item.image}</div>
                     </div>
-                    <div style={{ marginTop: '1rem' }}>
-                      <label className="admin-label">Cloudflare Image URL</label>
-                      <div style={{ display: 'flex', gap: '0.5rem' }}>
-                        <input
-                          type="url"
-                          className="admin-input"
-                          defaultValue={cat.image}
-                          id={`cat_url_${cat.id}`}
-                        />
-                        <button
-                          type="button"
-                          className="admin-btn admin-btn-primary"
-                          onClick={() => {
-                            const val = document.getElementById(`cat_url_${cat.id}`).value;
-                            if (val) {
-                              updateCategoryCard(cat.id, val.trim());
-                              showNotification(`Updated ${cat.title} thumbnail!`);
-                            }
-                          }}
-                        >
-                          Save
-                        </button>
-                      </div>
-                    </div>
+                    <button className="ap-delete-btn"
+                      onClick={() => { if (window.confirm(`Delete "${item.title}"?`)) { removeLatestWorkItem(item.id); toast('Removed.'); } }}
+                    ><Trash2 size={14} /></button>
                   </div>
                 ))}
               </div>
             </div>
-          )}
+          </section>
+        )}
 
-          {/* ================================= SERVICE GALLERIES (WEDDING, EVENTS, PORTRAITS, TODDLERS) ================================= */}
-          {currentService && (
-            <div>
-              <div className="admin-section-header">
-                <div>
-                  <h2 className="admin-section-title">{currentService.title}</h2>
-                  <p className="admin-section-desc">Manage the hero banner image and full gallery photos for this service page.</p>
-                </div>
-              </div>
-
-              {/* Update Service Hero Image */}
-              <div className="admin-card" style={{ marginBottom: '1.5rem' }}>
-                <h3 className="admin-card-title"><ImageIcon size={18} /> Hero Banner Image</h3>
-                <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-                  <div style={{ width: '160px', height: '100px', borderRadius: '8px', overflow: 'hidden', border: '1px solid #e2e8f0', flexShrink: 0 }}>
-                    <img src={currentService.heroImage} alt="Hero" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        {/* ════════════ ABOUT CARDS ════════════ */}
+        {activeTab === 'categories' && (
+          <section className="ap-section">
+            <h2 className="ap-section-title">About Section — Category Cards</h2>
+            <div className="ap-cards-2col">
+              {categories.map(cat => (
+                <div key={cat.id} className="ap-card">
+                  <h3 className="ap-card-title">{cat.title}</h3>
+                  <img src={cat.image} alt={cat.title} className="ap-cat-preview" />
+                  <div className="ap-upload-row" style={{ marginTop: '0.75rem' }}>
+                    <R2Uploader folder="images/about"
+                      label="Upload new image"
+                      onUploaded={url => { updateCategoryCard(cat.id, url); toast(`Updated ${cat.title}!`); }}
+                    />
+                    <span className="ap-or">or paste URL</span>
                   </div>
-                  <div style={{ flex: 1 }}>
-                    <label className="admin-label">Change Banner Cloudflare URL</label>
-                    <div style={{ display: 'flex', gap: '0.5rem' }}>
-                      <input 
-                        type="url" 
-                        className="admin-input" 
-                        defaultValue={currentService.heroImage} 
-                        id={`hero_banner_${activeTab}`} 
-                      />
-                      <button 
-                        type="button" 
-                        className="admin-btn admin-btn-primary"
-                        onClick={() => {
-                          const val = document.getElementById(`hero_banner_${activeTab}`).value;
-                          if (val) {
-                            updateServiceHero(activeTab, val.trim());
-                            showNotification('Updated hero banner image!');
-                          }
-                        }}
-                      >
-                        Update
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Add New Service Photo Form */}
-              <div className="admin-card add-image-card">
-                <h3 className="admin-card-title"><Plus size={18} /> Add New Photo to {currentService.title}</h3>
-                <form onSubmit={handleAddServicePhoto(activeTab)} className="admin-form-grid">
-                  <div className="admin-field-full">
-                    <label className="admin-label">Cloudflare Image URL <span className="req">*</span></label>
-                    <input
-                      type="url"
-                      className="admin-input"
-                      placeholder="https://media.nadodikalaignan.com/images/..."
-                      value={formUrl}
-                      onChange={(e) => {
-                        setFormUrl(e.target.value);
-                        setImageLoadError(false);
+                  <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+                    <input className="ap-input" type="url" defaultValue={cat.image} id={`cat_${cat.id}`} />
+                    <button className="ap-btn-primary" type="button"
+                      onClick={() => {
+                        const v = document.getElementById(`cat_${cat.id}`).value;
+                        if (v) { updateCategoryCard(cat.id, v.trim()); toast(`Updated ${cat.title}!`); }
                       }}
-                      required
-                    />
+                    >Save</button>
                   </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
-                  <div className="admin-field-third">
-                    <label className="admin-label">Photo Title</label>
-                    <input
-                      type="text"
-                      className="admin-input"
-                      placeholder="e.g. Royal Vows"
-                      value={formTitle}
-                      onChange={(e) => setFormTitle(e.target.value)}
-                    />
+        {/* ════════════ SERVICE GALLERIES ════════════ */}
+        {currentService && (
+          <section className="ap-section">
+            <h2 className="ap-section-title">{currentService.title}</h2>
+
+            {/* Hero Banner */}
+            <div className="ap-card">
+              <h3 className="ap-card-title"><ImageIcon size={16} /> Hero Banner</h3>
+              <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                <img src={currentService.heroImage} alt="Hero" className="ap-service-hero-thumb" />
+                <div style={{ flex: 1, minWidth: '220px' }}>
+                  <R2Uploader
+                    folder={serviceFolder[activeTab] || 'images/services'}
+                    label="Upload new hero image"
+                    onUploaded={url => { updateServiceHero(activeTab, url); toast('Hero updated!'); }}
+                  />
+                  <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+                    <input className="ap-input" type="url" defaultValue={currentService.heroImage} id={`hero_${activeTab}`} />
+                    <button className="ap-btn-primary" type="button"
+                      onClick={() => {
+                        const v = document.getElementById(`hero_${activeTab}`).value;
+                        if (v) { updateServiceHero(activeTab, v.trim()); toast('Hero updated!'); }
+                      }}
+                    >Save</button>
                   </div>
-
-                  <div className="admin-field-third">
-                    <label className="admin-label">Category Tag</label>
-                    <input
-                      type="text"
-                      className="admin-input"
-                      placeholder="e.g. Candid / Sunset / Ceremony"
-                      value={formCategory}
-                      onChange={(e) => setFormCategory(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="admin-field-third">
-                    <label className="admin-label">Location</label>
-                    <input
-                      type="text"
-                      className="admin-input"
-                      placeholder="e.g. Grand Mandapam"
-                      value={formLocation}
-                      onChange={(e) => setFormLocation(e.target.value)}
-                    />
-                  </div>
-
-                  {/* Live Image Preview */}
-                  {formUrl && (
-                    <div className="admin-field-full admin-preview-box">
-                      <p className="preview-label">Live Cloudflare Image Preview:</p>
-                      <div className="preview-image-wrapper">
-                        <img 
-                          src={formUrl} 
-                          alt="Preview" 
-                          onError={() => setImageLoadError(true)}
-                          onLoad={() => setImageLoadError(false)}
-                        />
-                        {imageLoadError && (
-                          <div className="preview-error-overlay">
-                            <AlertCircle size={24} />
-                            <span>Unable to load image. Please verify the Cloudflare URL.</span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="admin-field-full">
-                    <button type="submit" disabled={!formUrl || imageLoadError} className="admin-btn admin-btn-primary">
-                      <Plus size={16} /> Add Photo to Gallery
-                    </button>
-                  </div>
-                </form>
-              </div>
-
-              {/* Current Service Gallery Photos */}
-              <div className="admin-card">
-                <h3 className="admin-card-title">Gallery Photos ({currentService.gallery?.length || 0})</h3>
-                <div className="admin-gallery-grid">
-                  {currentService.gallery?.map((img) => (
-                    <div key={img.id} className="admin-image-item">
-                      <div className="item-thumb-wrapper">
-                        <img src={img.image} alt={img.title} />
-                        <span className="item-badge">{img.category || 'Photo'}</span>
-                      </div>
-                      <div className="item-meta">
-                        <div className="item-title">{img.title}</div>
-                        <div className="item-subtitle">{img.location || ''}</div>
-                        <div className="item-url-text" title={img.image}>{img.image}</div>
-                      </div>
-                      <button 
-                        onClick={() => {
-                          if (window.confirm(`Delete "${img.title}" from ${currentService.title}?`)) {
-                            removeServiceImage(activeTab, img.id);
-                            showNotification('Photo removed from gallery.');
-                          }
-                        }}
-                        className="admin-delete-btn"
-                        title="Delete Photo"
-                      >
-                        <Trash2 size={16} /> Remove
-                      </button>
-                    </div>
-                  ))}
                 </div>
               </div>
             </div>
-          )}
 
-          {/* ================================= FILMS & ALBUMS ================================= */}
-          {activeTab === 'albums' && (
-            <div>
-              <div className="admin-section-header">
-                <div>
-                  <h2 className="admin-section-title">Films & Story Albums</h2>
-                  <p className="admin-section-desc">Manage individual wedding films and client story albums.</p>
-                </div>
+            {/* Add Gallery Photo */}
+            <div className="ap-card">
+              <h3 className="ap-card-title">Add Gallery Photo</h3>
+              <div className="ap-upload-row">
+                <R2Uploader folder={serviceFolder[activeTab] || 'images/services'}
+                  label="Upload to R2"
+                  onUploaded={url => { setFormUrl(url); setImgError(false); }} />
+                <span className="ap-or">or paste URL</span>
               </div>
+              <form onSubmit={handleAddService(activeTab)} className="ap-form">
+                <label className="ap-label">Image URL *</label>
+                <input className="ap-input" type="url" required value={formUrl}
+                  onChange={e => { setFormUrl(e.target.value); setImgError(false); }}
+                  placeholder="https://media.nadodikalaignan.com/..." />
+                <div className="ap-row">
+                  <div>
+                    <label className="ap-label">Title</label>
+                    <input className="ap-input" type="text" value={formTitle}
+                      onChange={e => setFormTitle(e.target.value)} placeholder="Signature Frame" />
+                  </div>
+                  <div>
+                    <label className="ap-label">Location</label>
+                    <input className="ap-input" type="text" value={formLocation}
+                      onChange={e => setFormLocation(e.target.value)} placeholder="Scenic Location" />
+                  </div>
+                </div>
+                <label className="ap-label">Camera Info</label>
+                <input className="ap-input" type="text" value={formCamera}
+                  onChange={e => setFormCamera(e.target.value)} placeholder="Sony A7R V • 85mm f/1.4" />
+                <UrlPreview />
+                <button className="ap-btn-primary" type="submit" disabled={!formUrl || imgError}>
+                  <Plus size={16} /> Add Photo
+                </button>
+              </form>
+            </div>
 
-              {/* Album Selector Tabs */}
-              <div className="admin-subtabs">
-                {albums.map((album) => (
-                  <button
-                    key={album.id}
-                    className={`admin-subtab-btn ${activeAlbumId === album.id ? 'active' : ''}`}
-                    onClick={() => setActiveAlbumId(album.id)}
+            {/* Gallery Grid */}
+            <div className="ap-card">
+              <h3 className="ap-card-title">Gallery ({currentService.gallery?.length || 0} photos)</h3>
+              <div className="ap-grid">
+                {(currentService.gallery || []).map((item, idx) => (
+                  <div key={item.id || idx} className="ap-item">
+                    <img src={item.image} alt={item.title} className="ap-thumb" />
+                    <div className="ap-item-meta">
+                      <div className="ap-item-title">{item.title}</div>
+                      <div className="ap-item-sub">{item.location}</div>
+                    </div>
+                    <button className="ap-delete-btn"
+                      onClick={() => { if (window.confirm('Remove this photo?')) { removeServiceImage(activeTab, idx); toast('Photo removed.'); } }}
+                    ><Trash2 size={14} /></button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* ════════════ FILMS & ALBUMS ════════════ */}
+        {activeTab === 'albums' && (
+          <section className="ap-section">
+            <h2 className="ap-section-title">Films &amp; Albums</h2>
+
+            {/* Album selector */}
+            <div className="ap-card">
+              <h3 className="ap-card-title">Select Album</h3>
+              <div className="ap-album-pills">
+                {albums.map(a => (
+                  <button key={a.id}
+                    className={`ap-album-pill ${activeAlbumId === a.id ? 'active' : ''}`}
+                    onClick={() => setActiveAlbumId(a.id)}
                   >
-                    {album.title}
+                    {a.title || a.id}
+                    <span className="ap-tab-count">{a.photos?.length || 0}</span>
                   </button>
                 ))}
               </div>
+            </div>
 
-              {activeAlbum && (
-                <div>
-                  {/* Album Cover & Details Card */}
-                  <div className="admin-card" style={{ marginBottom: '1.5rem' }}>
-                    <h3 className="admin-card-title">Album Cover & Details</h3>
-                    <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-                      <div style={{ width: '160px', height: '110px', borderRadius: '8px', overflow: 'hidden', border: '1px solid #e2e8f0', flexShrink: 0 }}>
-                        <img src={activeAlbum.coverImage} alt={activeAlbum.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                      </div>
-                      <div style={{ flex: 1 }}>
-                        <div style={{ marginBottom: '0.8rem' }}>
-                          <strong>{activeAlbum.clientName}</strong> — {activeAlbum.category} ({activeAlbum.details?.location})
-                        </div>
-                        <label className="admin-label">Cover Image Cloudflare URL</label>
-                        <div style={{ display: 'flex', gap: '0.5rem' }}>
-                          <input 
-                            type="url" 
-                            className="admin-input" 
-                            defaultValue={activeAlbum.coverImage} 
-                            id={`album_cover_${activeAlbum.id}`} 
-                          />
-                          <button 
-                            type="button" 
-                            className="admin-btn admin-btn-primary"
-                            onClick={() => {
-                              const val = document.getElementById(`album_cover_${activeAlbum.id}`).value;
-                              if (val) {
-                                updateAlbumCover(activeAlbum.id, val.trim());
-                                showNotification('Updated album cover photo!');
-                              }
-                            }}
-                          >
-                            Update Cover
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Add Photo to Album Form */}
-                  <div className="admin-card add-image-card">
-                    <h3 className="admin-card-title"><Plus size={18} /> Add Photo to "{activeAlbum.title}"</h3>
-                    <form onSubmit={handleAddAlbumPhoto} className="admin-form-grid">
-                      <div className="admin-field-full">
-                        <label className="admin-label">Cloudflare Image URL <span className="req">*</span></label>
-                        <input
-                          type="url"
-                          className="admin-input"
-                          placeholder="https://media.nadodikalaignan.com/images/..."
-                          value={formUrl}
-                          onChange={(e) => {
-                            setFormUrl(e.target.value);
-                            setImageLoadError(false);
+            {activeAlbum && (
+              <>
+                {/* Cover update */}
+                <div className="ap-card">
+                  <h3 className="ap-card-title">Cover Photo — {activeAlbum.title}</h3>
+                  <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                    <img src={activeAlbum.cover} alt="Cover" className="ap-service-hero-thumb" />
+                    <div style={{ flex: 1, minWidth: '220px' }}>
+                      <R2Uploader folder="images/albums" label="Upload new cover"
+                        onUploaded={url => { updateAlbumCover(activeAlbumId, url); toast('Cover updated!'); }} />
+                      <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+                        <input className="ap-input" type="url" defaultValue={activeAlbum.cover} id={`cover_${activeAlbumId}`} />
+                        <button className="ap-btn-primary" type="button"
+                          onClick={() => {
+                            const v = document.getElementById(`cover_${activeAlbumId}`).value;
+                            if (v) { updateAlbumCover(activeAlbumId, v.trim()); toast('Cover updated!'); }
                           }}
-                          required
-                        />
+                        >Save</button>
                       </div>
-
-                      <div className="admin-field-half">
-                        <label className="admin-label">Photo Title</label>
-                        <input
-                          type="text"
-                          className="admin-input"
-                          placeholder="e.g. Sacred Rituals"
-                          value={formTitle}
-                          onChange={(e) => setFormTitle(e.target.value)}
-                        />
-                      </div>
-
-                      <div className="admin-field-half">
-                        <label className="admin-label">Caption / Description</label>
-                        <input
-                          type="text"
-                          className="admin-input"
-                          placeholder="e.g. Unscripted laughter between newlyweds."
-                          value={formTagline}
-                          onChange={(e) => setFormTagline(e.target.value)}
-                        />
-                      </div>
-
-                      {/* Live Image Preview */}
-                      {formUrl && (
-                        <div className="admin-field-full admin-preview-box">
-                          <p className="preview-label">Live Cloudflare Image Preview:</p>
-                          <div className="preview-image-wrapper">
-                            <img 
-                              src={formUrl} 
-                              alt="Preview" 
-                              onError={() => setImageLoadError(true)}
-                              onLoad={() => setImageLoadError(false)}
-                            />
-                            {imageLoadError && (
-                              <div className="preview-error-overlay">
-                                <AlertCircle size={24} />
-                                <span>Unable to load image. Please verify the Cloudflare URL.</span>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      )}
-
-                      <div className="admin-field-full">
-                        <button type="submit" disabled={!formUrl || imageLoadError} className="admin-btn admin-btn-primary">
-                          <Plus size={16} /> Add Photo to Album
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-
-                  {/* Current Album Photos */}
-                  <div className="admin-card">
-                    <h3 className="admin-card-title">Photos in "{activeAlbum.title}" ({activeAlbum.photos?.length || 0})</h3>
-                    <div className="admin-gallery-grid">
-                      {activeAlbum.photos?.map((photo) => (
-                        <div key={photo.id} className="admin-image-item">
-                          <div className="item-thumb-wrapper">
-                            <img src={photo.src} alt={photo.title} />
-                          </div>
-                          <div className="item-meta">
-                            <div className="item-title">{photo.title}</div>
-                            <div className="item-subtitle">{photo.caption}</div>
-                            <div className="item-url-text" title={photo.src}>{photo.src}</div>
-                          </div>
-                          <button 
-                            onClick={() => {
-                              if (window.confirm(`Delete "${photo.title}" from this album?`)) {
-                                removeAlbumPhoto(activeAlbum.id, photo.id);
-                                showNotification('Photo removed from album.');
-                              }
-                            }}
-                            className="admin-delete-btn"
-                            title="Delete Photo"
-                          >
-                            <Trash2 size={16} /> Remove
-                          </button>
-                        </div>
-                      ))}
                     </div>
                   </div>
                 </div>
-              )}
-            </div>
-          )}
-        </main>
+
+                {/* Add photo */}
+                <div className="ap-card">
+                  <h3 className="ap-card-title">Add Photo</h3>
+                  <div className="ap-upload-row">
+                    <R2Uploader folder="images/albums" label="Upload to R2"
+                      onUploaded={url => { setFormUrl(url); setImgError(false); }} />
+                    <span className="ap-or">or paste URL</span>
+                  </div>
+                  <form onSubmit={handleAddAlbumPhoto} className="ap-form">
+                    <label className="ap-label">Image URL *</label>
+                    <input className="ap-input" type="url" required value={formUrl}
+                      onChange={e => { setFormUrl(e.target.value); setImgError(false); }}
+                      placeholder="https://media.nadodikalaignan.com/images/albums/..." />
+                    <div className="ap-row">
+                      <div>
+                        <label className="ap-label">Title</label>
+                        <input className="ap-input" type="text" value={formTitle}
+                          onChange={e => setFormTitle(e.target.value)} placeholder="Cinematic Moment" />
+                      </div>
+                      <div>
+                        <label className="ap-label">Caption</label>
+                        <input className="ap-input" type="text" value={formTagline}
+                          onChange={e => setFormTagline(e.target.value)} placeholder="Artistic memory in natural light." />
+                      </div>
+                    </div>
+                    <UrlPreview />
+                    <button className="ap-btn-primary" type="submit" disabled={!formUrl || imgError}>
+                      <Plus size={16} /> Add Photo
+                    </button>
+                  </form>
+                </div>
+
+                {/* Photos grid */}
+                <div className="ap-card">
+                  <h3 className="ap-card-title">Photos ({activeAlbum.photos?.length || 0})</h3>
+                  <div className="ap-grid">
+                    {(activeAlbum.photos || []).map((p, idx) => (
+                      <div key={p.id || idx} className="ap-item">
+                        <img src={p.src} alt={p.title} className="ap-thumb" />
+                        <div className="ap-item-meta">
+                          <div className="ap-item-title">{p.title}</div>
+                          <div className="ap-item-sub">{p.caption}</div>
+                        </div>
+                        <button className="ap-delete-btn"
+                          onClick={() => { if (window.confirm('Remove photo?')) { removeAlbumPhoto(activeAlbumId, idx); toast('Removed.'); } }}
+                        ><Trash2 size={14} /></button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
+          </section>
+        )}
+      </main>
+
+      {/* ── Footer reset ──────────────────────────────────────── */}
+      <div className="ap-footer">
+        <button onClick={handleReset} className="ap-topbar-btn">
+          <RotateCcw size={14} /> Reset All Defaults
+        </button>
       </div>
 
-      {/* GitHub Sync Settings Modal */}
-      {showSettingsModal && (
-        <div className="admin-modal-backdrop" onClick={() => setShowSettingsModal(false)}>
-          <div className="admin-modal-box" onClick={(e) => e.stopPropagation()}>
-            <div className="admin-modal-header">
-              <h3 className="admin-modal-title"><KeyRound size={20} /> GitHub 1-Click Publishing Setup</h3>
-              <button onClick={() => setShowSettingsModal(false)} className="admin-modal-close">×</button>
-            </div>
-
-            <div className="admin-modal-body">
-              <p style={{ fontSize: '0.95rem', color: '#4b5563', lineHeight: '1.6', marginBottom: '1rem' }}>
-                To enable <strong>1-Click Live Publishing</strong> directly to <strong>www.nadodikalaignan.com</strong> with zero backend or database fees, paste your GitHub Personal Access Token once below.
-              </p>
-
-              <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '8px', border: '1px solid #e2e8f0', marginBottom: '1.25rem', fontSize: '0.875rem' }}>
-                <strong>Repository:</strong> {githubConfig.owner}/{githubConfig.repo} ({githubConfig.branch})<br />
-                <strong>Target File:</strong> {githubConfig.filePath}
-              </div>
-
-              <div style={{ marginBottom: '1.25rem' }}>
-                <label className="admin-label">GitHub Personal Access Token (PAT)</label>
-                <input
-                  type="password"
-                  className="admin-input"
-                  placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-                  value={tempToken}
-                  onChange={(e) => setTempToken(e.target.value)}
-                />
-                <p style={{ fontSize: '0.8rem', color: '#6b7280', marginTop: '0.5rem' }}>
-                  Requires repository <code>Contents: Read and Write</code> permission. Token stays securely in this browser.
-                </p>
-              </div>
-            </div>
-
-            <div className="admin-modal-footer">
-              <button 
-                type="button" 
-                className="admin-btn secondary" 
-                onClick={() => setShowSettingsModal(false)}
-              >
-                Cancel
+      {/* ── GitHub Settings Modal ─────────────────────────────── */}
+      {showSettings && (
+        <div className="ap-modal-overlay" onClick={() => setShowSettings(false)}>
+          <div className="ap-modal" onClick={e => e.stopPropagation()}>
+            <h3>GitHub Auto-Publish Token</h3>
+            <p>Paste your GitHub Personal Access Token (PAT) with <code>contents:write</code> permission.</p>
+            <label className="ap-label">Token</label>
+            <input className="ap-input" type="password" value={tempToken}
+              onChange={e => setTempToken(e.target.value)} placeholder="ghp_..." />
+            <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
+              <button className="ap-btn-primary" onClick={() => { saveGithubToken(tempToken); setShowSettings(false); toast('Token saved!'); }}>
+                Save Token
               </button>
-              <button 
-                type="button" 
-                className="admin-btn admin-btn-primary"
-                onClick={() => {
-                  saveGithubToken(tempToken);
-                  setShowSettingsModal(false);
-                  showNotification('GitHub Token saved! You can now publish live with 1 click.');
-                }}
-              >
-                Save Settings
-              </button>
+              <button className="ap-btn-secondary" onClick={() => setShowSettings(false)}>Cancel</button>
             </div>
           </div>
         </div>
