@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-11-05T06:53:58.571Z",
+  "lastUpdated": "2026-11-24T10:14:07.243Z",
   "heroSlides": [
     {
       "video": "https://media.nadodikalaignan.com/images/VIDEO/HEROSEACTIONVIDEO/video.m3u8",
@@ -77,6 +77,14 @@
     }
   ],
   "latestWork": [
+    {
+      "image": "https://media.nadodikalaignan.com/images/latest/images_protrate_1__25__1795515188908.webp",
+      "title": "test",
+      "category": "Weddings",
+      "location": "Fine Art Set",
+      "aspect": "tall",
+      "id": 1795515247243
+    },
     {
       "id": 1,
       "title": "Eternal Whispers",
