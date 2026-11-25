@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-11-24T10:14:07.243Z",
+  "lastUpdated": "2026-11-25T05:49:36.429Z",
   "heroSlides": [
     {
       "video": "https://media.nadodikalaignan.com/images/VIDEO/HEROSEACTIONVIDEO/video.m3u8",
@@ -78,12 +78,20 @@
   ],
   "latestWork": [
     {
-      "image": "https://media.nadodikalaignan.com/images/latest/images_protrate_1__25__1795515188908.webp",
-      "title": "test",
+      "image": "https://media.nadodikalaignan.com/images/latest_image/images_protrate_1_25__1795585755274.webp",
+      "title": "Timeless Frame",
       "category": "Weddings",
       "location": "Fine Art Set",
       "aspect": "tall",
-      "id": 1795515247243
+      "id": 1795585776429
+    },
+    {
+      "image": "https://media.nadodikalaignan.com/images/BABYIMAGE/1%20(10).webp",
+      "title": "Timeless Frame",
+      "category": "Weddings",
+      "location": "Fine Art Set",
+      "aspect": "wide",
+      "id": 1792597543072
     },
     {
       "id": 1,
@@ -789,6 +797,14 @@
           "category": "Reception",
           "location": "Wedding Set",
           "camera": "Sony A7IV • 35mm GM"
+        },
+        {
+          "id": 21,
+          "title": "Sacred Muhurtham",
+          "image": "https://media.nadodikalaignan.com/images/WEEDING/1 (21).webp",
+          "category": "Ceremony",
+          "location": "Heritage Mandap",
+          "camera": "Sony A7R V • 85mm GM"
         },
         {
           "id": 22,
