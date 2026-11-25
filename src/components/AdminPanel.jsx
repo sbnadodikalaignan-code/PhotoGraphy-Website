@@ -28,12 +28,31 @@ function ProgressBar({ value }) {
   );
 }
 
+// ─── Cloudflare R2 Folder Options ──────────────────────────────────────────
+const CLOUDFLARE_FOLDERS = [
+  { value: 'images/HEROSEACTIONIMAGE', label: 'Hero Slides (HEROSEACTIONIMAGE)' },
+  { value: 'images/latest_image', label: 'Latest Work (latest_image)' },
+  { value: 'images/WEEDING', label: 'Weddings (WEEDING)' },
+  { value: 'images/events seaction', label: 'Events (events seaction)' },
+  { value: 'images/protrate', label: 'Portraits (protrate)' },
+  { value: 'images/BABYIMAGE', label: 'Toddlers & Baby (BABYIMAGE)' },
+  { value: 'images/thumbnail', label: 'Thumbnails & Covers (thumbnail)' },
+  { value: 'images/VIDEO', label: 'Videos (VIDEO)' },
+  { value: 'images/other', label: 'Other Branding (other)' },
+];
+
 // ─── File Upload Widget ───────────────────────────────────────────────────────
 function R2Uploader({ folder, onUploaded, label = 'Upload Image / Video' }) {
+  const [targetFolder, setTargetFolder] = useState(folder);
   const [progress, setProgress] = useState(0);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
   const fileRef = useRef();
+
+  // Keep targetFolder synced if default folder changes with tab
+  React.useEffect(() => {
+    setTargetFolder(folder);
+  }, [folder]);
 
   const handleFile = async (e) => {
     const file = e.target.files?.[0];
@@ -42,7 +61,7 @@ function R2Uploader({ folder, onUploaded, label = 'Upload Image / Video' }) {
     setUploading(true);
     setProgress(0);
     try {
-      const publicUrl = await uploadToR2(file, folder, setProgress);
+      const publicUrl = await uploadToR2(file, targetFolder, setProgress);
       onUploaded(publicUrl);
     } catch (err) {
       setError(err.message);
@@ -54,15 +73,35 @@ function R2Uploader({ folder, onUploaded, label = 'Upload Image / Video' }) {
 
   return (
     <div className="ap-uploader">
-      <button
-        type="button"
-        className="ap-upload-btn"
-        onClick={() => fileRef.current?.click()}
-        disabled={uploading}
-      >
-        <Upload size={16} />
-        {uploading ? 'Uploading to R2…' : label}
-      </button>
+      <div className="ap-uploader-bar">
+        <button
+          type="button"
+          className="ap-upload-btn"
+          onClick={() => fileRef.current?.click()}
+          disabled={uploading}
+        >
+          <Upload size={16} />
+          {uploading ? 'Uploading to R2…' : label}
+        </button>
+
+        <div className="ap-folder-picker">
+          <span className="ap-folder-label">Folder:</span>
+          <select
+            className="ap-folder-select"
+            value={targetFolder}
+            onChange={(e) => setTargetFolder(e.target.value)}
+            disabled={uploading}
+            title="Destination folder in Cloudflare R2"
+          >
+            {CLOUDFLARE_FOLDERS.map((f) => (
+              <option key={f.value} value={f.value}>
+                {f.label}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
       <input
         ref={fileRef}
         type="file"
@@ -384,9 +423,11 @@ export default function AdminPanel() {
   const activeAlbum    = albums.find(a => a.id === activeAlbumId) || albums[0];
 
   const serviceFolder = {
-    wedding: 'images/weddings', events: 'images/events',
-    portrait: 'images/portraits', toddlers: 'images/toddlers',
-    'pre-wedding': 'images/pre-wedding'
+    wedding: 'images/WEEDING',
+    events: 'images/events seaction',
+    portrait: 'images/protrate',
+    toddlers: 'images/BABYIMAGE',
+    'pre-wedding': 'images/WEEDING'
   };
 
   const NAV_TABS = [
@@ -475,8 +516,8 @@ export default function AdminPanel() {
               <h3 className="ap-card-title">Add New Hero Slide</h3>
               <div className="ap-upload-row">
                 <R2Uploader
-                  folder="images/hero"
-                  label="Upload Hero Image to R2"
+                  folder="images/HEROSEACTIONIMAGE"
+                  label="Upload Hero Image"
                   onUploaded={url => { setFormUrl(url); setImgError(false); }}
                 />
                 <span className="ap-or">or paste URL</span>
@@ -535,7 +576,7 @@ export default function AdminPanel() {
             <div className="ap-card">
               <h3 className="ap-card-title">Add New Photo</h3>
               <div className="ap-upload-row">
-                <R2Uploader folder="images/latest" label="Upload to R2"
+                <R2Uploader folder="images/latest_image" label="Upload to Latest Work"
                   onUploaded={url => { setFormUrl(url); setImgError(false); }} />
                 <span className="ap-or">or paste URL</span>
               </div>
@@ -606,7 +647,7 @@ export default function AdminPanel() {
                   <h3 className="ap-card-title">{cat.title}</h3>
                   <img src={cat.image} alt={cat.title} className="ap-cat-preview" />
                   <div className="ap-upload-row" style={{ marginTop: '0.75rem' }}>
-                    <R2Uploader folder="images/about"
+                    <R2Uploader folder="images/thumbnail"
                       label="Upload new image"
                       onUploaded={url => { updateCategoryCard(cat.id, url); toast(`Updated ${cat.title}!`); }}
                     />
@@ -639,7 +680,7 @@ export default function AdminPanel() {
                 <img src={currentService.heroImage} alt="Hero" className="ap-service-hero-thumb" />
                 <div style={{ flex: 1, minWidth: '220px' }}>
                   <R2Uploader
-                    folder={serviceFolder[activeTab] || 'images/services'}
+                    folder={serviceFolder[activeTab] || 'images/WEEDING'}
                     label="Upload new hero image"
                     onUploaded={url => { updateServiceHero(activeTab, url); toast('Hero updated!'); }}
                   />
@@ -660,8 +701,8 @@ export default function AdminPanel() {
             <div className="ap-card">
               <h3 className="ap-card-title">Add Gallery Photo</h3>
               <div className="ap-upload-row">
-                <R2Uploader folder={serviceFolder[activeTab] || 'images/services'}
-                  label="Upload to R2"
+                <R2Uploader folder={serviceFolder[activeTab] || 'images/WEEDING'}
+                  label="Upload to Gallery"
                   onUploaded={url => { setFormUrl(url); setImgError(false); }} />
                 <span className="ap-or">or paste URL</span>
               </div>
@@ -742,7 +783,7 @@ export default function AdminPanel() {
                   <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
                     <img src={activeAlbum.cover} alt="Cover" className="ap-service-hero-thumb" />
                     <div style={{ flex: 1, minWidth: '220px' }}>
-                      <R2Uploader folder="images/albums" label="Upload new cover"
+                      <R2Uploader folder="images/thumbnail" label="Upload new cover"
                         onUploaded={url => { updateAlbumCover(activeAlbumId, url); toast('Cover updated!'); }} />
                       <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
                         <input className="ap-input" type="url" defaultValue={activeAlbum.cover} id={`cover_${activeAlbumId}`} />
@@ -761,7 +802,7 @@ export default function AdminPanel() {
                 <div className="ap-card">
                   <h3 className="ap-card-title">Add Photo</h3>
                   <div className="ap-upload-row">
-                    <R2Uploader folder="images/albums" label="Upload to R2"
+                    <R2Uploader folder="images/WEEDING" label="Upload to Album"
                       onUploaded={url => { setFormUrl(url); setImgError(false); }} />
                     <span className="ap-or">or paste URL</span>
                   </div>

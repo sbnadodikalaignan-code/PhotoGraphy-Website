@@ -317,6 +317,39 @@
 
 .ap-uploader { display: flex; flex-direction: column; gap: 0.5rem; }
 
+.ap-uploader-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ap-folder-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f8fafc;
+  border: 1px solid var(--ap-border);
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+.ap-folder-label {
+  font-weight: 600;
+  color: var(--ap-muted);
+}
+
+.ap-folder-select {
+  border: none;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ap-dark);
+  cursor: pointer;
+  outline: none;
+}
+
 .ap-upload-btn {
   display: inline-flex;
   align-items: center;
