@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastUpdated": "2026-11-23T10:55:38.900Z",
+  "lastUpdated": "2026-11-24T10:14:07.243Z",
   "heroSlides": [
     {
       "video": "https://media.nadodikalaignan.com/images/VIDEO/HEROSEACTIONVIDEO/video.m3u8",
@@ -74,24 +74,16 @@
       "copyTheme": "copy-ink",
       "navTone": "dark",
       "overlay": null
-    },
-    {
-      "image": "https://media.nadodikalaignan.com/images/HEROSEACTIONIMAGE/9.webp",
-      "title": "FOREVER BEGINS HERE",
-      "tagline": "TWO SOULS, ONE BEAUTIFUL JOURNEY",
-      "copyTheme": "copy-ink",
-      "navTone": "dark",
-      "overlay": null
     }
   ],
   "latestWork": [
     {
-      "image": "https://media.nadodikalaignan.com/images/latest/images_protrate_1__25__1795431302502.webp",
-      "title": "Timeless Frame",
+      "image": "https://media.nadodikalaignan.com/images/latest/images_protrate_1__25__1795515188908.webp",
+      "title": "test",
       "category": "Weddings",
       "location": "Fine Art Set",
       "aspect": "tall",
-      "id": 1795431338900
+      "id": 1795515247243
     },
     {
       "id": 1,
@@ -797,14 +789,6 @@
           "category": "Reception",
           "location": "Wedding Set",
           "camera": "Sony A7IV • 35mm GM"
-        },
-        {
-          "id": 21,
-          "title": "Sacred Muhurtham",
-          "image": "https://media.nadodikalaignan.com/images/WEEDING/1 (21).webp",
-          "category": "Ceremony",
-          "location": "Heritage Mandap",
-          "camera": "Sony A7R V • 85mm GM"
         },
         {
           "id": 22,
